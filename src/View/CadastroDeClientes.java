@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  *
  * @author Emerson
  */
-public class CadastroDeClientes extends javax.swing.JFrame {
+public class CadastroDeClientes extends javax.swing.JFrame{
     private Connection con;
     /**
      * Creates new form CadastroDeClientes
@@ -27,8 +27,12 @@ public class CadastroDeClientes extends javax.swing.JFrame {
     
     public CadastroDeClientes() {
         initComponents();
+        BuscarEstado();
+        Iniciar();
         
     }
+    
+   
 
    
     /**
@@ -60,9 +64,7 @@ public class CadastroDeClientes extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         txtEmail2 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        txtCidade = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        txtEstado = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         txtPais = new javax.swing.JTextField();
         txtTelefone = new javax.swing.JTextField();
@@ -71,6 +73,8 @@ public class CadastroDeClientes extends javax.swing.JFrame {
         txtCpf = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         txtRg = new javax.swing.JTextField();
+        comboboxEstado = new javax.swing.JComboBox<>();
+        txtCidade = new javax.swing.JTextField();
         btnSalvar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
@@ -150,19 +154,7 @@ public class CadastroDeClientes extends javax.swing.JFrame {
 
         jLabel10.setText("Cidade:");
 
-        txtCidade.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCidadeActionPerformed(evt);
-            }
-        });
-
         jLabel11.setText("Estado:");
-
-        txtEstado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEstadoActionPerformed(evt);
-            }
-        });
 
         jLabel12.setText("Pais:");
 
@@ -222,7 +214,7 @@ public class CadastroDeClientes extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtCep))
+                        .addComponent(txtCep, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -238,7 +230,7 @@ public class CadastroDeClientes extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(comboboxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -285,11 +277,11 @@ public class CadastroDeClientes extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11)
-                    .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12)
-                    .addComponent(txtPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboboxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -387,6 +379,18 @@ public class CadastroDeClientes extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    private void Iniciar(){
+        txtNome.setDocument(new SoLetrasMaiusculas());
+        txtCodigo.setDocument(new SoNumeros());
+        txtNumero.setDocument(new SoNumeros());
+        txtCep.setDocument(new SoNumeros());
+        txtCpf.setDocument(new SoNumeros());
+        txtRg.setDocument(new SoNumeros());
+        txtTelefone.setDocument(new SoNumeros());
+    }
+    
+    
     private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
         
     }//GEN-LAST:event_txtCodigoActionPerformed
@@ -406,14 +410,6 @@ public class CadastroDeClientes extends javax.swing.JFrame {
     private void txtCepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCepActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCepActionPerformed
-
-    private void txtCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCidadeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCidadeActionPerformed
-
-    private void txtEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEstadoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEstadoActionPerformed
 
     private void txtPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPaisActionPerformed
         // TODO add your handling code here:
@@ -436,7 +432,7 @@ public class CadastroDeClientes extends javax.swing.JFrame {
        
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    
+    // CRUD
     private void Salvar(){
         
         Clientes cli = new View.Clientes();
@@ -447,7 +443,7 @@ public class CadastroDeClientes extends javax.swing.JFrame {
           cli.telefone = txtTelefone.getText();
           cli.cep = txtCep.getText();
           cli.cidade = txtCidade.getText();
-          cli.estado = txtEstado.getText();
+          cli.estado = (String) comboboxEstado.getSelectedItem();
           cli.pais = txtPais.getText();
           cli.email = txtEmail.getText();
           cli.email2 = txtEmail2.getText();
@@ -481,6 +477,8 @@ public class CadastroDeClientes extends javax.swing.JFrame {
                
                 JOptionPane.showMessageDialog(null, "Registro inserido com sucesso!", "Mensagem",
                     JOptionPane.INFORMATION_MESSAGE);
+                
+                Limpar();
                
                 } catch (SQLException ex) {
                     System.err.println("Erro"+ex);
@@ -516,7 +514,7 @@ public class CadastroDeClientes extends javax.swing.JFrame {
                        txtRg.setText(rs.getString("rg"));
                        txtCep.setText(rs.getString("cep"));
                        txtCidade.setText(rs.getString("cidade"));
-                       txtEstado.setText(rs.getString("estado"));
+                       comboboxEstado.addItem(rs.getString("estado"));
                        txtPais.setText(rs.getString("pais"));
                        txtEmail.setText(rs.getString("email"));
                        txtEmail2.setText(rs.getString("email2"));
@@ -536,16 +534,65 @@ public class CadastroDeClientes extends javax.swing.JFrame {
         
     }
     
+     private void BuscarEstado(){
+        PreparedStatement stmt = null;
+
+        this.con = Database.getConnection();
+           
+             try (PreparedStatement busca = con.prepareStatement("select * from estado order by uf")) {
+
+                ResultSet rs = busca.executeQuery();
+                
+                while(rs.next()){
+                    String cod = rs.getString("uf");
+                    comboboxEstado.addItem(cod);
+                }
+       
+            } catch (SQLException ex) {
+                    System.err.println("Erro"+ex);
+                 
+                }finally{
+                  Database.closeConnection(con, stmt);
+                }
+           
+           
+        
+    }
+    
     private void atualizar(){
         PreparedStatement stmt = null;
         
+        Clientes cli = new Clientes();
+        
+          cli.nome = txtNome.getText();
+          cli.endereco = txtEndereco.getText();
+          cli.numero = txtNumero.getText();
+          cli.telefone = txtTelefone.getText();
+          cli.cep = txtCep.getText();
+          cli.cidade = txtCidade.getText();
+          cli.estado = (String) comboboxEstado.getSelectedItem();
+          cli.pais = txtPais.getText();
+          cli.email = txtEmail.getText();
+          cli.email2 = txtEmail2.getText();
+          cli.rg = txtRg.getText();
+          cli.cpf = txtCpf.getText();
+        
+    
         this.con = Database.getConnection();
         
-         try (PreparedStatement edit = con.prepareStatement("update clientes set nome = '"+txtNome.getText()+"' where nome = '"+txtCodigo.getText()+"'")) {
-                            edit.executeUpdate();
+         try (PreparedStatement edit = con.prepareStatement("update clientes set nome = ? where codigo = ?")) {
+             
+             edit.setString(1, cli.nome);
+             edit.setString(2, txtCodigo.getText());
+               
+             edit.executeUpdate();
+             
+            
                             
-                            JOptionPane.showMessageDialog(null, "Registro Atualizado com sucesso!", "Mensagem",
+            JOptionPane.showMessageDialog(null, "Registro Atualizado com sucesso!", "Mensagem",
                     JOptionPane.INFORMATION_MESSAGE);
+            
+            Limpar();
                             
         } catch (SQLException ex) {
                     System.err.println("Erro"+ex);
@@ -554,6 +601,25 @@ public class CadastroDeClientes extends javax.swing.JFrame {
                   Database.closeConnection(con, stmt);
                 }
     }
+    
+    
+    private void Limpar(){
+        txtCep.setText("");
+        txtCidade.setText("");
+        txtCodigo.setText("");
+        txtCpf.setText("");
+        txtEmail.setText("");
+        txtEmail2.setText("");
+        txtEndereco.setText("");
+        BuscarEstado();
+        txtNome.setText("");
+        txtNumero.setText("");
+        txtPais.setText("");
+        txtRg.setText("");
+        txtTelefone.setText("");
+        
+    }
+    
     
     private void txtTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefoneActionPerformed
         // TODO add your handling code here:
@@ -613,6 +679,7 @@ public class CadastroDeClientes extends javax.swing.JFrame {
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnSalvar1;
+    private javax.swing.JComboBox<String> comboboxEstado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -638,7 +705,6 @@ public class CadastroDeClientes extends javax.swing.JFrame {
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtEmail2;
     private javax.swing.JTextField txtEndereco;
-    private javax.swing.JTextField txtEstado;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtNumero;
     private javax.swing.JTextField txtPais;
