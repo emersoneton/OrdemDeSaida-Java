@@ -10,7 +10,7 @@ public class Clientes {
           String endereco = null;
           String numero = null ;
           String telefone = null;
-          String  cep = null;
+          String cep = null;
           String cidade = null;
           String estado = null;
           String pais = null;
@@ -40,10 +40,6 @@ public class Clientes {
         return numero;
     }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
     public String getTelefone() {
         return telefone;
     }
@@ -51,6 +47,8 @@ public class Clientes {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
+
+        
 
     public String getCep() {
         return cep;
