@@ -384,12 +384,13 @@ public class Filial extends javax.swing.JFrame {
         fil.razãoSocial = txtRazaoSocial.getText();
         fil.telefoneComercial = txtTelefoneComercial.getText();
         fil.telefoneCelular = txtTelefoneCelular.getText();
+        fil.endereco = txtEndereco.getText();
         
         
          try {
              PreparedStatement salvar = con.prepareStatement("INSERT INTO filial (bairro,cidade,cnpj,estado,razao_fantasia,"
-                     + "inscricao_estadual, inscricao_municipal, numero, pais, razao_social, telefone_comercial, telefone_celular"
-                     + ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+                     + "inscricao_estadual, inscricao_municipal, numero, pais, razao_social, telefone_comercial, telefone_celular, endereco"
+                     + ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
              
              salvar.setString(1, fil.bairro);
              salvar.setString(2, fil.cidade);
@@ -403,6 +404,7 @@ public class Filial extends javax.swing.JFrame {
              salvar.setString(10, fil.razãoSocial);
              salvar.setString(11, fil.telefoneComercial);
              salvar.setString(12, fil.telefoneCelular);
+             salvar.setString(13, fil.endereco);
            
              
              salvar.executeUpdate();

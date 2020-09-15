@@ -19,6 +19,7 @@ public class Clientes {
           String codigo = null;
           String cpf = null;
           String rg = null;
+          String bairro = null;
 
     public String getNome() {
         return nome;
@@ -121,6 +122,14 @@ public class Clientes {
 
     public void setRg(String rg) {
         this.rg = rg;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
     }
     
   

@@ -14,7 +14,8 @@ public class CadastroDeFilial {
             telefoneCelular = null,
             cidade = null,
             estado = null,
-            pais = null;
+            pais = null,
+            endereco = null;
 
     public String getFilia() {
         return filia;
@@ -120,8 +121,13 @@ public class CadastroDeFilial {
         this.pais = pais;
     }
 
-   
-    
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
 
     
 }
