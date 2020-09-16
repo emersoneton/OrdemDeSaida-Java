@@ -339,6 +339,12 @@ public class FormFilial extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
    
+    //CRUD
+    
+    private void Conexao(){ // Classe de Conexão com o Banco de Dados
+        this.con = Database.getConnection();
+    }
+    
     private void Iniciar(){
         txtTelefoneCelular.setDocument(new SoNumeros());
         txtTelefoneComercial.setDocument(new SoNumeros());
@@ -352,7 +358,7 @@ public class FormFilial extends javax.swing.JFrame {
     private void BuscarEstado(){
         PreparedStatement stmt = null;
 
-        this.con = Database.getConnection();
+        Conexao(); // chama a classe de conexão com o Banco de Dados
 
         try (PreparedStatement busca = con.prepareStatement("select * from estado order by uf")) {
 
@@ -390,7 +396,7 @@ public class FormFilial extends javax.swing.JFrame {
 
     
     private void Salvar(){
-        this.con = Database.getConnection();
+        Conexao(); // chama a classe de conexão com o Banco de Dados
         
         CadastroDeFilial fil = new CadastroDeFilial();
       
@@ -443,8 +449,8 @@ public class FormFilial extends javax.swing.JFrame {
     }
     
     private void Buscar(){
-        
-        this.con = Database.getConnection();
+        boolean validador = false;
+        Conexao(); // chama a classe de conexão com o Banco de Dados
         
         CadastroDeFilial fil = new CadastroDeFilial();
        
@@ -471,7 +477,14 @@ public class FormFilial extends javax.swing.JFrame {
                     txtPais.setText(rs.getString("pais"));
                     txtTelefoneComercial.setText(rs.getString("telefone_comercial"));
                     txtTelefoneCelular.setText(rs.getString("telefone_celular"));
+                    validador = true;
+                    break;
                 }
+            }
+            
+            if (validador == false) {
+                JOptionPane.showMessageDialog(null, "Não foi encontrado registro desse Produto no Banco de Dados!", "Mensagem",
+                    JOptionPane.INFORMATION_MESSAGE);
             }
             con.close();
                 
@@ -483,7 +496,7 @@ public class FormFilial extends javax.swing.JFrame {
     
     private void Alterar(){
         
-        this.con = Database.getConnection();
+        Conexao(); // chama a classe de conexão com o Banco de Dados
         
         CadastroDeFilial fil = new CadastroDeFilial();
         

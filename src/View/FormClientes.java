@@ -562,6 +562,10 @@ public class FormClientes extends javax.swing.JFrame {
 
     
     // CRUD
+    
+    private void Conexao(){ // Classe de Conexão com o Banco de Dados
+        this.con = Database.getConnection();
+    }
     private void Salvar() {
 
         CadastroDeClientes cli = new View.CadastroDeClientes();
@@ -619,6 +623,7 @@ public class FormClientes extends javax.swing.JFrame {
     }
 
     private void Buscar() {
+        boolean validador = false;
         PreparedStatement stmt = null;
 
         CadastroDeClientes cli = new CadastroDeClientes();
@@ -649,9 +654,15 @@ public class FormClientes extends javax.swing.JFrame {
                     txtEmail.setText(rs.getString("email"));
                     txtEmail2.setText(rs.getString("email2"));
                     txtBairro.setText(rs.getString("bairro"));
-
+                    validador = true;
+                    break;
                 }
 
+            }
+            
+            if (validador == false) {
+                JOptionPane.showMessageDialog(null, "Não foi encontrado registro desse Produto no Banco de Dados!", "Mensagem",
+                    JOptionPane.INFORMATION_MESSAGE);
             }
 
         } catch (SQLException ex) {
@@ -666,7 +677,7 @@ public class FormClientes extends javax.swing.JFrame {
     private void BuscarEstado() {
         PreparedStatement stmt = null;
 
-        this.con = Database.getConnection();
+        Conexao(); // chama a classe de conexão com o Banco de Dados
 
         try (PreparedStatement busca = con.prepareStatement("select * from estado order by uf")) {
 
@@ -706,7 +717,7 @@ public class FormClientes extends javax.swing.JFrame {
         cli.cpf = txtCpf.getText();
         cli.bairro = txtBairro.getText();
 
-        this.con = Database.getConnection();
+        Conexao(); // chama a classe de conexão com o Banco de Dados
 
         try (PreparedStatement edit = con.prepareStatement("update clientes set nome = ?, endereco = ?, numero = ?, telefone = ?,"
                 + "cidade = ?, estado = ?, pais = ?, email = ?, email2 = ?, rg = ?, cpf = ?, cep = ?, bairro = ?"

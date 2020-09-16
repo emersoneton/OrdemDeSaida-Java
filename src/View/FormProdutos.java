@@ -8,6 +8,7 @@ package View;
 import Modal.Database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -242,8 +243,12 @@ public class FormProdutos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtValorActionPerformed
 
-    private void Salvar(){
+    //CRUD
+    private void Conexao(){ // Classe de Conexão com o Banco de Dados
         this.con = Database.getConnection();
+    }
+    private void Salvar(){
+        Conexao(); // chama a classe de conexão com o Banco de Dados
         
         CadastroDeProdutos pro = new CadastroDeProdutos();
         
@@ -266,11 +271,85 @@ public class FormProdutos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Registro inserido com sucesso!", "Mensagem",
                     JOptionPane.INFORMATION_MESSAGE);
         
+            Limpar();
             con.close();
         } catch (SQLException ex) {
             Logger.getLogger(FormProdutos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    private void Buscar(){
+        boolean validador = false;
+        
+        Conexao(); // chama a classe de conexão com o Banco de Dados
+        
+        try {
+            PreparedStatement busca = con.prepareStatement("SELECT * FROM produtos");
+            
+            ResultSet rs = busca.executeQuery();
+            
+            while(rs.next()){
+                String codigo = rs.getString("codigo");
+                
+                if(codigo.trim().equals(txtCodigo.getText())){
+                    txtCodigoBarras.setText(rs.getString("codigo_barras"));
+                    txtDescricao.setText(rs.getString("descricao"));
+                    txtValor.setText(rs.getString("valor"));
+                    txtQuantidade.setText(rs.getString("quantidade"));
+                    validador = true;
+                    break;
+                }
+                
+            }
+            
+            if (validador == false) {
+                JOptionPane.showMessageDialog(null, "Não foi encontrado registro desse Produto no Banco de Dados!", "Mensagem",
+                    JOptionPane.INFORMATION_MESSAGE);
+            }
+            
+            con.close();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FormProdutos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    private void Alterar(){
+        
+        Conexao(); // chama a classe de conexão com o Banco de Dados
+        
+        CadastroDeProdutos pro = new CadastroDeProdutos();
+        
+        pro.codigoBarras = txtCodigoBarras.getText();
+        pro.descricao = txtDescricao.getText();
+        pro.quantidade = txtQuantidade.getText();
+        pro.valor = txtValor.getText();
+        
+        try {
+            PreparedStatement alterar = con.prepareStatement("UPDATE produtos SET codigo_barras = ?, descricao = ?, valor = ?, quantidade = ?"
+                    + "WHERE codigo = ?");
+            
+            alterar.setString(1, pro.codigoBarras);
+            alterar.setString(2, pro.descricao);
+            alterar.setString(3, pro.valor);
+            alterar.setString(4, pro.quantidade);
+            
+            alterar.setString(5, pro.codigoBarras);
+            
+            alterar.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "Registro alterado com sucesso!", "Mensagem",
+                    JOptionPane.INFORMATION_MESSAGE);
+             
+             Limpar();
+             con.close();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FormProdutos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }      
     
     private void Limpar(){
         txtCodigo.setText("");
@@ -289,11 +368,13 @@ public class FormProdutos extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
 
+        Buscar();
         
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnSalvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvar1ActionPerformed
-
+        
+        Alterar();
         
     }//GEN-LAST:event_btnSalvar1ActionPerformed
 
