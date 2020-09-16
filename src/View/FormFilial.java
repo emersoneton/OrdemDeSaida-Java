@@ -20,14 +20,14 @@ import javax.swing.JOptionPane;
  *
  * @author Emerson
  */
-public class Filial extends javax.swing.JFrame {
+public class FormFilial extends javax.swing.JFrame {
     
     private Connection con;
     
     /**
      * Creates new form Filial
      */
-    public Filial() {
+    public FormFilial() {
         initComponents();
         BuscarEstado();
         Iniciar();
@@ -48,7 +48,6 @@ public class Filial extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtRazaoSocial = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         txtRazaoFantasia = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtCnpj = new javax.swing.JTextField();
@@ -72,6 +71,9 @@ public class Filial extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         txtTelefoneCelular = new javax.swing.JTextField();
         comboBoxEstado = new javax.swing.JComboBox<>();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtCodigo = new javax.swing.JTextField();
         btnSalvar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnSalvar1 = new javax.swing.JButton();
@@ -109,8 +111,6 @@ public class Filial extends javax.swing.JFrame {
 
         jLabel2.setText("Razão Social:");
 
-        jLabel3.setText("Fantasia:");
-
         jLabel4.setText("CNPJ:");
 
         jLabel5.setText("Inscrição Estadual:");
@@ -133,6 +133,16 @@ public class Filial extends javax.swing.JFrame {
 
         jLabel14.setText("Telefone Celular:");
 
+        jLabel15.setText("Codigo:");
+
+        jLabel3.setText("Fantasia:");
+
+        txtCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCodigoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -140,35 +150,6 @@ public class Filial extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCnpj)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtInscricaoEstadual, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel6)
-                        .addGap(7, 7, 7)
-                        .addComponent(txtInscricaoMunicipal))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtRazaoSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtRazaoFantasia))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtTelefoneComercial, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel14)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtTelefoneCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -192,11 +173,44 @@ public class Filial extends javax.swing.JFrame {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(comboBoxEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(comboBoxEstado, 0, 112, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel12)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtPais, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txtPais, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTelefoneComercial, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTelefoneCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCnpj)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtInscricaoEstadual, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)
+                        .addGap(7, 7, 7)
+                        .addComponent(txtInscricaoMunicipal))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtRazaoSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtRazaoFantasia)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -206,8 +220,10 @@ public class Filial extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtRazaoSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtRazaoFantasia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15)
                     .addComponent(jLabel3)
-                    .addComponent(txtRazaoFantasia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -245,6 +261,7 @@ public class Filial extends javax.swing.JFrame {
         btnSalvar.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/salvar.png"))); // NOI18N
         btnSalvar.setText("Salvar");
+        btnSalvar.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarActionPerformed(evt);
@@ -255,6 +272,7 @@ public class Filial extends javax.swing.JFrame {
         btnEditar.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/buscar.png"))); // NOI18N
         btnEditar.setText("Buscar");
+        btnEditar.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -265,6 +283,7 @@ public class Filial extends javax.swing.JFrame {
         btnSalvar1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         btnSalvar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/editar.png"))); // NOI18N
         btnSalvar1.setText("Alterar");
+        btnSalvar1.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         btnSalvar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvar1ActionPerformed(evt);
@@ -275,6 +294,7 @@ public class Filial extends javax.swing.JFrame {
         btnSair.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/sair.png"))); // NOI18N
         btnSair.setText("Sair");
+        btnSair.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSairActionPerformed(evt);
@@ -290,12 +310,12 @@ public class Filial extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43)
-                        .addComponent(btnEditar)
-                        .addGap(45, 45, 45)
-                        .addComponent(btnSalvar1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57)
+                        .addComponent(btnSalvar1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -307,13 +327,13 @@ public class Filial extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSalvar1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();
@@ -353,6 +373,7 @@ public class Filial extends javax.swing.JFrame {
     }
     
     private void Limpar(){
+        txtCodigo.setText("");
         txtBairro.setText("");
         txtCidade.setText("");
         txtCnpj.setText("");
@@ -364,14 +385,16 @@ public class Filial extends javax.swing.JFrame {
         txtRazaoFantasia.setText("");
         txtRazaoSocial.setText("");
         txtTelefoneCelular.setText("");
-        txtTelefoneComercial.setText("");
+        txtTelefoneComercial.setText("");            
     }
+
     
     private void Salvar(){
         this.con = Database.getConnection();
         
         CadastroDeFilial fil = new CadastroDeFilial();
-        
+      
+       
         fil.bairro = txtBairro.getText();
         fil.cidade = txtCidade.getText();
         fil.cnpj = txtCnpj.getText();
@@ -415,10 +438,105 @@ public class Filial extends javax.swing.JFrame {
              Limpar();
              con.close();
           } catch (SQLException ex) {
-             Logger.getLogger(Filial.class.getName()).log(Level.SEVERE, null, ex);
+             Logger.getLogger(FormFilial.class.getName()).log(Level.SEVERE, null, ex);
          }
     }
     
+    private void Buscar(){
+        
+        this.con = Database.getConnection();
+        
+        CadastroDeFilial fil = new CadastroDeFilial();
+       
+        
+        try {
+            PreparedStatement busca = con.prepareStatement("SELECT * FROM filial");
+                
+            ResultSet rs = busca.executeQuery();
+            
+            while(rs.next()){
+                String codigo = rs.getString("codigo");
+                
+                if(codigo.equals(txtCodigo.getText())){
+                    txtRazaoSocial.setText(rs.getString("razao_social"));
+                    txtRazaoFantasia.setText(rs.getString("razao_fantasia"));
+                    txtCnpj.setText(rs.getString("cnpj"));
+                    txtInscricaoEstadual.setText(rs.getString("inscricao_estadual"));
+                    txtInscricaoMunicipal.setText(rs.getString("inscricao_municipal"));
+                    txtEndereco.setText(rs.getString("endereco"));
+                    txtNumero.setText(rs.getString("numero"));
+                    txtBairro.setText(rs.getString("bairro"));
+                    txtCidade.setText(rs.getString("cidade"));
+                    comboBoxEstado.addItem(rs.getString("estado"));
+                    txtPais.setText(rs.getString("pais"));
+                    txtTelefoneComercial.setText(rs.getString("telefone_comercial"));
+                    txtTelefoneCelular.setText(rs.getString("telefone_celular"));
+                }
+            }
+            con.close();
+                
+        } catch (SQLException ex) {
+            Logger.getLogger(FormFilial.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    private void Alterar(){
+        
+        this.con = Database.getConnection();
+        
+        CadastroDeFilial fil = new CadastroDeFilial();
+        
+        fil.bairro = txtBairro.getText();
+        fil.cidade = txtCidade.getText();
+        fil.cnpj = txtCnpj.getText();
+        fil.estado = (String) comboBoxEstado.getSelectedItem();
+        fil.razaoFantasia = txtRazaoFantasia.getText();
+        fil.inscricaoEstadual = txtInscricaoEstadual.getText();
+        fil.inscricaoMunicipal = txtInscricaoMunicipal.getText();
+        fil.numero = txtNumero.getText();
+        fil.pais = txtPais.getText();
+        fil.razãoSocial = txtRazaoSocial.getText();
+        fil.telefoneComercial = txtTelefoneComercial.getText();
+        fil.telefoneCelular = txtTelefoneCelular.getText();
+        fil.endereco = txtEndereco.getText();
+        
+       
+        
+        try {
+            PreparedStatement update = con.prepareStatement("UPDATE filial SET bairro = ?, cidade = ?, cnpj = ?, estado = ?,"
+                    + "razao_fantasia = ?, inscricao_estadual = ?, inscricao_municipal = ?, numero = ?, pais = ?, razao_social = ?,"
+                    + "telefone_comercial = ?, telefone_celular = ?, endereco = ? WHERE codigo = ?");
+            
+             update.setString(1, fil.bairro);
+             update.setString(2, fil.cidade);
+             update.setString(3, fil.cnpj);
+             update.setString(4, fil.estado);
+             update.setString(5, fil.razaoFantasia);
+             update.setString(6, fil.inscricaoEstadual);
+             update.setString(7, fil.inscricaoMunicipal);
+             update.setString(8, fil.numero);
+             update.setString(9, fil.pais);
+             update.setString(10, fil.razãoSocial);
+             update.setString(11, fil.telefoneComercial);
+             update.setString(12, fil.telefoneCelular);
+             update.setString(13, fil.endereco);
+             
+             update.setString(14, txtCodigo.getText());
+            
+            update.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "Registro inserido com sucesso!", "Mensagem",
+                    JOptionPane.INFORMATION_MESSAGE);
+            
+            Limpar();
+            con.close();
+                    
+        } catch (SQLException ex) {
+            Logger.getLogger(FormFilial.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
     
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
 
@@ -428,17 +546,23 @@ public class Filial extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
 
-       
+       Buscar();
+        
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnSalvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvar1ActionPerformed
 
+       Alterar();
         
     }//GEN-LAST:event_btnSalvar1ActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         dispose();
     }//GEN-LAST:event_btnSairActionPerformed
+
+    private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCodigoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -457,20 +581,21 @@ public class Filial extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Filial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormFilial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Filial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormFilial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Filial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormFilial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Filial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormFilial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Filial().setVisible(true);
+                new FormFilial().setVisible(true);
             }
         });
     }
@@ -487,6 +612,7 @@ public class Filial extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -500,6 +626,7 @@ public class Filial extends javax.swing.JFrame {
     private javax.swing.JTextField txtBairro;
     private javax.swing.JTextField txtCidade;
     private javax.swing.JTextField txtCnpj;
+    private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtEndereco;
     private javax.swing.JTextField txtInscricaoEstadual;
     private javax.swing.JTextField txtInscricaoMunicipal;
