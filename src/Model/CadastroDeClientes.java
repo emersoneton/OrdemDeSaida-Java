@@ -3,23 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package View;
+package Model;
 
 public class CadastroDeClientes {
-          String nome = null;
-          String endereco = null;
-          String numero = null ;
-          String telefone = null;
-          String cep = null;
-          String cidade = null;
-          String estado = null;
-          String pais = null;
-          String email = null;
-          String email2 = null;
-          String codigo = null;
-          String cpf = null;
-          String rg = null;
-          String bairro = null;
+
+    public String nome = null;
+    public String endereco = null;
+    public String numero = null;
+    public String telefone = null;
+    public String cep = null;
+    public String cidade = null;
+    public String estado = null;
+    public String pais = null;
+    public String email = null;
+    public String email2 = null;
+    public String codigo = null;
+    public String cpf = null;
+    public String rg = null;
+    public String bairro = null;
 
     public String getNome() {
         return nome;
@@ -48,8 +49,6 @@ public class CadastroDeClientes {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
-
-        
 
     public String getCep() {
         return cep;
@@ -107,7 +106,6 @@ public class CadastroDeClientes {
         this.codigo = codigo;
     }
 
-
     public String getCpf() {
         return cpf;
     }
@@ -131,8 +129,5 @@ public class CadastroDeClientes {
     public void setBairro(String bairro) {
         this.bairro = bairro;
     }
-    
-  
-    
-   
+
 }

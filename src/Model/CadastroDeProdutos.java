@@ -1,8 +1,8 @@
 
-package View;
+package Model;
 
 public class CadastroDeProdutos {
-    String codigoBarras, descricao, valor, quantidade;
+   public String codigoBarras, descricao, valor, quantidade;
 
     public String getCodigo() {
         return codigoBarras;

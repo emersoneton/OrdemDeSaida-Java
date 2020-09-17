@@ -5,7 +5,8 @@
  */
 package View;
 
-import Modal.Database;
+import Model.CadastroDeProdutos;
+import Model.Database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -1,8 +1,8 @@
 
-package View;
+package Model;
 
 public class CadastroDeFilial {
-    String filia = null, 
+   public String filia = null, 
             razãoSocial = null, 
             razaoFantasia = null, 
             cnpj = null, 

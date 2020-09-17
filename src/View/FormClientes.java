@@ -5,10 +5,11 @@
  */
 package View;
 
+import Model.CadastroDeClientes;
 import Classes.SoNumeros;
 import Classes.SoLetrasMaiusculas;
-import Modal.formPesquisaCliente;
-import Modal.Database;
+import Model.formPesquisaCliente;
+import Model.Database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -568,7 +569,7 @@ public class FormClientes extends javax.swing.JFrame {
     }
     private void Salvar() {
 
-        CadastroDeClientes cli = new View.CadastroDeClientes();
+        CadastroDeClientes cli = new Model.CadastroDeClientes();
 
         cli.nome = txtNome.getText();
         cli.endereco = txtEndereco.getText();

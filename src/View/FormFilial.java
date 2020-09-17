@@ -5,9 +5,10 @@
  */
 package View;
 
+import Model.CadastroDeFilial;
 import Classes.SoLetrasMaiusculas;
 import Classes.SoNumeros;
-import Modal.Database;
+import Model.Database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

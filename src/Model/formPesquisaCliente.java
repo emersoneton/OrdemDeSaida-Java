@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Modal;
+package Model;
 
-import Modal.Database;
+import Model.Database;
 import View.FormClientes;
 import Classes.SoLetrasMaiusculas;
 import java.sql.Connection;
