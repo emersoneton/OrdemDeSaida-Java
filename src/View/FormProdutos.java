@@ -253,7 +253,7 @@ public class FormProdutos extends javax.swing.JFrame {
                 Lista.setVisible(false);
             }
             
-           
+           con.close();
         } catch (SQLException ex) {
             Logger.getLogger(FormClientes.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -266,7 +266,7 @@ public class FormProdutos extends javax.swing.JFrame {
             try {
                 PreparedStatement buscar = con.prepareStatement("SELECT * FROM produtos where descricao like '%"
                         +txtDescricao.getText()+"%' ORDER BY descricao LIMI"+ Linha +" , 1");
-                
+                con.close();
             } catch (SQLException ex) {
                 Logger.getLogger(FormOrdemDeServico.class.getName()).log(Level.SEVERE, null, ex);
             }

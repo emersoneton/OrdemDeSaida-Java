@@ -35,7 +35,6 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     public FormOrdemDeServico() {
         initComponents();
         BuscarProdutos();
-        BuscarClientes();
         Inicializar();
         Lista.setVisible(false);
         MODELO = new DefaultListModel();
@@ -99,7 +98,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                 ListaMousePressed(evt);
             }
         });
-        jPanel1.add(Lista, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 40, 380, 112));
+        jPanel1.add(Lista, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, 370, 112));
 
         jPanel1.add(comboBoxProduto, new org.netbeans.lib.awtextra.AbsoluteConstraints(62, 57, 378, -1));
 
@@ -183,7 +182,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -269,7 +268,9 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1)
+                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 704, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jLayeredPane1Layout.createSequentialGroup()
                         .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(55, 55, 55)
@@ -277,8 +278,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                         .addGap(48, 48, 48)
                         .addComponent(btnSalvar1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -298,7 +298,9 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLayeredPane1)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLayeredPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -355,6 +357,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             try {
                 PreparedStatement buscar = con.prepareStatement("SELECT * FROM clientes where nome like '%"
                         +txtPesquisaCliente.getText()+"%' ORDER BY nome LIMI"+ Linha +" , 1");
+                con.close();
             } catch (SQLException ex) {
                 Logger.getLogger(FormOrdemDeServico.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -385,23 +388,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
     }
     
-    private void BuscarClientes(){
-        Conexao();
-        
-        try {
-            PreparedStatement busca = con.prepareStatement("SELECT * FROM clientes ORDER BY nome");
-            
-            ResultSet rs = busca.executeQuery();
-            
-            while(rs.next()){
-             //   comboBoxCliente.addItem(rs.getString("nome"));
-            }
-            
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(FormOrdemDeServico.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+   
     
     private double InsereValor(){
         String valor = "";

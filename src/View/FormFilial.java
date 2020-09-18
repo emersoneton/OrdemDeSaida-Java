@@ -13,9 +13,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -34,6 +36,7 @@ public class FormFilial extends javax.swing.JFrame {
         Iniciar();
         BuscarCodigoDaFilial();
         txtCodigo.setEnabled(false);
+        Mascaras();
     }
 
     /**
@@ -52,11 +55,8 @@ public class FormFilial extends javax.swing.JFrame {
         txtRazaoSocial = new javax.swing.JTextField();
         txtRazaoFantasia = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtCnpj = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        txtInscricaoEstadual = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txtInscricaoMunicipal = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         txtEndereco = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -69,13 +69,16 @@ public class FormFilial extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         txtPais = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        txtTelefoneComercial = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        txtTelefoneCelular = new javax.swing.JTextField();
         comboBoxEstado = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
+        jCnpj = new javax.swing.JFormattedTextField();
+        jIncricaoEstadual = new javax.swing.JFormattedTextField();
+        jInscricaoMunicipal = new javax.swing.JFormattedTextField();
+        jTelefoneComercial = new javax.swing.JFormattedTextField();
+        jTelefoneCelular = new javax.swing.JFormattedTextField();
         btnSalvar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnSalvar1 = new javax.swing.JButton();
@@ -145,6 +148,12 @@ public class FormFilial extends javax.swing.JFrame {
             }
         });
 
+        jIncricaoEstadual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jIncricaoEstadualActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -165,54 +174,58 @@ public class FormFilial extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(comboBoxEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtPais, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtBairro))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(comboBoxEstado, 0, 112, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel12)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtPais, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txtBairro))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtTelefoneComercial, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTelefoneComercial, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtTelefoneCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTelefoneCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(24, 24, 24)
-                        .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel15)
+                            .addComponent(jLabel4))
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtInscricaoEstadual, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6)
-                        .addGap(7, 7, 7)
-                        .addComponent(txtInscricaoMunicipal))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel15)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel2))
+                            .addComponent(jCnpj))
                         .addGap(18, 18, 18)
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtRazaoSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtRazaoFantasia)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jIncricaoEstadual))
+                            .addComponent(txtRazaoSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jInscricaoMunicipal))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtRazaoFantasia, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -229,11 +242,11 @@ public class FormFilial extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(txtInscricaoEstadual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(txtInscricaoMunicipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jIncricaoEstadual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jInscricaoMunicipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -250,12 +263,12 @@ public class FormFilial extends javax.swing.JFrame {
                     .addComponent(jLabel12)
                     .addComponent(txtPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboBoxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
-                    .addComponent(txtTelefoneComercial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14)
-                    .addComponent(txtTelefoneCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTelefoneComercial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTelefoneCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19))
         );
 
@@ -335,7 +348,7 @@ public class FormFilial extends javax.swing.JFrame {
                     .addComponent(btnSalvar1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
@@ -343,6 +356,34 @@ public class FormFilial extends javax.swing.JFrame {
    
     
     //CRUD
+    
+     public void Mascaras(){
+
+        MaskFormatter maskCnpj, maskIe, maskIm, maskTelefoneComercial, maskTelefoneCelular;
+        
+        try {
+            maskCnpj = new MaskFormatter("##.###.###/####-##");
+            maskCnpj.install(jCnpj);
+            
+            maskIe = new MaskFormatter("###.###.###.###");
+            maskIe.install(jIncricaoEstadual);
+            
+            maskIm = new MaskFormatter("######-#");
+            maskIm.install(jInscricaoMunicipal);
+            
+            maskTelefoneComercial = new MaskFormatter("(##) ####-####");
+            maskTelefoneComercial.install(jInscricaoMunicipal);
+            
+            maskTelefoneCelular = new MaskFormatter("(##) #.####-####");
+            maskTelefoneCelular.install(jInscricaoMunicipal);
+            
+        } catch (ParseException ex) {
+            Logger.getLogger(FormClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+            
+
+    }
     
      private void BuscarCodigoDaFilial(){
         Conexao();
@@ -354,8 +395,8 @@ public class FormFilial extends javax.swing.JFrame {
             while(rs.next()){
                 txtCodigo.setText(rs.getString("codigo"));
             }
-            
-                    } catch (SQLException ex) {
+            con.close();
+        } catch (SQLException ex) {
             Logger.getLogger(FormProdutos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -365,12 +406,7 @@ public class FormFilial extends javax.swing.JFrame {
     }
     
     private void Iniciar(){
-        txtTelefoneCelular.setDocument(new SoNumeros());
-        txtTelefoneComercial.setDocument(new SoNumeros());
         txtNumero.setDocument(new SoNumeros());
-        txtCnpj.setDocument(new SoNumeros());
-        txtInscricaoEstadual.setDocument(new SoNumeros());
-        txtInscricaoMunicipal.setDocument(new SoNumeros());
         txtRazaoSocial.setDocument(new SoLetrasMaiusculas());
     }
     
@@ -401,16 +437,16 @@ public class FormFilial extends javax.swing.JFrame {
         txtCodigo.setText("");
         txtBairro.setText("");
         txtCidade.setText("");
-        txtCnpj.setText("");
+        jCnpj.setText("");
         txtEndereco.setText("");
-        txtInscricaoEstadual.setText("");
-        txtInscricaoMunicipal.setText("");
+        jIncricaoEstadual.setText("");
+        jInscricaoMunicipal.setText("");
         txtNumero.setText("");
         txtPais.setText("");
         txtRazaoFantasia.setText("");
         txtRazaoSocial.setText("");
-        txtTelefoneCelular.setText("");
-        txtTelefoneComercial.setText("");            
+        jTelefoneCelular.setText("");
+        jTelefoneComercial.setText("");            
     }
 
     
@@ -422,16 +458,16 @@ public class FormFilial extends javax.swing.JFrame {
        
         fil.bairro = txtBairro.getText();
         fil.cidade = txtCidade.getText();
-        fil.cnpj = txtCnpj.getText();
+        fil.cnpj = jCnpj.getText();
         fil.estado = (String) comboBoxEstado.getSelectedItem();
         fil.razaoFantasia = txtRazaoFantasia.getText();
-        fil.inscricaoEstadual = txtInscricaoEstadual.getText();
-        fil.inscricaoMunicipal = txtInscricaoMunicipal.getText();
+        fil.inscricaoEstadual = jIncricaoEstadual.getText();
+        fil.inscricaoMunicipal = jInscricaoMunicipal.getText();
         fil.numero = txtNumero.getText();
         fil.pais = txtPais.getText();
         fil.razãoSocial = txtRazaoSocial.getText();
-        fil.telefoneComercial = txtTelefoneComercial.getText();
-        fil.telefoneCelular = txtTelefoneCelular.getText();
+        fil.telefoneComercial = jTelefoneComercial.getText();
+        fil.telefoneCelular = jTelefoneCelular.getText();
         fil.endereco = txtEndereco.getText();
         
         
@@ -485,17 +521,17 @@ public class FormFilial extends javax.swing.JFrame {
                 if(codigo.equals(txtCodigo.getText())){
                     txtRazaoSocial.setText(rs.getString("razao_social"));
                     txtRazaoFantasia.setText(rs.getString("razao_fantasia"));
-                    txtCnpj.setText(rs.getString("cnpj"));
-                    txtInscricaoEstadual.setText(rs.getString("inscricao_estadual"));
-                    txtInscricaoMunicipal.setText(rs.getString("inscricao_municipal"));
+                    jCnpj.setText(rs.getString("cnpj"));
+                    jIncricaoEstadual.setText(rs.getString("inscricao_estadual"));
+                    jInscricaoMunicipal.setText(rs.getString("inscricao_municipal"));
                     txtEndereco.setText(rs.getString("endereco"));
                     txtNumero.setText(rs.getString("numero"));
                     txtBairro.setText(rs.getString("bairro"));
                     txtCidade.setText(rs.getString("cidade"));
                     comboBoxEstado.addItem(rs.getString("estado"));
                     txtPais.setText(rs.getString("pais"));
-                    txtTelefoneComercial.setText(rs.getString("telefone_comercial"));
-                    txtTelefoneCelular.setText(rs.getString("telefone_celular"));
+                    jTelefoneComercial.setText(rs.getString("telefone_comercial"));
+                    jTelefoneCelular.setText(rs.getString("telefone_celular"));
                     validador = true;
                     break;
                 }
@@ -521,16 +557,16 @@ public class FormFilial extends javax.swing.JFrame {
         
         fil.bairro = txtBairro.getText();
         fil.cidade = txtCidade.getText();
-        fil.cnpj = txtCnpj.getText();
+        fil.cnpj = jCnpj.getText();
         fil.estado = (String) comboBoxEstado.getSelectedItem();
         fil.razaoFantasia = txtRazaoFantasia.getText();
-        fil.inscricaoEstadual = txtInscricaoEstadual.getText();
-        fil.inscricaoMunicipal = txtInscricaoMunicipal.getText();
+        fil.inscricaoEstadual = jIncricaoEstadual.getText();
+        fil.inscricaoMunicipal = jInscricaoMunicipal.getText();
         fil.numero = txtNumero.getText();
         fil.pais = txtPais.getText();
         fil.razãoSocial = txtRazaoSocial.getText();
-        fil.telefoneComercial = txtTelefoneComercial.getText();
-        fil.telefoneCelular = txtTelefoneCelular.getText();
+        fil.telefoneComercial = jTelefoneComercial.getText();
+        fil.telefoneCelular = jTelefoneCelular.getText();
         fil.endereco = txtEndereco.getText();
         
        
@@ -596,6 +632,10 @@ public class FormFilial extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodigoActionPerformed
 
+    private void jIncricaoEstadualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jIncricaoEstadualActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jIncricaoEstadualActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -638,6 +678,9 @@ public class FormFilial extends javax.swing.JFrame {
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnSalvar1;
     private javax.swing.JComboBox<String> comboBoxEstado;
+    private javax.swing.JFormattedTextField jCnpj;
+    private javax.swing.JFormattedTextField jIncricaoEstadual;
+    private javax.swing.JFormattedTextField jInscricaoMunicipal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -655,18 +698,15 @@ public class FormFilial extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JFormattedTextField jTelefoneCelular;
+    private javax.swing.JFormattedTextField jTelefoneComercial;
     private javax.swing.JTextField txtBairro;
     private javax.swing.JTextField txtCidade;
-    private javax.swing.JTextField txtCnpj;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtEndereco;
-    private javax.swing.JTextField txtInscricaoEstadual;
-    private javax.swing.JTextField txtInscricaoMunicipal;
     private javax.swing.JTextField txtNumero;
     private javax.swing.JTextField txtPais;
     private javax.swing.JTextField txtRazaoFantasia;
     private javax.swing.JTextField txtRazaoSocial;
-    private javax.swing.JTextField txtTelefoneCelular;
-    private javax.swing.JTextField txtTelefoneComercial;
     // End of variables declaration//GEN-END:variables
 }

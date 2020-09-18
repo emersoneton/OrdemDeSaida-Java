@@ -5,6 +5,12 @@
  */
 package Controller;
 
+import View.FormClientes;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.text.MaskFormatter;
+
 public class CadastroDeClientes {
 
     public String nome = null;
@@ -129,5 +135,6 @@ public class CadastroDeClientes {
     public void setBairro(String bairro) {
         this.bairro = bairro;
     }
+   
 
 }
