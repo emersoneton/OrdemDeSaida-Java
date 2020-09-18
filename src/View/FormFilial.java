@@ -5,7 +5,7 @@
  */
 package View;
 
-import Model.CadastroDeFilial;
+import Controller.CadastroDeFilial;
 import Classes.SoLetrasMaiusculas;
 import Classes.SoNumeros;
 import Model.Database;
@@ -32,7 +32,8 @@ public class FormFilial extends javax.swing.JFrame {
         initComponents();
         BuscarEstado();
         Iniciar();
-        
+        BuscarCodigoDaFilial();
+        txtCodigo.setEnabled(false);
     }
 
     /**
@@ -130,7 +131,7 @@ public class FormFilial extends javax.swing.JFrame {
 
         jLabel12.setText("Pais:");
 
-        jLabel13.setText("Telefone Comercial:");
+        jLabel13.setText("Telefonel:");
 
         jLabel14.setText("Telefone Celular:");
 
@@ -152,12 +153,12 @@ public class FormFilial extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel10)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCidade))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -181,8 +182,8 @@ public class FormFilial extends javax.swing.JFrame {
                                 .addComponent(txtPais, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtTelefoneComercial, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtTelefoneComercial, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -190,8 +191,8 @@ public class FormFilial extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCnpj)
+                        .addGap(24, 24, 24)
+                        .addComponent(txtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -202,8 +203,8 @@ public class FormFilial extends javax.swing.JFrame {
                         .addComponent(txtInscricaoMunicipal))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel15)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -340,7 +341,24 @@ public class FormFilial extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
    
+    
     //CRUD
+    
+     private void BuscarCodigoDaFilial(){
+        Conexao();
+        
+        try {
+            PreparedStatement busca = con.prepareStatement("select MAX(codigo + 1) AS codigo from filial");
+            
+            ResultSet rs = busca.executeQuery();
+            while(rs.next()){
+                txtCodigo.setText(rs.getString("codigo"));
+            }
+            
+                    } catch (SQLException ex) {
+            Logger.getLogger(FormProdutos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     private void Conexao(){ // Classe de Conexão com o Banco de Dados
         this.con = Database.getConnection();

@@ -63,5 +63,12 @@ public class Database {
      closeConnection(con, stmt);
  }   
 
-   
+    public void executaSQL() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void executaSQL(String select__from_clientes_where_) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+  
 }

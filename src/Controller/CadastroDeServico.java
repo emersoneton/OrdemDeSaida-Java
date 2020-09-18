@@ -1,5 +1,5 @@
 
-package Model;
+package Controller;
 
 
 public class CadastroDeServico {
