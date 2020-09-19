@@ -372,10 +372,10 @@ public class FormFilial extends javax.swing.JFrame {
             maskIm.install(jInscricaoMunicipal);
             
             maskTelefoneComercial = new MaskFormatter("(##) ####-####");
-            maskTelefoneComercial.install(jInscricaoMunicipal);
+            maskTelefoneComercial.install(jTelefoneComercial);
             
             maskTelefoneCelular = new MaskFormatter("(##) #.####-####");
-            maskTelefoneCelular.install(jInscricaoMunicipal);
+            maskTelefoneCelular.install(jTelefoneCelular);
             
         } catch (ParseException ex) {
             Logger.getLogger(FormClientes.class.getName()).log(Level.SEVERE, null, ex);

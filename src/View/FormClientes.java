@@ -5,21 +5,26 @@
  */
 package View;
 
+
 import Controller.CadastroDeClientes;
 import Classes.SoNumeros;
 import Classes.SoLetrasMaiusculas;
+import Controller.ClienteTabelaModel;
 import Model.Database;
-import Controller.ProdutoTableModel;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.text.MaskFormatter;
+
 
 /**
  *
@@ -28,9 +33,9 @@ import javax.swing.text.MaskFormatter;
 public class FormClientes extends javax.swing.JFrame {
 
     private Connection con;
-   
-    ProdutoTableModel tableModel = new ProdutoTableModel();
     
+    ClienteTabelaModel tabelaClientes = new ClienteTabelaModel();
+
     DefaultListModel MODELO;
     
     int Enter = 0;
@@ -44,7 +49,7 @@ public class FormClientes extends javax.swing.JFrame {
         MODELO = new DefaultListModel();
         Lista.setModel(MODELO);
         Mascaras();
-       
+        jtableClientes.setModel(tabelaClientes);
 
 
     }
@@ -60,11 +65,12 @@ public class FormClientes extends javax.swing.JFrame {
 
         jLabel5 = new javax.swing.JLabel();
         btnSalvar = new javax.swing.JButton();
-        btnEditar = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        btnSalvar1 = new javax.swing.JButton();
+        btnAlterar = new javax.swing.JButton();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         Lista = new javax.swing.JList<>();
@@ -96,6 +102,12 @@ public class FormClientes extends javax.swing.JFrame {
         jCnpj = new javax.swing.JFormattedTextField();
         jCpf = new javax.swing.JFormattedTextField();
         jCep = new javax.swing.JFormattedTextField();
+        jPanel3 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtableClientes = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
 
         jLabel5.setText("jLabel5");
 
@@ -113,14 +125,14 @@ public class FormClientes extends javax.swing.JFrame {
             }
         });
 
-        btnEditar.setBackground(new java.awt.Color(255, 255, 255));
-        btnEditar.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/buscar.png"))); // NOI18N
-        btnEditar.setText("Buscar");
-        btnEditar.setBorder(javax.swing.BorderFactory.createCompoundBorder());
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setBackground(new java.awt.Color(255, 255, 255));
+        btnBuscar.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/buscar.png"))); // NOI18N
+        btnBuscar.setText("Buscar");
+        btnBuscar.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
 
@@ -161,19 +173,30 @@ public class FormClientes extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnSalvar1.setBackground(new java.awt.Color(255, 255, 255));
-        btnSalvar1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        btnSalvar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/editar.png"))); // NOI18N
-        btnSalvar1.setText("Alterar");
-        btnSalvar1.setBorder(javax.swing.BorderFactory.createCompoundBorder());
-        btnSalvar1.addActionListener(new java.awt.event.ActionListener() {
+        btnAlterar.setBackground(new java.awt.Color(255, 255, 255));
+        btnAlterar.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/editar.png"))); // NOI18N
+        btnAlterar.setText("Alterar");
+        btnAlterar.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalvar1ActionPerformed(evt);
+                btnAlterarActionPerformed(evt);
+            }
+        });
+
+        jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTabbedPane1MousePressed(evt);
             }
         });
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0))));
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel1MousePressed(evt);
+            }
+        });
 
         jLayeredPane1.setBackground(new java.awt.Color(204, 204, 204));
         jLayeredPane1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -310,38 +333,124 @@ public class FormClientes extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jTabbedPane1.addTab("Cadastro", jPanel1);
+
+        jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel3MousePressed(evt);
+            }
+        });
+
+        jButton1.setText("Buscar Clientes");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jPanel4.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jtableClientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jtableClientes);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jButton2.setText("PDF");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(334, 334, 334)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 265, Short.MAX_VALUE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Relatórios", jPanel3);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(78, 78, 78)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSalvar1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(75, 75, 75)
-                        .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(73, 73, 73)
+                        .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSalvar1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -350,17 +459,17 @@ public class FormClientes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 
-    private void btnSalvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvar1ActionPerformed
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
 
         atualizar();
 
-    }//GEN-LAST:event_btnSalvar1ActionPerformed
+    }//GEN-LAST:event_btnAlterarActionPerformed
 
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
         Buscar();
 
-    }//GEN-LAST:event_btnEditarActionPerformed
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         dispose();
@@ -419,7 +528,59 @@ public class FormClientes extends javax.swing.JFrame {
         Lista.setVisible(false);
     }//GEN-LAST:event_ListaMousePressed
 
-    public void Mascaras(){
+    private void InsereNaTabela(){
+        Conexao();
+        
+        try {
+            PreparedStatement busca = con.prepareStatement("SELECT * FROM clientes ORDER BY nome");
+                
+              ResultSet rs = busca.executeQuery();
+
+              while(rs.next()){
+                  CadastroDeClientes c = new CadastroDeClientes();
+                  
+                  c.setNome(rs.getString("nome")); 
+                  c.setEndereco(rs.getString("endereco"));
+                  c.setTelefone(rs.getString("telefone"));
+                  c.setData(rs.getString("data"));
+
+                  tabelaClientes.addRow(c); 
+             }
+                    
+              con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(FormClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       InsereNaTabela();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    public class GeneratorPDF {
+
+    
+         
+      
+    }
+    
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTabbedPane1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MousePressed
+       
+    }//GEN-LAST:event_jTabbedPane1MousePressed
+
+    private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
+
+    }//GEN-LAST:event_jPanel1MousePressed
+
+    private void jPanel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MousePressed
+
+    }//GEN-LAST:event_jPanel3MousePressed
+
+    private void Mascaras(){
 
         MaskFormatter maskTelefone, maskCnpj, maskCpf, maskCep;
         
@@ -516,9 +677,14 @@ public class FormClientes extends javax.swing.JFrame {
         this.con = Database.getConnection();
     }
     private void Salvar() {
-
+        Date data = new Date(System.currentTimeMillis());
+      //  DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String dataFormatada = dateFormat.format(data);
+        
         CadastroDeClientes cli = new Controller.CadastroDeClientes();
 
+        
         cli.nome = txtNome.getText();
         cli.endereco = txtEndereco.getText();
         cli.numero = txtNumero.getText();
@@ -533,8 +699,8 @@ public class FormClientes extends javax.swing.JFrame {
         cli.cpf = jCnpj.getText();
         cli.bairro = txtBairro.getText();
 
-        String sql = "INSERT INTO clientes (nome,endereco,numero,telefone,rg,cep,cidade,estado,pais,email,email2,cpf,bairro) "
-                + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO clientes (nome,endereco,numero,telefone,rg,cep,cidade,estado,pais,email,email2,cpf,bairro,data) "
+                + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         con = Database.getConnection();
 
@@ -555,6 +721,7 @@ public class FormClientes extends javax.swing.JFrame {
             stmt.setString(11, cli.email2);
             stmt.setString(12, cli.cpf);
             stmt.setString(13, cli.bairro);
+            stmt.setString(14, dataFormatada);
 
             stmt.executeUpdate();
 
@@ -764,11 +931,13 @@ public class FormClientes extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> Lista;
-    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnAlterar;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JButton btnSalvar1;
     private javax.swing.JComboBox<String> comboboxEstado;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JFormattedTextField jCep;
     private javax.swing.JFormattedTextField jCnpj;
     private javax.swing.JFormattedTextField jCpf;
@@ -791,7 +960,12 @@ public class FormClientes extends javax.swing.JFrame {
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JFormattedTextField jTelefone;
+    private javax.swing.JTable jtableClientes;
     private javax.swing.JTextField txtBairro;
     private javax.swing.JTextField txtCidade;
     private javax.swing.JTextField txtCodigo;

@@ -5,12 +5,6 @@
  */
 package Controller;
 
-import View.FormClientes;
-import java.text.ParseException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.text.MaskFormatter;
-
 public class CadastroDeClientes {
 
     public String nome = null;
@@ -27,6 +21,7 @@ public class CadastroDeClientes {
     public String cpf = null;
     public String rg = null;
     public String bairro = null;
+    public String data = null;
 
     public String getNome() {
         return nome;
@@ -134,6 +129,32 @@ public class CadastroDeClientes {
 
     public void setBairro(String bairro) {
         this.bairro = bairro;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+    
+    
+
+    void getNome(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    void getEndereco(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    void getTelefone(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    void getData(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
    
 
