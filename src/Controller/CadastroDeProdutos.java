@@ -2,7 +2,11 @@
 package Controller;
 
 public class CadastroDeProdutos {
-   public String codigoBarras, descricao, valor, quantidade;
+   public String codigoBarras = null
+           , descricao = null
+           , valor = null
+           , quantidade = null
+           , codigo = null;
 
     public String getCodigo() {
         return codigoBarras;

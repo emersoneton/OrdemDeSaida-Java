@@ -373,17 +373,18 @@ public class FormProdutos extends javax.swing.JFrame {
         pro.descricao = txtDescricao.getText();
         pro.quantidade = txtQuantidade.getText();
         pro.valor = txtValor.getText();
+        pro.codigo = txtCodigo.getText();
         
         try {
             PreparedStatement alterar = con.prepareStatement("UPDATE produtos SET codigo_barras = ?, descricao = ?, valor = ?, quantidade = ?"
-                    + "WHERE descricao = ?");
+                    + "WHERE codigo = ?");
             
             alterar.setString(1, pro.codigoBarras);
             alterar.setString(2, pro.descricao);
             alterar.setString(3, pro.valor);
             alterar.setString(4, pro.quantidade);
             
-            alterar.setString(5, pro.descricao);
+            alterar.setString(5, pro.codigo);
             
             alterar.executeUpdate();
             

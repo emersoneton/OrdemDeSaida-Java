@@ -11,6 +11,14 @@ import Classes.SoNumeros;
 import Classes.SoLetrasMaiusculas;
 import Controller.ClienteTabelaModel;
 import Model.Database;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -370,18 +378,18 @@ public class FormClientes extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jButton2.setText("PDF");
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/pdf.png"))); // NOI18N
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -400,17 +408,17 @@ public class FormClientes extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(334, 334, 334)
                         .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 265, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -556,16 +564,76 @@ public class FormClientes extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        InsereNaTabela();
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    public class GeneratorPDF {
-
-    
-         
-      
-    }
     
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+         com.itextpdf.text.Document document =new com.itextpdf.text.Document();
+        
+        try {
+            PdfWriter.getInstance(document, new FileOutputStream("Clientes.pdf"));
+            
+            
+           document.open();
+           document.add(new Paragraph("                                                       RELATÓRIO DE CLIENTES"));
+           document.add(new Paragraph(""
+                   + ""
+                   + ""));
+
+           document.add(new Paragraph("  "));
+           document.add(new Paragraph("  "));
+           document.add(new Paragraph("  "
+                   + ""
+                   + ""));
+
+           document.add(new Paragraph(""));
+           
+           Conexao();
+           
+             try {
+                 PreparedStatement busca = con.prepareStatement("SELECT * FROM clientes");
+                 
+                 ResultSet rs = busca.executeQuery();
+                 
+                 int cont = 1;   
+                 while(rs.next()){
+                    String nome = rs.getString("nome");
+                    String endereco = rs.getString("endereco");
+                    String numero = rs.getString("numero");
+                    String bairro = rs.getString("bairro");
+                    String telefone = rs.getString("telefone");
+                    String cidade = rs.getString("cidade");
+                    String estado = rs.getString("estado");
+                    document.add(new Paragraph(cont+" "+nome+ " - "+endereco+" "+numero+" "+bairro+" - "+telefone+" - "+cidade+" - "+estado));
+                    cont++;
+                 }
+                         
+                 con.close();
+             } catch (SQLException ex) {
+                 Logger.getLogger(FormClientes.class.getName()).log(Level.SEVERE, null, ex);
+             }
+           
+      /*     int cont = tabelaClientes.getRowCount();
+
+           for(int x=0 ; x<cont ;x++){
+               String nome = tabelaClientes.getValueAt(x, 0).toString();
+               String endereco = tabelaClientes.getValueAt(x, 1).toString();
+               String telefone = tabelaClientes.getValueAt(x, 2).toString();
+               String data = tabelaClientes.getValueAt(x, 3).toString();
+               document.add(new Paragraph((x+1)+" "+nome+ " - "+endereco+" - "+telefone+" - "+data));
+           } */
+           document.add(new Paragraph("  "
+                   + ""
+                   + ""));
+        } catch (FileNotFoundException | DocumentException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }finally{
+            document.close();
+        }
+        
+        try {
+            Desktop.getDesktop().open(new File("clientes.pdf"));
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTabbedPane1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MousePressed
@@ -757,6 +825,7 @@ public class FormClientes extends javax.swing.JFrame {
 
                 if (nome.trim().equals(cli.nome)) {
 
+                    txtCodigo.setText(rs.getString("codigo"));
                     txtNome.setText(rs.getString("nome"));
                     txtEndereco.setText(rs.getString("endereco"));
                     txtNumero.setText(rs.getString("numero"));
@@ -819,6 +888,7 @@ public class FormClientes extends javax.swing.JFrame {
         CadastroDeClientes cli = new CadastroDeClientes();
        
 
+        cli.codigo = txtCodigo.getText();
         cli.nome = txtNome.getText();
         cli.endereco = txtEndereco.getText();
         cli.numero = txtNumero.getText();
@@ -838,7 +908,7 @@ public class FormClientes extends javax.swing.JFrame {
         try (PreparedStatement edit = con.prepareStatement("update clientes set nome = ?, endereco = ?, numero = ?, telefone = ?,"
                 + "cidade = ?, estado = ?, pais = ?, email = ?, email2 = ?, rg = ?, cpf = ?, cep = ?, bairro = ?"
                 
-                + "where nome = ?")) {
+                + "where codigo = ?")) {
 
             edit.setString(1, cli.nome);
             edit.setString(2, cli.endereco);
@@ -854,7 +924,7 @@ public class FormClientes extends javax.swing.JFrame {
             edit.setString(12, cli.cep);
             edit.setString(13, cli.bairro);
             
-            edit.setString(14, txtNome.getText());
+            edit.setString(14, txtCodigo.getText());
 
             edit.executeUpdate();
 
