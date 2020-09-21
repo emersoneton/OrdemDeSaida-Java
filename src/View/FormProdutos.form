@@ -62,7 +62,7 @@
                   <Component id="btnSalvar1" min="-2" pref="60" max="-2" attributes="0"/>
                   <Component id="btnSair" min="-2" pref="60" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="43" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

@@ -224,7 +224,7 @@ public class FormProdutos extends javax.swing.JFrame {
                     .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSalvar1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -261,7 +261,7 @@ public class FormProdutos extends javax.swing.JFrame {
     }
     
     private void MostrarPesquisa(){
-         int Linha = Lista.getSelectedIndex();
+        int Linha = Lista.getSelectedIndex();
         if(Linha >=0){
             Conexao();
             try {
@@ -290,62 +290,33 @@ public class FormProdutos extends javax.swing.JFrame {
         pro.setValor(txtValor.getText());
         pro.setQuantidade(txtQuantidade.getText());
         
-        proDao.Salvar();
+        proDao.Salvar(pro);
         Limpar();
-        
+        BuscarCodigoDoProduto();
     }
     
     private void BuscarCodigoDoProduto(){
-        Conexao();
-        
-        try {
-            PreparedStatement busca = con.prepareStatement("select MAX(codigo + 1) AS codigo from produtos");
-            
-            ResultSet rs = busca.executeQuery();
-            while(rs.next()){
-                txtCodigo.setText(rs.getString("codigo"));
-            }
-            con.close();
-                    } catch (SQLException ex) {
-            Logger.getLogger(FormProdutos.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       CadastroDeProdutos pro = new CadastroDeProdutos();
+       ProdutosDAO proDao = new ProdutosDAO();
+       
+       proDao.CodigoDoProduto(pro);
+       
+       txtCodigo.setText(pro.getCodigo());        
     }
     
     private void Buscar(){
-        boolean validador = false;
         
-        Conexao(); // chama a classe de conexão com o Banco de Dados
+        CadastroDeProdutos pro = new CadastroDeProdutos();
+        pro.setDescricao(txtDescricao.getText());
         
-        try {
-            PreparedStatement busca = con.prepareStatement("SELECT * FROM produtos");
-            
-            ResultSet rs = busca.executeQuery();
-            
-            while(rs.next()){
-                String descricao = rs.getString("descricao");
-                
-                if(descricao.trim().equals(txtDescricao.getText())){
-                    txtCodigo.setText(rs.getString("codigo"));
-                    txtCodigoBarras.setText(rs.getString("codigo_barras"));
-                    txtDescricao.setText(rs.getString("descricao"));
-                    txtValor.setText(rs.getString("valor"));
-                    txtQuantidade.setText(rs.getString("quantidade"));
-                    validador = true;
-                    break;
-                }
-                
-            }
-            
-            if (validador == false) {
-                JOptionPane.showMessageDialog(null, "Não foi encontrado registro desse Produto no Banco de Dados!", "Mensagem",
-                    JOptionPane.INFORMATION_MESSAGE);
-            }
-            
-            con.close();
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(FormProdutos.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ProdutosDAO proDao = new ProdutosDAO();
+        proDao.Buscar(pro);
+        
+        txtCodigo.setText(pro.getCodigo());
+        txtCodigoBarras.setText(pro.getCodigoBarras());
+        txtDescricao.setText(pro.getDescricao());
+        txtValor.setText(pro.getValor());
+        txtQuantidade.setText(pro.getQuantidade());
         
     }
     
@@ -354,35 +325,16 @@ public class FormProdutos extends javax.swing.JFrame {
         Conexao(); // chama a classe de conexão com o Banco de Dados
         
         CadastroDeProdutos pro = new CadastroDeProdutos();
+        ProdutosDAO proDao = new ProdutosDAO();
         
-        pro.codigoBarras = txtCodigoBarras.getText();
-        pro.descricao = txtDescricao.getText();
-        pro.quantidade = txtQuantidade.getText();
-        pro.valor = txtValor.getText();
-        pro.codigo = txtCodigo.getText();
+        pro.setCodigoBarras(txtCodigoBarras.getText());
+        pro.setDescricao(txtDescricao.getText());
+        pro.setQuantidade(txtQuantidade.getText());
+        pro.setValor(txtValor.getText());
+        pro.setCodigo(txtCodigo.getText());
         
-        try {
-            PreparedStatement alterar = con.prepareStatement("UPDATE produtos SET codigo_barras = ?, descricao = ?, valor = ?, quantidade = ?"
-                    + "WHERE codigo = ?");
-            
-            alterar.setString(1, pro.codigoBarras);
-            alterar.setString(2, pro.descricao);
-            alterar.setString(3, pro.valor);
-            alterar.setString(4, pro.quantidade);
-            
-            alterar.setString(5, pro.codigo);
-            
-            alterar.executeUpdate();
-            
-            JOptionPane.showMessageDialog(null, "Registro alterado com sucesso!", "Mensagem",
-                    JOptionPane.INFORMATION_MESSAGE);
-             
-             Limpar();
-             con.close();
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(FormProdutos.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        proDao.Alterar(pro);
+        Limpar();
         
     }      
     

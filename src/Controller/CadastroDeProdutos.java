@@ -16,14 +16,6 @@ public class CadastroDeProdutos {
         this.codigoBarras = codigoBarras;
     }
 
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-
     public String getDescricao() {
         return descricao;
     }
@@ -47,6 +39,14 @@ public class CadastroDeProdutos {
     public void setQuantidade(String quantidade) {
         this.quantidade = quantidade;
     }
-    
-    
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+        
 }
