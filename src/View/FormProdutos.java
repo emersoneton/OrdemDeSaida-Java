@@ -8,6 +8,7 @@ package View;
 import Controller.CadastroDeProdutos;
 import Model.Database;
 import Controller.ProdutoTableModel;
+import Model.ProdutosDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -282,31 +283,16 @@ public class FormProdutos extends javax.swing.JFrame {
         Conexao(); // chama a classe de conexão com o Banco de Dados
         
         CadastroDeProdutos pro = new CadastroDeProdutos();
+        ProdutosDAO proDao = new ProdutosDAO();
         
-        pro.codigoBarras = txtCodigoBarras.getText();
-        pro.descricao = txtDescricao.getText();
-        pro.valor = txtValor.getText();
-        pro.quantidade = txtQuantidade.getText();
+        pro.setCodigoBarras(txtCodigoBarras.getText());
+        pro.setDescricao(txtDescricao.getText());
+        pro.setValor(txtValor.getText());
+        pro.setQuantidade(txtQuantidade.getText());
         
+        proDao.Salvar();
+        Limpar();
         
-        try {
-            PreparedStatement salvar = con.prepareStatement("INSERT INTO produtos (codigo_barras,descricao,valor,quantidade) VALUES (?,?,?,?)");
-        
-            salvar.setString(1, pro.codigoBarras);
-            salvar.setString(2, pro.descricao);
-            salvar.setString(3, pro.valor);
-            salvar.setString(4, pro.quantidade);
-            
-            salvar.executeUpdate();
-            
-            JOptionPane.showMessageDialog(null, "Registro inserido com sucesso!", "Mensagem",
-                    JOptionPane.INFORMATION_MESSAGE);
-        
-            Limpar();
-            con.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(FormProdutos.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
     private void BuscarCodigoDoProduto(){

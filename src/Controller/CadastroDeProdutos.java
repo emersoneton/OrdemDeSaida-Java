@@ -8,12 +8,20 @@ public class CadastroDeProdutos {
            , quantidade = null
            , codigo = null;
 
-    public String getCodigo() {
+    public String getCodigoBarras() {
         return codigoBarras;
     }
 
+    public void setCodigoBarras(String codigoBarras) {
+        this.codigoBarras = codigoBarras;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
     public void setCodigo(String codigo) {
-        this.codigoBarras = codigo;
+        this.codigo = codigo;
     }
 
     public String getDescricao() {

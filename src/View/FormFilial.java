@@ -9,14 +9,12 @@ import Controller.CadastroDeFilial;
 import Classes.SoLetrasMaiusculas;
 import Classes.SoNumeros;
 import Model.Database;
+import Model.FilialDAO;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.text.MaskFormatter;
 
 /**
@@ -24,9 +22,9 @@ import javax.swing.text.MaskFormatter;
  * @author Emerson
  */
 public class FormFilial extends javax.swing.JFrame {
-    
+
     private Connection con;
-    
+
     /**
      * Creates new form Filial
      */
@@ -35,8 +33,8 @@ public class FormFilial extends javax.swing.JFrame {
         BuscarEstado();
         Iniciar();
         BuscarCodigoDaFilial();
-        txtCodigo.setEnabled(false);
         Mascaras();
+
     }
 
     /**
@@ -116,6 +114,12 @@ public class FormFilial extends javax.swing.JFrame {
 
         jLabel2.setText("Razão Social:");
 
+        txtRazaoSocial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRazaoSocialActionPerformed(evt);
+            }
+        });
+
         jLabel4.setText("CNPJ:");
 
         jLabel5.setText("Inscrição Estadual:");
@@ -137,6 +141,12 @@ public class FormFilial extends javax.swing.JFrame {
         jLabel13.setText("Telefonel:");
 
         jLabel14.setText("Telefone Celular:");
+
+        comboBoxEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxEstadoActionPerformed(evt);
+            }
+        });
 
         jLabel15.setText("Codigo:");
 
@@ -353,87 +363,65 @@ public class FormFilial extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-   
-    
+
     //CRUD
-    
-     public void Mascaras(){
+    private void Mascaras() {
 
         MaskFormatter maskCnpj, maskIe, maskIm, maskTelefoneComercial, maskTelefoneCelular;
-        
+
         try {
             maskCnpj = new MaskFormatter("##.###.###/####-##");
             maskCnpj.install(jCnpj);
-            
+
             maskIe = new MaskFormatter("###.###.###.###");
             maskIe.install(jIncricaoEstadual);
-            
+
             maskIm = new MaskFormatter("######-#");
             maskIm.install(jInscricaoMunicipal);
-            
+
             maskTelefoneComercial = new MaskFormatter("(##) ####-####");
             maskTelefoneComercial.install(jTelefoneComercial);
-            
+
             maskTelefoneCelular = new MaskFormatter("(##) #.####-####");
             maskTelefoneCelular.install(jTelefoneCelular);
-            
+
         } catch (ParseException ex) {
             Logger.getLogger(FormClientes.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
-            
 
     }
-    
-     private void BuscarCodigoDaFilial(){
-        Conexao();
-        
-        try {
-            PreparedStatement busca = con.prepareStatement("select MAX(codigo + 1) AS codigo from filial");
-            
-            ResultSet rs = busca.executeQuery();
-            while(rs.next()){
-                txtCodigo.setText(rs.getString("codigo"));
-            }
-            con.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(FormProdutos.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+    private void BuscarCodigoDaFilial() {
+       CadastroDeFilial fil = new CadastroDeFilial();
+       FilialDAO filDao = new FilialDAO();
+       
+       filDao.BuscarCodigoDeFilial(fil);
+       
+       txtCodigo.setText(fil.getCodigo());
+       
     }
-    
-    private void Conexao(){ // Classe de Conexão com o Banco de Dados
+
+    private void Conexao() { // Classe de Conexão com o Banco de Dados
         this.con = Database.getConnection();
     }
-    
-    private void Iniciar(){
+
+    private void Iniciar() {
         txtNumero.setDocument(new SoNumeros());
         txtRazaoSocial.setDocument(new SoLetrasMaiusculas());
     }
-    
-    private void BuscarEstado(){
-        PreparedStatement stmt = null;
 
-        Conexao(); // chama a classe de conexão com o Banco de Dados
-
-        try (PreparedStatement busca = con.prepareStatement("select * from estado order by uf")) {
-
-            ResultSet rs = busca.executeQuery();
-
-            while (rs.next()) {
-                String cod = rs.getString("uf");
-                comboBoxEstado.addItem(cod);
-            }
-
-        } catch (SQLException ex) {
-            System.err.println("Erro" + ex);
-
-        } finally {
-            Database.closeConnection(con, stmt);
-        }
+    private void BuscarEstado() {
+      FilialDAO filDao = new FilialDAO(); // Instancia da Classe FilialDAO
+      
+      List<String> lista = filDao.BuscarEstado(filDao); // Busca a lista de Estados da classe FilialDAO
+      
+      for(int x = 0; x <= 27; x++){  // Laço de repetição da lista para a adição de itens no ComboBOX
+          comboBoxEstado.addItem(lista.get(x)); 
+      }
 
     }
-    
-    private void Limpar(){
+
+    private void Limpar() {
         txtCodigo.setText("");
         txtBairro.setText("");
         txtCidade.setText("");
@@ -446,182 +434,102 @@ public class FormFilial extends javax.swing.JFrame {
         txtRazaoFantasia.setText("");
         txtRazaoSocial.setText("");
         jTelefoneCelular.setText("");
-        jTelefoneComercial.setText("");            
+        jTelefoneComercial.setText("");
     }
 
-    
-    private void Salvar(){
-        Conexao(); // chama a classe de conexão com o Banco de Dados
-        
+    private void Salvar() {
+
         CadastroDeFilial fil = new CadastroDeFilial();
-      
-       
-        fil.bairro = txtBairro.getText();
-        fil.cidade = txtCidade.getText();
-        fil.cnpj = jCnpj.getText();
-        fil.estado = (String) comboBoxEstado.getSelectedItem();
-        fil.razaoFantasia = txtRazaoFantasia.getText();
-        fil.inscricaoEstadual = jIncricaoEstadual.getText();
-        fil.inscricaoMunicipal = jInscricaoMunicipal.getText();
-        fil.numero = txtNumero.getText();
-        fil.pais = txtPais.getText();
-        fil.razãoSocial = txtRazaoSocial.getText();
-        fil.telefoneComercial = jTelefoneComercial.getText();
-        fil.telefoneCelular = jTelefoneCelular.getText();
-        fil.endereco = txtEndereco.getText();
-        
-        
-         try {
-             PreparedStatement salvar = con.prepareStatement("INSERT INTO filial (bairro,cidade,cnpj,estado,razao_fantasia,"
-                     + "inscricao_estadual, inscricao_municipal, numero, pais, razao_social, telefone_comercial, telefone_celular, endereco"
-                     + ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
-             
-             salvar.setString(1, fil.bairro);
-             salvar.setString(2, fil.cidade);
-             salvar.setString(3, fil.cnpj);
-             salvar.setString(4, fil.estado);
-             salvar.setString(5, fil.razaoFantasia);
-             salvar.setString(6, fil.inscricaoEstadual);
-             salvar.setString(7, fil.inscricaoMunicipal);
-             salvar.setString(8, fil.numero);
-             salvar.setString(9, fil.pais);
-             salvar.setString(10, fil.razãoSocial);
-             salvar.setString(11, fil.telefoneComercial);
-             salvar.setString(12, fil.telefoneCelular);
-             salvar.setString(13, fil.endereco);
-           
-             
-             salvar.executeUpdate();
-             
-              JOptionPane.showMessageDialog(null, "Registro inserido com sucesso!", "Mensagem",
-                    JOptionPane.INFORMATION_MESSAGE);
-         
-             Limpar();
-             con.close();
-          } catch (SQLException ex) {
-             Logger.getLogger(FormFilial.class.getName()).log(Level.SEVERE, null, ex);
-         }
+        FilialDAO filDao = new FilialDAO();
+
+        fil.setBairro(txtBairro.getText());
+        fil.setCidade(txtCidade.getText());
+        fil.setCnpj(jCnpj.getText());
+        fil.setEstado((String) comboBoxEstado.getSelectedItem());
+        fil.setRazaoFantasia(txtRazaoFantasia.getText());
+        fil.setInscricaoEstadual(jIncricaoEstadual.getText());
+        fil.setInscricaoMunicipal(jInscricaoMunicipal.getText());
+        fil.setNumero(txtNumero.getText());
+        fil.setPais(txtPais.getText());
+        fil.setRazaoSocial(txtRazaoSocial.getText());
+        fil.setTelefoneComercial(jTelefoneComercial.getText());
+        fil.setTelefoneCelular(jTelefoneCelular.getText());
+        fil.setEndereco(txtEndereco.getText());
+
+        filDao.Salvar(fil);
+        Limpar();
     }
-    
-    private void Buscar(){
-        boolean validador = false;
-        Conexao(); // chama a classe de conexão com o Banco de Dados
-        
+
+    private void Buscar() {
+
         CadastroDeFilial fil = new CadastroDeFilial();
-       
+        FilialDAO filDao = new FilialDAO();
         
-        try {
-            PreparedStatement busca = con.prepareStatement("SELECT * FROM filial");
-                
-            ResultSet rs = busca.executeQuery();
-            
-            while(rs.next()){
-                String codigo = rs.getString("codigo");
-                
-                if(codigo.equals(txtCodigo.getText())){
-                    txtRazaoSocial.setText(rs.getString("razao_social"));
-                    txtRazaoFantasia.setText(rs.getString("razao_fantasia"));
-                    jCnpj.setText(rs.getString("cnpj"));
-                    jIncricaoEstadual.setText(rs.getString("inscricao_estadual"));
-                    jInscricaoMunicipal.setText(rs.getString("inscricao_municipal"));
-                    txtEndereco.setText(rs.getString("endereco"));
-                    txtNumero.setText(rs.getString("numero"));
-                    txtBairro.setText(rs.getString("bairro"));
-                    txtCidade.setText(rs.getString("cidade"));
-                    comboBoxEstado.addItem(rs.getString("estado"));
-                    txtPais.setText(rs.getString("pais"));
-                    jTelefoneComercial.setText(rs.getString("telefone_comercial"));
-                    jTelefoneCelular.setText(rs.getString("telefone_celular"));
-                    validador = true;
-                    break;
-                }
-            }
-            
-            if (validador == false) {
-                JOptionPane.showMessageDialog(null, "Não foi encontrado registro desse Produto no Banco de Dados!", "Mensagem",
-                    JOptionPane.INFORMATION_MESSAGE);
-            }
-            con.close();
-                
-        } catch (SQLException ex) {
-            Logger.getLogger(FormFilial.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
+        fil.setCodigo(txtCodigo.getText());
+        
+        filDao.Buscar(fil);
+        
+        txtRazaoSocial.setText(fil.getRazaoSocial());
+        txtRazaoFantasia.setText(fil.getRazaoFantasia());
+        jCnpj.setText(fil.getCnpj());
+        jIncricaoEstadual.setText(fil.getInscricaoEstadual());
+        jInscricaoMunicipal.setText(fil.getInscricaoMunicipal());
+        txtEndereco.setText(fil.getEndereco());
+        txtNumero.setText(fil.getNumero());
+        txtBairro.setText(fil.getBairro());
+        txtCidade.setText(fil.getCidade());
+        comboBoxEstado.setSelectedItem(fil.getEstado());
+        txtPais.setText(fil.getPais());
+        jTelefoneComercial.setText(fil.getTelefoneComercial());
+        jTelefoneCelular.setText(fil.getTelefoneCelular());
+        
         
     }
-    
-    private void Alterar(){
-        
-        Conexao(); // chama a classe de conexão com o Banco de Dados
+
+    private void Alterar() {
         
         CadastroDeFilial fil = new CadastroDeFilial();
+        FilialDAO filDao = new FilialDAO();
         
-        fil.bairro = txtBairro.getText();
-        fil.cidade = txtCidade.getText();
-        fil.cnpj = jCnpj.getText();
-        fil.estado = (String) comboBoxEstado.getSelectedItem();
-        fil.razaoFantasia = txtRazaoFantasia.getText();
-        fil.inscricaoEstadual = jIncricaoEstadual.getText();
-        fil.inscricaoMunicipal = jInscricaoMunicipal.getText();
-        fil.numero = txtNumero.getText();
-        fil.pais = txtPais.getText();
-        fil.razãoSocial = txtRazaoSocial.getText();
-        fil.telefoneComercial = jTelefoneComercial.getText();
-        fil.telefoneCelular = jTelefoneCelular.getText();
-        fil.endereco = txtEndereco.getText();
+        fil.setCodigo(txtCodigo.getText());
+        fil.setBairro(txtBairro.getText());
+        fil.setCidade(txtCidade.getText());
+        fil.setCnpj(jCnpj.getText());
+        fil.setEstado((String) comboBoxEstado.getSelectedItem());
+        fil.setRazaoFantasia(txtRazaoFantasia.getText());
+        fil.setInscricaoEstadual(jIncricaoEstadual.getText());
+        fil.setInscricaoMunicipal(jInscricaoMunicipal.getText());
+        fil.setNumero(txtNumero.getText());
+        fil.setPais(txtPais.getText());
+        fil.setRazaoSocial(txtRazaoSocial.getText());
+        fil.setTelefoneComercial(jTelefoneComercial.getText());
+        fil.setTelefoneCelular(jTelefoneCelular.getText());
+        fil.setEndereco(txtEndereco.getText());
         
-       
-        
-        try {
-            PreparedStatement update = con.prepareStatement("UPDATE filial SET bairro = ?, cidade = ?, cnpj = ?, estado = ?,"
-                    + "razao_fantasia = ?, inscricao_estadual = ?, inscricao_municipal = ?, numero = ?, pais = ?, razao_social = ?,"
-                    + "telefone_comercial = ?, telefone_celular = ?, endereco = ? WHERE codigo = ?");
-            
-             update.setString(1, fil.bairro);
-             update.setString(2, fil.cidade);
-             update.setString(3, fil.cnpj);
-             update.setString(4, fil.estado);
-             update.setString(5, fil.razaoFantasia);
-             update.setString(6, fil.inscricaoEstadual);
-             update.setString(7, fil.inscricaoMunicipal);
-             update.setString(8, fil.numero);
-             update.setString(9, fil.pais);
-             update.setString(10, fil.razãoSocial);
-             update.setString(11, fil.telefoneComercial);
-             update.setString(12, fil.telefoneCelular);
-             update.setString(13, fil.endereco);
-             
-             update.setString(14, txtCodigo.getText());
-            
-            update.executeUpdate();
-            
-            JOptionPane.showMessageDialog(null, "Registro inserido com sucesso!", "Mensagem",
-                    JOptionPane.INFORMATION_MESSAGE);
-            
-            Limpar();
-            con.close();
-                    
-        } catch (SQLException ex) {
-            Logger.getLogger(FormFilial.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        filDao.Alterar(fil);
+        Limpar();
         
     }
-    
+
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
 
-       Salvar();
-        
+        Salvar();
+        BuscarCodigoDaFilial();
+
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
 
-       Buscar();
-        
+        Buscar();
+
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnSalvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvar1ActionPerformed
 
-       Alterar();
-        
+        Alterar();
+        BuscarCodigoDaFilial();
+
     }//GEN-LAST:event_btnSalvar1ActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -635,6 +543,14 @@ public class FormFilial extends javax.swing.JFrame {
     private void jIncricaoEstadualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jIncricaoEstadualActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jIncricaoEstadualActionPerformed
+
+    private void txtRazaoSocialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRazaoSocialActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRazaoSocialActionPerformed
+
+    private void comboBoxEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxEstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboBoxEstadoActionPerformed
 
     /**
      * @param args the command line arguments

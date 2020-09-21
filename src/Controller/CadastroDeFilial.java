@@ -2,8 +2,8 @@
 package Controller;
 
 public class CadastroDeFilial {
-   public String filia = null, 
-            razãoSocial = null, 
+   private String filia = null, 
+            razaoSocial = null, 
             razaoFantasia = null, 
             cnpj = null, 
             inscricaoEstadual = null,
@@ -15,7 +15,8 @@ public class CadastroDeFilial {
             cidade = null,
             estado = null,
             pais = null,
-            endereco = null;
+            endereco = null,
+            codigo = null;
 
     public String getFilia() {
         return filia;
@@ -25,12 +26,12 @@ public class CadastroDeFilial {
         this.filia = filia;
     }
 
-    public String getRazãoSocial() {
-        return razãoSocial;
+    public String getRazaoSocial() {
+        return razaoSocial;
     }
 
-    public void setRazãoSocial(String razãoSocial) {
-        this.razãoSocial = razãoSocial;
+    public void setRazaoSocial(String razaoSocial) {
+        this.razaoSocial = razaoSocial;
     }
 
     public String getRazaoFantasia() {
@@ -105,14 +106,6 @@ public class CadastroDeFilial {
         this.cidade = cidade;
     }
 
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
     public String getPais() {
         return pais;
     }
@@ -129,5 +122,20 @@ public class CadastroDeFilial {
         this.endereco = endereco;
     }
 
-   
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
 }
