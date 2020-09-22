@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -136,29 +138,29 @@ public class ProdutosDAO {
         }
     }
     
-    public void ListaDePesquisa(CadastroDeProdutos pro){
-        MODELO.removeAllElements();
-        
+    public List<String> ListaDePesquisa(ProdutosDAO pro){
+                
+        List<String> lista = new ArrayList<>();
+       
+        CadastroDeProdutos cadPro = new CadastroDeProdutos();
+                
         Conexao();
         
+        
+        
         try {
-            PreparedStatement busca = con.prepareStatement("select * from produtos where descricao like '%"+pro.getDescricao()+"%' Order by descricao");
+            PreparedStatement busca = con.prepareStatement("select * from produtos where descricao like '%"+cadPro.getDescricao()+"%' Order by descricao");
             
             ResultSet rs = busca.executeQuery();
-            int v = 0;
+
             while(rs.next()){
-                MODELO.addElement(rs.getString("descricao"));
-                v++;
+                lista.add(rs.getString("descricao")); 
             }
-            if(v >= 1){
-          //      Lista.setVisible(true);
-            }else{
-          //      Lista.setVisible(false);
-            }
-            
+
            con.close();
         } catch (SQLException ex) {
             Logger.getLogger(FormClientes.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return lista;
     }
 }

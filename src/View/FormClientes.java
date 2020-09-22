@@ -5,11 +5,11 @@
  */
 package View;
 
-
 import Controller.CadastroDeClientes;
 import Classes.SoNumeros;
 import Classes.SoLetrasMaiusculas;
 import Controller.ClienteTabelaModel;
+import Model.ClientesDAO;
 import Model.Database;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
@@ -20,19 +20,15 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.text.MaskFormatter;
-
 
 /**
  *
@@ -41,11 +37,11 @@ import javax.swing.text.MaskFormatter;
 public class FormClientes extends javax.swing.JFrame {
 
     private Connection con;
-    
+
     ClienteTabelaModel tabelaClientes = new ClienteTabelaModel();
 
     DefaultListModel MODELO;
-    
+
     int Enter = 0;
 
     public FormClientes() {
@@ -58,7 +54,6 @@ public class FormClientes extends javax.swing.JFrame {
         Lista.setModel(MODELO);
         Mascaras();
         jtableClientes.setModel(tabelaClientes);
-
 
     }
 
@@ -116,6 +111,7 @@ public class FormClientes extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtableClientes = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
+        btnBuscar1 = new javax.swing.JButton();
 
         jLabel5.setText("jLabel5");
 
@@ -171,7 +167,7 @@ public class FormClientes extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(225, 225, 225)
                 .addComponent(jLabel1)
-                .addContainerGap(264, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -378,7 +374,7 @@ public class FormClientes extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 743, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -426,26 +422,37 @@ public class FormClientes extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Relatórios", jPanel3);
 
+        btnBuscar1.setBackground(new java.awt.Color(255, 255, 255));
+        btnBuscar1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        btnBuscar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/cancelar.png"))); // NOI18N
+        btnBuscar1.setText("Cancelar");
+        btnBuscar1.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        btnBuscar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscar1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(78, 78, 78)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(73, 73, 73)
-                        .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -454,13 +461,14 @@ public class FormClientes extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -502,8 +510,8 @@ public class FormClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEnderecoActionPerformed
 
     private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
-       Lista.setVisible(false);
-        Enter = 1; 
+        Lista.setVisible(false);
+        Enter = 1;
     }//GEN-LAST:event_txtNomeActionPerformed
 
     private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
@@ -511,9 +519,9 @@ public class FormClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCodigoActionPerformed
 
     private void txtNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyReleased
-        if(Enter == 0){
+        if (Enter == 0) {
             ListaDePesquisa();
-        }else{
+        } else {
             Enter = 0;
         }
  
@@ -536,82 +544,63 @@ public class FormClientes extends javax.swing.JFrame {
         Lista.setVisible(false);
     }//GEN-LAST:event_ListaMousePressed
 
-    private void InsereNaTabela(){
-        Conexao();
-        
-        try {
-            PreparedStatement busca = con.prepareStatement("SELECT * FROM clientes ORDER BY nome");
-                
-              ResultSet rs = busca.executeQuery();
+    private void InsereNaTabela() {
 
-              while(rs.next()){
-                  CadastroDeClientes c = new CadastroDeClientes();
-                  
-                  c.setNome(rs.getString("nome")); 
-                  c.setEndereco(rs.getString("endereco"));
-                  c.setTelefone(rs.getString("telefone"));
-                  c.setData(rs.getString("data"));
+        ClientesDAO cliDao = new ClientesDAO();
 
-                  tabelaClientes.addRow(c); 
-             }
-                    
-              con.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(FormClientes.class.getName()).log(Level.SEVERE, null, ex);
+        List<CadastroDeClientes> lista = cliDao.InsereNaTabela();
+
+        for (int x = 0; x < lista.size(); x++) {
+
+            CadastroDeClientes cli = new CadastroDeClientes();
+
+            cli.setNome(lista.get(x).getNome());
+            cli.setEndereco(lista.get(x).getEndereco());
+            cli.setTelefone(lista.get(x).getTelefone());
+            cli.setData(lista.get(x).getData());
+
+            tabelaClientes.addRow(cli);
         }
     }
-    
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       InsereNaTabela();
+        InsereNaTabela();
     }//GEN-LAST:event_jButton1ActionPerformed
-    
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-         com.itextpdf.text.Document document =new com.itextpdf.text.Document();
-        
+        com.itextpdf.text.Document document = new com.itextpdf.text.Document();
+
         try {
             PdfWriter.getInstance(document, new FileOutputStream("Clientes.pdf"));
-            
-            
-           document.open();
-           document.add(new Paragraph("                                                       RELATÓRIO DE CLIENTES"));
-           document.add(new Paragraph(""
-                   + ""
-                   + ""));
 
-           document.add(new Paragraph("  "));
-           document.add(new Paragraph("  "));
-           document.add(new Paragraph("  "
-                   + ""
-                   + ""));
+            document.open();
+            document.add(new Paragraph("                                                       RELATÓRIO DE CLIENTES"));
+            document.add(new Paragraph("                                                      ________________________"
+                    + ""
+                    + ""));
 
-           document.add(new Paragraph(""));
+            document.add(new Paragraph("  "));
+            document.add(new Paragraph("  "));
+            document.add(new Paragraph("  "
+                    + ""
+                    + ""));
+            document.add(new Paragraph("Os dados do relatório contém: Nome, Endereço, Número, Bairro, Telefone, Cidade e Estado."));
+            document.add(new Paragraph("****************************************************************************************************************"));
+            document.add(new Paragraph("  "));
+            document.add(new Paragraph("  "));
+            
+            ClientesDAO cliDao = new ClientesDAO();
+            
+            List<CadastroDeClientes> lista = cliDao.GerarPDF();
+
+            for(int x=0; x < lista.size(); x++){                
+                document.add(new Paragraph((x+1) + " - " + lista.get(x).getNome() + " - " + lista.get(x).getEndereco()+ 
+                        " " + lista.get(x).getNumero()+ " " + lista.get(x).getBairro()+ " - " + lista.get(x).getTelefone()+ 
+                        " - " + lista.get(x).getCidade()+ " - " + lista.get(x).getEstado()));
+                document.add(new Paragraph(" "));
+            }
            
-           Conexao();
-           
-             try {
-                 PreparedStatement busca = con.prepareStatement("SELECT * FROM clientes");
-                 
-                 ResultSet rs = busca.executeQuery();
-                 
-                 int cont = 1;   
-                 while(rs.next()){
-                    String nome = rs.getString("nome");
-                    String endereco = rs.getString("endereco");
-                    String numero = rs.getString("numero");
-                    String bairro = rs.getString("bairro");
-                    String telefone = rs.getString("telefone");
-                    String cidade = rs.getString("cidade");
-                    String estado = rs.getString("estado");
-                    document.add(new Paragraph(cont+" "+nome+ " - "+endereco+" "+numero+" "+bairro+" - "+telefone+" - "+cidade+" - "+estado));
-                    cont++;
-                 }
-                         
-                 con.close();
-             } catch (SQLException ex) {
-                 Logger.getLogger(FormClientes.class.getName()).log(Level.SEVERE, null, ex);
-             }
-           
-      /*     int cont = tabelaClientes.getRowCount();
+            /*     int cont = tabelaClientes.getRowCount();
 
            for(int x=0 ; x<cont ;x++){
                String nome = tabelaClientes.getValueAt(x, 0).toString();
@@ -620,15 +609,16 @@ public class FormClientes extends javax.swing.JFrame {
                String data = tabelaClientes.getValueAt(x, 3).toString();
                document.add(new Paragraph((x+1)+" "+nome+ " - "+endereco+" - "+telefone+" - "+data));
            } */
-           document.add(new Paragraph("  "
-                   + ""
-                   + ""));
+            document.add(new Paragraph("  "
+                    + ""
+                    + ""));
+            document.add(new Paragraph("                                                             Fim da Lista!"));
         } catch (FileNotFoundException | DocumentException ex) {
             JOptionPane.showMessageDialog(null, ex);
-        }finally{
+        } finally {
             document.close();
         }
-        
+
         try {
             Desktop.getDesktop().open(new File("clientes.pdf"));
         } catch (IOException ex) {
@@ -637,7 +627,7 @@ public class FormClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTabbedPane1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MousePressed
-       
+
     }//GEN-LAST:event_jTabbedPane1MousePressed
 
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
@@ -648,88 +638,102 @@ public class FormClientes extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jPanel3MousePressed
 
-    private void Mascaras(){
+    private void btnBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscar1ActionPerformed
+        Limpar();
+    }//GEN-LAST:event_btnBuscar1ActionPerformed
+
+    private void Mascaras() {
 
         MaskFormatter maskTelefone, maskCnpj, maskCpf, maskCep;
-        
+
         try {
             maskTelefone = new MaskFormatter("(##) ####-####");
             maskTelefone.install(jTelefone);
-            
+
             maskCnpj = new MaskFormatter("##.###.###/####-##");
             maskCnpj.install(jCnpj);
-            
+
             maskCpf = new MaskFormatter("###.###.###-##");
             maskCpf.install(jCpf);
-            
+
             maskCep = new MaskFormatter("#####-###");
             maskCep.install(jCep);
-            
+
         } catch (ParseException ex) {
             Logger.getLogger(FormClientes.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
-            
 
     }
-    
+
     private void Iniciar() {
         txtCodigo.setEnabled(false);
         txtNome.setDocument(new SoLetrasMaiusculas());
         txtCodigo.setDocument(new SoNumeros());
         txtNumero.setDocument(new SoNumeros());
     }
-    
-    private void BuscarCodigoDeCliente(){
-        Conexao();
+
+    private void BuscarCodigoDeCliente() {
+        ClientesDAO cliDao = new ClientesDAO();
+        CadastroDeClientes cli = new CadastroDeClientes();
         
-        try {
-            PreparedStatement busca = con.prepareStatement("SELECT MAX(codigo +1) AS codigo FROM clientes");
-            
-            ResultSet rs = busca.executeQuery();
-            rs.next();
-            
-            txtCodigo.setText(rs.getString("codigo"));
-            
-            con.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(FormClientes.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        cliDao.BuscarCodigoDeCliente(cli);
+        
+        txtCodigo.setText(cli.getCodigo());
     }
-    
-    private void ListaDePesquisa(){
-        MODELO.removeAllElements();
+
+    private void ListaDePesquisa() {
+       MODELO.removeAllElements();
+       CadastroDeClientes cli = new CadastroDeClientes();
+       
+       cli.setNome(txtNome.getText());
+       
+       ClientesDAO cliDao = new ClientesDAO();
+
+       List<CadastroDeClientes> lista = cliDao.ListaDePesquisa();
         
+            int v = 0;
+            for(int x=0; x < lista.size(); x++) {
+                MODELO.addElement(lista.get(x));
+                v++;
+            }
+            if (v >= 1) {
+                Lista.setVisible(true);
+            } else {
+                Lista.setVisible(false);
+            }
+        
+       /*  MODELO.removeAllElements();
+
         Conexao();
-        
+
         try {
-            PreparedStatement busca = con.prepareStatement("select nome from clientes where nome like '%"+txtNome.getText()+"%' Order by nome");
-            
+            PreparedStatement busca = con.prepareStatement("select nome from clientes where nome like '%" + txtNome.getText() + "%' Order by nome");
+
             ResultSet rs = busca.executeQuery();
             int v = 0;
-            while(rs.next()){
+            while (rs.next()) {
                 MODELO.addElement(rs.getString("nome"));
                 v++;
             }
-            if(v >= 1){
+            if (v >= 1) {
                 Lista.setVisible(true);
-            }else{
+            } else {
                 Lista.setVisible(false);
             }
-            
+
             con.close();
         } catch (SQLException ex) {
             Logger.getLogger(FormClientes.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }
-    
-    private void MostrarPesquisa(){
-         int Linha = Lista.getSelectedIndex();
-        if(Linha >=0){
+
+    private void MostrarPesquisa() {
+        int Linha = Lista.getSelectedIndex();
+        if (Linha >= 0) {
             Conexao();
             try {
                 PreparedStatement buscar = con.prepareStatement("SELECT * FROM clientes where nome like '%"
-                        +txtNome.getText()+"%' ORDER BY nome LIMI"+ Linha +" , 1");
+                        + txtNome.getText() + "%' ORDER BY nome LIMI" + Linha + " , 1");
                 con.close();
             } catch (SQLException ex) {
                 Logger.getLogger(FormOrdemDeServico.class.getName()).log(Level.SEVERE, null, ex);
@@ -738,207 +742,99 @@ public class FormClientes extends javax.swing.JFrame {
         txtNome.setText(Lista.getSelectedValue());
     }
 
-    
     // CRUD
-    
-    private void Conexao(){ // Classe de Conexão com o Banco de Dados
+    private void Conexao() { // Classe de Conexão com o Banco de Dados
         this.con = Database.getConnection();
     }
+
     private void Salvar() {
-        Date data = new Date(System.currentTimeMillis());
-      //  DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        String dataFormatada = dateFormat.format(data);
-        
-        CadastroDeClientes cli = new Controller.CadastroDeClientes();
-
-        
-        cli.nome = txtNome.getText();
-        cli.endereco = txtEndereco.getText();
-        cli.numero = txtNumero.getText();
-        cli.telefone = jTelefone.getText();
-        cli.cep = jCep.getText();
-        cli.cidade = txtCidade.getText();
-        cli.estado = (String) comboboxEstado.getSelectedItem();
-        cli.pais = txtPais.getText();
-        cli.email = txtEmail.getText();
-        cli.email2 = txtEmail2.getText();
-        cli.rg = jCpf.getText();
-        cli.cpf = jCnpj.getText();
-        cli.bairro = txtBairro.getText();
-
-        String sql = "INSERT INTO clientes (nome,endereco,numero,telefone,rg,cep,cidade,estado,pais,email,email2,cpf,bairro,data) "
-                + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-
-        con = Database.getConnection();
-
-        PreparedStatement stmt = null;
-
-        try {
-            stmt = con.prepareStatement(sql);
-            stmt.setString(1, cli.nome);
-            stmt.setString(2, cli.endereco);
-            stmt.setString(3, cli.numero);
-            stmt.setString(4, cli.telefone);
-            stmt.setString(5, cli.rg);
-            stmt.setString(6, cli.cep);
-            stmt.setString(7, cli.cidade);
-            stmt.setString(8, cli.estado);
-            stmt.setString(9, cli.pais);
-            stmt.setString(10, cli.email);
-            stmt.setString(11, cli.email2);
-            stmt.setString(12, cli.cpf);
-            stmt.setString(13, cli.bairro);
-            stmt.setString(14, dataFormatada);
-
-            stmt.executeUpdate();
-
-            JOptionPane.showMessageDialog(null, "Registro inserido com sucesso!", "Mensagem",
-                    JOptionPane.INFORMATION_MESSAGE);
-
-            Limpar();
-
-        } catch (SQLException ex) {
-            System.err.println("Erro" + ex);
-
-        } finally {
-            Database.closeConnection(con, stmt);
-        }
-    }
-
-    private void Buscar() {
-        boolean validador = false;
-        PreparedStatement stmt = null;
 
         CadastroDeClientes cli = new CadastroDeClientes();
 
-        cli.nome = txtNome.getText();
+        ClientesDAO cliDao = new ClientesDAO();
 
-        this.con = Database.getConnection();
+        cli.setNome(txtNome.getText());
+        cli.setEndereco(txtEndereco.getText());
+        cli.setNumero(txtNumero.getText());
+        cli.setTelefone(jTelefone.getText());
+        cli.setCep(jCep.getText());
+        cli.setCidade(txtCidade.getText());
+        cli.setEstado((String) comboboxEstado.getSelectedItem());
+        cli.setPais(txtPais.getText());
+        cli.setEmail(txtEmail.getText());
+        cli.setEmail2(txtEmail2.getText());
+        cli.setCnpj(jCnpj.getText());
+        cli.setCpf(jCpf.getText());
+        cli.setBairro(txtBairro.getText());
 
-        try (PreparedStatement busca = con.prepareStatement("select * from clientes")) {
+        cliDao.Salvar(cli);
+        Limpar();
+        BuscarCodigoDeCliente();
+    }
 
-            ResultSet rs = busca.executeQuery();
+    private void Buscar() {
 
-            while (rs.next()) {
-                String nome = rs.getString("nome");
+        CadastroDeClientes cli = new CadastroDeClientes();
+        cli.setNome(txtNome.getText());
 
-                if (nome.trim().equals(cli.nome)) {
+        ClientesDAO cliDao = new ClientesDAO();
 
-                    txtCodigo.setText(rs.getString("codigo"));
-                    txtNome.setText(rs.getString("nome"));
-                    txtEndereco.setText(rs.getString("endereco"));
-                    txtNumero.setText(rs.getString("numero"));
-                    jTelefone.setText(rs.getString("telefone"));
-                    jCnpj.setText(rs.getString("cpf"));
-                    jCpf.setText(rs.getString("rg"));
-                    jCep.setText(rs.getString("cep"));
-                    txtCidade.setText(rs.getString("cidade"));
-                    comboboxEstado.setSelectedItem(rs.getString("estado"));
-                    txtPais.setText(rs.getString("pais"));
-                    txtEmail.setText(rs.getString("email"));
-                    txtEmail2.setText(rs.getString("email2"));
-                    txtBairro.setText(rs.getString("bairro"));
-                    validador = true;
-                    break;
-                }
+        cliDao.Buscar(cli);
 
-            }
-            
-            if (validador == false) {
-                JOptionPane.showMessageDialog(null, "Não foi encontrado registro desse Produto no Banco de Dados!", "Mensagem",
-                    JOptionPane.INFORMATION_MESSAGE);
-            }
-
-        } catch (SQLException ex) {
-            System.err.println("Erro" + ex);
-
-        } finally {
-            Database.closeConnection(con, stmt);
-        }
+        txtCodigo.setText(cli.getCodigo());
+        txtNome.setText(cli.getNome());
+        txtEndereco.setText(cli.getEndereco());
+        txtNumero.setText(cli.getNumero());
+        jTelefone.setText(cli.getTelefone());
+        jCnpj.setText(cli.getCnpj());
+        jCpf.setText(cli.getCpf());
+        jCep.setText(cli.getCep());
+        txtCidade.setText(cli.getCidade());
+        comboboxEstado.setSelectedItem(cli.getEstado());
+        txtPais.setText(cli.getPais());
+        txtEmail.setText(cli.getEmail());
+        txtEmail2.setText(cli.getEmail2());
+        txtBairro.setText(cli.getBairro());
 
     }
 
     private void BuscarEstado() {
-        PreparedStatement stmt = null;
+        
+        ClientesDAO cliDao = new ClientesDAO();
+        List<String> lista = cliDao.BuscarEstado();
+        CadastroDeClientes cli = new CadastroDeClientes();
 
-        Conexao(); // chama a classe de conexão com o Banco de Dados
-
-        try (PreparedStatement busca = con.prepareStatement("select * from estado order by uf")) {
-
-            ResultSet rs = busca.executeQuery();
-
-            while (rs.next()) {
-                String cod = rs.getString("uf");
-                comboboxEstado.addItem(cod);
+            for(int x=0; x<lista.size();x++){
+                comboboxEstado.addItem(lista.get(x));
             }
 
-        } catch (SQLException ex) {
-            System.err.println("Erro" + ex);
-
-        } finally {
-            Database.closeConnection(con, stmt);
-        }
+        
 
     }
 
     private void atualizar() {
-        PreparedStatement stmt = null;
 
         CadastroDeClientes cli = new CadastroDeClientes();
-       
+        ClientesDAO cliDao = new ClientesDAO();
 
-        cli.codigo = txtCodigo.getText();
-        cli.nome = txtNome.getText();
-        cli.endereco = txtEndereco.getText();
-        cli.numero = txtNumero.getText();
-        cli.telefone = jTelefone.getText();
-        cli.cep = jCep.getText();
-        cli.cidade = txtCidade.getText();
-        cli.estado = (String) comboboxEstado.getSelectedItem();
-        cli.pais = txtPais.getText();
-        cli.email = txtEmail.getText();
-        cli.email2 = txtEmail2.getText();
-        cli.rg = jCpf.getText();
-        cli.cpf = jCnpj.getText();
-        cli.bairro = txtBairro.getText();
+        cli.setCodigo(txtCodigo.getText());
+        cli.setNome(txtNome.getText());
+        cli.setEndereco(txtEndereco.getText());
+        cli.setNumero(txtNumero.getText());
+        cli.setTelefone(jTelefone.getText());
+        cli.setCep(jCep.getText());
+        cli.setCidade(txtCidade.getText());
+        cli.setEstado((String) comboboxEstado.getSelectedItem());
+        cli.setPais(txtPais.getText());
+        cli.setEmail(txtEmail.getText());
+        cli.setEmail2(txtEmail2.getText());
+        cli.setCnpj(jCnpj.getText());
+        cli.setCpf(jCpf.getText());
+        cli.setBairro(txtBairro.getText());
 
-        Conexao(); // chama a classe de conexão com o Banco de Dados
-
-        try (PreparedStatement edit = con.prepareStatement("update clientes set nome = ?, endereco = ?, numero = ?, telefone = ?,"
-                + "cidade = ?, estado = ?, pais = ?, email = ?, email2 = ?, rg = ?, cpf = ?, cep = ?, bairro = ?"
-                
-                + "where codigo = ?")) {
-
-            edit.setString(1, cli.nome);
-            edit.setString(2, cli.endereco);
-            edit.setString(3, cli.numero);
-            edit.setString(4, cli.telefone);
-            edit.setString(5, cli.cidade);
-            edit.setString(6, cli.estado);
-            edit.setString(7, cli.pais);
-            edit.setString(8, cli.email);
-            edit.setString(9, cli.email2);
-            edit.setString(10, cli.rg);
-            edit.setString(11, cli.cpf);
-            edit.setString(12, cli.cep);
-            edit.setString(13, cli.bairro);
-            
-            edit.setString(14, txtCodigo.getText());
-
-            edit.executeUpdate();
-
-            JOptionPane.showMessageDialog(null, "Registro Atualizado com sucesso!", "Mensagem",
-                    JOptionPane.INFORMATION_MESSAGE);
-
-            Limpar();
-
-        } catch (SQLException ex) {
-            System.err.println("Erro" + ex);
-
-        } finally {
-            Database.closeConnection(con, stmt);
-        }
+        cliDao.atualizar(cli);
+        Limpar();
+        
     }
 
     private void Limpar() {
@@ -955,6 +851,7 @@ public class FormClientes extends javax.swing.JFrame {
         jCpf.setText("");
         jTelefone.setText("");
         txtBairro.setText("");
+        BuscarCodigoDeCliente();
     }
 
     /**
@@ -1003,6 +900,7 @@ public class FormClientes extends javax.swing.JFrame {
     private javax.swing.JList<String> Lista;
     private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnBuscar1;
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> comboboxEstado;

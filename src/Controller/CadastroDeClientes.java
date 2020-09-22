@@ -19,9 +19,11 @@ public class CadastroDeClientes {
     public String email2 = null;
     public String codigo = null;
     public String cpf = null;
-    public String rg = null;
+    public String cnpj = null;
     public String bairro = null;
     public String data = null;
+    
+    public String lista;
 
     public String getNome() {
         return nome;
@@ -42,6 +44,11 @@ public class CadastroDeClientes {
     public String getNumero() {
         return numero;
     }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
 
     public String getTelefone() {
         return telefone;
@@ -115,13 +122,15 @@ public class CadastroDeClientes {
         this.cpf = cpf;
     }
 
-    public String getRg() {
-        return rg;
+    public String getCnpj() {
+        return cnpj;
     }
 
-    public void setRg(String rg) {
-        this.rg = rg;
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
+
+    
 
     public String getBairro() {
         return bairro;
@@ -138,6 +147,16 @@ public class CadastroDeClientes {
     public void setData(String data) {
         this.data = data;
     }
+
+    public String getLista() {
+        return lista;
+    }
+
+    public void setLista(String lista) {
+        this.lista = lista;
+    }
+    
+    
     
     
 
