@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 
 public class GeradorDePdf {
     
+    // GERA PDF DO CADASTRO DE CLIENTES
     public void GeraPDFClientes(){
         com.itextpdf.text.Document document = new com.itextpdf.text.Document();
 
@@ -68,7 +69,7 @@ public class GeradorDePdf {
     }
     
     
-    
+    // GERA PDF DO CADASTRO DE PRODUTOS
     public void GeraPDFProdutos(){
         com.itextpdf.text.Document document = new com.itextpdf.text.Document();
 

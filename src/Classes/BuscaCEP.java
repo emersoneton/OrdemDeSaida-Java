@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package Classes;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
@@ -14,7 +14,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 
-public class buscaCEP {
+public class BuscaCEP {
 
     public String getEndereco(String CEP) throws IOException {
         

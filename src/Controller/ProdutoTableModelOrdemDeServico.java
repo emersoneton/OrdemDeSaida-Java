@@ -40,7 +40,7 @@ public class ProdutoTableModelOrdemDeServico extends AbstractTableModel{
            case 0:
                return dados.get(linha).getDescricao();  // Insere os dados na Tabela
            case 1:
-               return dados.get(linha).getValor();      // Insere os dados na Tabela
+               return dados.get(linha).getValorTotal();      // Insere os dados na Tabela
            case 2:
                return dados.get(linha).getQuantidade(); // Insere os dados na Tabela
        }
@@ -54,7 +54,7 @@ public class ProdutoTableModelOrdemDeServico extends AbstractTableModel{
                 dados.get(linha).setDescricao((String) valor);  // Insere os dados na Tabela
                 break;
            case 1:
-                dados.get(linha).setValor(Double.parseDouble((String) valor));      // Insere os dados na Tabela
+                dados.get(linha).setValorTotal(Double.parseDouble((String) valor));      // Insere os dados na Tabela
                 break;
            case 2:
                 dados.get(linha).setQuantidade(Integer.parseInt((String) valor)); // Insere os dados na Tabela

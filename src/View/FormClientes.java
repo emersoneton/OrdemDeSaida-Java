@@ -10,7 +10,7 @@ import Classes.SoNumeros;
 import Classes.SoLetrasMaiusculas;
 import Controller.ClienteTabelaModel;
 import Controller.GeradorDePdf;
-import Controller.buscaCEP;
+import Classes.BuscaCEP;
 import Model.ClientesDAO;
 import Model.Database;
 import java.awt.event.KeyEvent;
@@ -589,7 +589,7 @@ public class FormClientes extends javax.swing.JFrame {
     private void BuscaCEP(){
         String CEP = jCep.getText();
 
-        buscaCEP buscaCep = new buscaCEP();
+        BuscaCEP buscaCep = new BuscaCEP();
 
         try {
             txtEndereco.setText(buscaCep.getEndereco(CEP)); // Insere os dados de endereço da classe de buscacep

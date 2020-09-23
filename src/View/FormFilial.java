@@ -8,7 +8,7 @@ package View;
 import Controller.CadastroDeFilial;
 import Classes.SoLetrasMaiusculas;
 import Classes.SoNumeros;
-import Controller.buscaCEP;
+import Classes.BuscaCEP;
 import Model.Database;
 import Model.FilialDAO;
 import java.awt.event.KeyEvent;
@@ -610,7 +610,7 @@ public class FormFilial extends javax.swing.JFrame {
     public void BuscaCEP() {
         String CEP = jCep.getText();
 
-        buscaCEP buscaCep = new buscaCEP();
+        BuscaCEP buscaCep = new BuscaCEP();
 
         try {
             txtEndereco.setText(buscaCep.getEndereco(CEP)); // Insere os dados de endereço da classe de buscacep
