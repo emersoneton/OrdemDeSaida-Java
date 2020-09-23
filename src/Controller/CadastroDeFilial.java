@@ -16,7 +16,8 @@ public class CadastroDeFilial {
             estado = null,
             pais = null,
             endereco = null,
-            codigo = null;
+            codigo = null,
+            cep = null;
 
     public String getFilia() {
         return filia;
@@ -138,4 +139,13 @@ public class CadastroDeFilial {
         this.estado = estado;
     }
 
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    
 }

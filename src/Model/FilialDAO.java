@@ -33,7 +33,7 @@ public class FilialDAO {
             salvar.setString(2, fil.getCidade());
             salvar.setString(3, fil.getCnpj());
             salvar.setString(4, fil.getEstado());
-            salvar.setString(5, fil.getRazaoSocial());
+            salvar.setString(5, fil.getRazaoFantasia());
             salvar.setString(6, fil.getInscricaoEstadual());
             salvar.setString(7, fil.getInscricaoMunicipal());
             salvar.setString(8, fil.getNumero());

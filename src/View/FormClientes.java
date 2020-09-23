@@ -10,14 +10,18 @@ import Classes.SoNumeros;
 import Classes.SoLetrasMaiusculas;
 import Controller.ClienteTabelaModel;
 import Controller.GeradorDePdf;
+import Controller.buscaCEP;
 import Model.ClientesDAO;
 import Model.Database;
+import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.sql.Connection;
 import java.text.ParseException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.text.MaskFormatter;
 
 /**
@@ -71,8 +75,6 @@ public class FormClientes extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        txtEndereco = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtNumero = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -80,21 +82,23 @@ public class FormClientes extends javax.swing.JFrame {
         txtEmail = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         txtEmail2 = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        txtPais = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        comboboxEstado = new javax.swing.JComboBox<>();
-        txtCidade = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         txtBairro = new javax.swing.JTextField();
         jTelefone = new javax.swing.JFormattedTextField();
         jCnpj = new javax.swing.JFormattedTextField();
         jCpf = new javax.swing.JFormattedTextField();
         jCep = new javax.swing.JFormattedTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtEndereco = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        txtCidade = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        comboboxEstado = new javax.swing.JComboBox<>();
+        jLabel12 = new javax.swing.JLabel();
+        txtPais = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
@@ -191,6 +195,7 @@ public class FormClientes extends javax.swing.JFrame {
                 jPanel1MousePressed(evt);
             }
         });
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLayeredPane1.setBackground(new java.awt.Color(204, 204, 204));
         jLayeredPane1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -235,28 +240,18 @@ public class FormClientes extends javax.swing.JFrame {
         jLabel3.setText("Nome:");
         jLayeredPane1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(137, 14, -1, -1));
 
-        jLabel4.setText("Endereço:");
-        jLayeredPane1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 77, -1, -1));
-
-        txtEndereco.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEnderecoActionPerformed(evt);
-            }
-        });
-        jLayeredPane1.add(txtEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 74, 210, -1));
-
         jLabel6.setText("Numero:");
-        jLayeredPane1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(302, 77, -1, -1));
+        jLayeredPane1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 80, -1, -1));
 
         txtNumero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNumeroActionPerformed(evt);
             }
         });
-        jLayeredPane1.add(txtNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 74, 57, -1));
+        jLayeredPane1.add(txtNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(517, 80, 40, -1));
 
         jLabel7.setText("Cep:");
-        jLayeredPane1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(419, 77, -1, -1));
+        jLayeredPane1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, -1, -1));
 
         jLabel8.setText("E-Mail:");
         jLayeredPane1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
@@ -264,68 +259,69 @@ public class FormClientes extends javax.swing.JFrame {
 
         jLabel9.setText("E-Mail 2:");
         jLayeredPane1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 300, -1, -1));
-        jLayeredPane1.add(txtEmail2, new org.netbeans.lib.awtextra.AbsoluteConstraints(418, 297, 350, -1));
-
-        jLabel10.setText("Cidade:");
-        jLayeredPane1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 229, -1, -1));
-
-        jLabel11.setText("Estado:");
-        jLayeredPane1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(452, 226, -1, -1));
-
-        jLabel12.setText("Pais:");
-        jLayeredPane1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(581, 226, -1, -1));
-
-        txtPais.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPaisActionPerformed(evt);
-            }
-        });
-        jLayeredPane1.add(txtPais, new org.netbeans.lib.awtextra.AbsoluteConstraints(614, 223, 149, -1));
+        jLayeredPane1.add(txtEmail2, new org.netbeans.lib.awtextra.AbsoluteConstraints(418, 297, 340, -1));
 
         jLabel14.setText("Telefone:");
-        jLayeredPane1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 158, -1, -1));
+        jLayeredPane1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
 
         jLabel15.setText("CNPJ:");
-        jLayeredPane1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 160, -1, -1));
+        jLayeredPane1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, -1, -1));
 
         jLabel16.setText("CPF:");
-        jLayeredPane1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 160, -1, -1));
-
-        jLayeredPane1.add(comboboxEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(493, 223, 58, -1));
-        jLayeredPane1.add(txtCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 226, 350, -1));
+        jLayeredPane1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 220, -1, -1));
 
         jLabel13.setText("Bairro:");
-        jLayeredPane1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(575, 77, -1, -1));
+        jLayeredPane1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 80, -1, -1));
 
         txtBairro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtBairroActionPerformed(evt);
             }
         });
-        jLayeredPane1.add(txtBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(611, 74, 152, -1));
+        jLayeredPane1.add(txtBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 80, 152, -1));
 
         jTelefone.setToolTipText("");
-        jLayeredPane1.add(jTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 155, 207, -1));
-        jLayeredPane1.add(jCnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 155, 207, -1));
-        jLayeredPane1.add(jCpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(611, 155, 152, -1));
-        jLayeredPane1.add(jCep, new org.netbeans.lib.awtextra.AbsoluteConstraints(452, 74, 103, -1));
+        jLayeredPane1.add(jTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, 207, -1));
+        jLayeredPane1.add(jCnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 220, 207, -1));
+        jLayeredPane1.add(jCpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 220, 152, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        jCep.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jCepKeyPressed(evt);
+            }
+        });
+        jLayeredPane1.add(jCep, new org.netbeans.lib.awtextra.AbsoluteConstraints(73, 80, 90, -1));
+
+        jLabel4.setText("Endereço:");
+        jLayeredPane1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, -1, -1));
+
+        txtEndereco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEnderecoActionPerformed(evt);
+            }
+        });
+        jLayeredPane1.add(txtEndereco, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, 190, -1));
+
+        jLabel10.setText("Cidade:");
+        jLayeredPane1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, -1));
+        jLayeredPane1.add(txtCidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, 350, -1));
+
+        jLabel11.setText("Estado:");
+        jLayeredPane1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 150, -1, -1));
+
+        jLayeredPane1.add(comboboxEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 150, 58, -1));
+
+        jLabel12.setText("Pais:");
+        jLayeredPane1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 150, -1, -1));
+
+        txtPais.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPaisActionPerformed(evt);
+            }
+        });
+        jLayeredPane1.add(txtPais, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 150, 149, -1));
+
+        jPanel1.add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 768, -1));
 
         jTabbedPane1.addTab("Cadastro", jPanel1);
 
@@ -451,7 +447,7 @@ public class FormClientes extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -578,6 +574,34 @@ public class FormClientes extends javax.swing.JFrame {
         Limpar();
     }//GEN-LAST:event_btnBuscar1ActionPerformed
 
+    private void jCepKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jCepKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+
+            int resposta = JOptionPane.showConfirmDialog(null, "Deseja Buscar o CEP", "escolha dois", JOptionPane.YES_NO_OPTION);
+            //verfica se a resposta é verdadeira
+            if (resposta == JOptionPane.YES_OPTION) {
+                BuscaCEP();
+            }
+
+        }
+    }//GEN-LAST:event_jCepKeyPressed
+
+    private void BuscaCEP(){
+        String CEP = jCep.getText();
+
+        buscaCEP buscaCep = new buscaCEP();
+
+        try {
+            txtEndereco.setText(buscaCep.getEndereco(CEP)); // Insere os dados de endereço da classe de buscacep
+            txtBairro.setText(buscaCep.getBairro(CEP));
+            txtCidade.setText(buscaCep.getCidade(CEP));
+            comboboxEstado.setSelectedItem(buscaCep.getUF(CEP));
+
+        } catch (IOException ex) {
+            Logger.getLogger(FormFilial.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     private void Mascaras() {
 
         MaskFormatter maskTelefone, maskCnpj, maskCpf, maskCep;
@@ -843,4 +867,5 @@ public class FormClientes extends javax.swing.JFrame {
     private javax.swing.JTextField txtNumero;
     private javax.swing.JTextField txtPais;
     // End of variables declaration//GEN-END:variables
+
 }

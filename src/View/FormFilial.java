@@ -8,13 +8,17 @@ package View;
 import Controller.CadastroDeFilial;
 import Classes.SoLetrasMaiusculas;
 import Classes.SoNumeros;
+import Controller.buscaCEP;
 import Model.Database;
 import Model.FilialDAO;
+import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.sql.Connection;
 import java.text.ParseException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.text.MaskFormatter;
 
 /**
@@ -77,6 +81,8 @@ public class FormFilial extends javax.swing.JFrame {
         jInscricaoMunicipal = new javax.swing.JFormattedTextField();
         jTelefoneComercial = new javax.swing.JFormattedTextField();
         jTelefoneCelular = new javax.swing.JFormattedTextField();
+        jLabel16 = new javax.swing.JLabel();
+        jCep = new javax.swing.JFormattedTextField();
         btnSalvar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnSalvar1 = new javax.swing.JButton();
@@ -165,6 +171,14 @@ public class FormFilial extends javax.swing.JFrame {
             }
         });
 
+        jLabel16.setText("CEP:");
+
+        jCep.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jCepKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -173,18 +187,12 @@ public class FormFilial extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel10)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(comboBoxEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -193,12 +201,18 @@ public class FormFilial extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtPais, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jCep, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel9)
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtBairro))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel13)
@@ -207,12 +221,13 @@ public class FormFilial extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTelefoneCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jTelefoneCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel15)
-                            .addComponent(jLabel4))
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel16)
+                                .addComponent(jLabel4)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -230,7 +245,7 @@ public class FormFilial extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGap(0, 44, Short.MAX_VALUE)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtRazaoFantasia, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -266,7 +281,9 @@ public class FormFilial extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
-                    .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16)
+                    .addComponent(jCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
@@ -275,13 +292,13 @@ public class FormFilial extends javax.swing.JFrame {
                     .addComponent(jLabel12)
                     .addComponent(txtPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboBoxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(jLabel14)
                     .addComponent(jTelefoneComercial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTelefoneCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19))
+                .addGap(24, 24, 24))
         );
 
         btnSalvar.setBackground(new java.awt.Color(255, 255, 255));
@@ -349,7 +366,7 @@ public class FormFilial extends javax.swing.JFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 1, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -386,7 +403,7 @@ public class FormFilial extends javax.swing.JFrame {
     //CRUD
     private void Mascaras() {
 
-        MaskFormatter maskCnpj, maskIe, maskIm, maskTelefoneComercial, maskTelefoneCelular;
+        MaskFormatter maskCnpj, maskIe, maskIm, maskTelefoneComercial, maskTelefoneCelular, maskCep;
 
         try {
             maskCnpj = new MaskFormatter("##.###.###/####-##");
@@ -404,6 +421,9 @@ public class FormFilial extends javax.swing.JFrame {
             maskTelefoneCelular = new MaskFormatter("(##) #.####-####");
             maskTelefoneCelular.install(jTelefoneCelular);
 
+            maskCep = new MaskFormatter("#####-###");
+            maskCep.install(jCep);
+
         } catch (ParseException ex) {
             Logger.getLogger(FormClientes.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -411,13 +431,13 @@ public class FormFilial extends javax.swing.JFrame {
     }
 
     private void BuscarCodigoDaFilial() {
-       CadastroDeFilial fil = new CadastroDeFilial();
-       FilialDAO filDao = new FilialDAO();
-       
-       filDao.BuscarCodigoDeFilial(fil);
-       
-       txtCodigo.setText(fil.getCodigo());
-       
+        CadastroDeFilial fil = new CadastroDeFilial();
+        FilialDAO filDao = new FilialDAO();
+
+        filDao.BuscarCodigoDeFilial(fil);
+
+        txtCodigo.setText(fil.getCodigo());
+
     }
 
     private void Conexao() { // Classe de Conexão com o Banco de Dados
@@ -430,13 +450,13 @@ public class FormFilial extends javax.swing.JFrame {
     }
 
     private void BuscarEstado() {
-      FilialDAO filDao = new FilialDAO(); // Instancia da Classe FilialDAO
-      
-      List<String> lista = filDao.BuscarEstado(filDao); // Busca a lista de Estados da classe FilialDAO
-      
-      for(int x = 0; x < lista.size(); x++){  // Laço de repetição da lista para a adição de itens no ComboBOX
-          comboBoxEstado.addItem(lista.get(x)); 
-      }
+        FilialDAO filDao = new FilialDAO(); // Instancia da Classe FilialDAO
+
+        List<String> lista = filDao.BuscarEstado(filDao); // Busca a lista de Estados da classe FilialDAO
+
+        for (int x = 0; x < lista.size(); x++) {  // Laço de repetição da lista para a adição de itens no ComboBOX
+            comboBoxEstado.addItem(lista.get(x));
+        }
 
     }
 
@@ -454,6 +474,7 @@ public class FormFilial extends javax.swing.JFrame {
         txtRazaoSocial.setText("");
         jTelefoneCelular.setText("");
         jTelefoneComercial.setText("");
+        jCep.setText("");
         BuscarCodigoDaFilial();
     }
 
@@ -484,12 +505,11 @@ public class FormFilial extends javax.swing.JFrame {
 
         CadastroDeFilial fil = new CadastroDeFilial();
         FilialDAO filDao = new FilialDAO();
-        
-        
+
         fil.setCodigo(txtCodigo.getText());
-        
+
         filDao.Buscar(fil);
-        
+
         txtRazaoSocial.setText(fil.getRazaoSocial());
         txtRazaoFantasia.setText(fil.getRazaoFantasia());
         jCnpj.setText(fil.getCnpj());
@@ -503,15 +523,14 @@ public class FormFilial extends javax.swing.JFrame {
         txtPais.setText(fil.getPais());
         jTelefoneComercial.setText(fil.getTelefoneComercial());
         jTelefoneCelular.setText(fil.getTelefoneCelular());
-        
-        
+
     }
 
     private void Alterar() {
-        
+
         CadastroDeFilial fil = new CadastroDeFilial();
         FilialDAO filDao = new FilialDAO();
-        
+
         fil.setCodigo(txtCodigo.getText());
         fil.setBairro(txtBairro.getText());
         fil.setCidade(txtCidade.getText());
@@ -526,10 +545,10 @@ public class FormFilial extends javax.swing.JFrame {
         fil.setTelefoneComercial(jTelefoneComercial.getText());
         fil.setTelefoneCelular(jTelefoneCelular.getText());
         fil.setEndereco(txtEndereco.getText());
-        
+
         filDao.Alterar(fil);
         Limpar();
-        
+
     }
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
@@ -576,6 +595,34 @@ public class FormFilial extends javax.swing.JFrame {
         Limpar();
     }//GEN-LAST:event_btnBuscar1ActionPerformed
 
+    private void jCepKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jCepKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+
+            int resposta = JOptionPane.showConfirmDialog(null, "Deseja Buscar o CEP", "escolha dois", JOptionPane.YES_NO_OPTION);
+            //verfica se a resposta é verdadeira
+            if (resposta == JOptionPane.YES_OPTION) {
+                BuscaCEP();
+            }
+
+        }
+    }//GEN-LAST:event_jCepKeyPressed
+
+    public void BuscaCEP() {
+        String CEP = jCep.getText();
+
+        buscaCEP buscaCep = new buscaCEP();
+
+        try {
+            txtEndereco.setText(buscaCep.getEndereco(CEP)); // Insere os dados de endereço da classe de buscacep
+            txtBairro.setText(buscaCep.getBairro(CEP));
+            txtCidade.setText(buscaCep.getCidade(CEP));
+            comboBoxEstado.setSelectedItem(buscaCep.getUF(CEP));
+
+        } catch (IOException ex) {
+            Logger.getLogger(FormFilial.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -619,6 +666,7 @@ public class FormFilial extends javax.swing.JFrame {
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnSalvar1;
     private javax.swing.JComboBox<String> comboBoxEstado;
+    private javax.swing.JFormattedTextField jCep;
     private javax.swing.JFormattedTextField jCnpj;
     private javax.swing.JFormattedTextField jIncricaoEstadual;
     private javax.swing.JFormattedTextField jInscricaoMunicipal;
@@ -629,6 +677,7 @@ public class FormFilial extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
