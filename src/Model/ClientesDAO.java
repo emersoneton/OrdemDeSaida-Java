@@ -4,7 +4,6 @@ package Model;
 import Controller.CadastroDeClientes;
 import Controller.ClienteTabelaModel;
 import View.FormClientes;
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -264,7 +263,7 @@ public class ClientesDAO {
     }
     
     
-    public List<CadastroDeClientes> ListaDePesquisa(CadastroDeClientes cli){
+    public List<CadastroDeClientes> ListaDePesquisa(CadastroDeClientes cli){ //Cria o Metodo com o ArrayList e recebe os valores por parametro do Cadastro de cliente
         List<CadastroDeClientes> lista = new ArrayList<>();
         
         Conexao();
@@ -275,9 +274,10 @@ public class ClientesDAO {
             ResultSet rs = busca.executeQuery();
             while (rs.next()) {
                 CadastroDeClientes cli2 = new CadastroDeClientes();
+                
                 cli2.setNome(rs.getString("nome"));
                 
-                lista.add(cli2);
+                lista.add(cli2); // Adiciona a lista as informações do Cadastro de Clientes
                 
             }
 

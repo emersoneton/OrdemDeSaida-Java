@@ -9,25 +9,15 @@ import Controller.CadastroDeClientes;
 import Classes.SoNumeros;
 import Classes.SoLetrasMaiusculas;
 import Controller.ClienteTabelaModel;
+import Controller.GeradorDePdf;
 import Model.ClientesDAO;
 import Model.Database;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
-import java.awt.Desktop;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 import javax.swing.text.MaskFormatter;
 
 /**
@@ -568,53 +558,8 @@ public class FormClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        com.itextpdf.text.Document document = new com.itextpdf.text.Document();
-
-        try {
-            PdfWriter.getInstance(document, new FileOutputStream("Clientes.pdf"));
-
-            document.open();
-            document.add(new Paragraph("                                                       RELATÓRIO DE CLIENTES"));
-            document.add(new Paragraph("                                                      ________________________"
-                    + ""
-                    + ""));
-
-            document.add(new Paragraph("  "));
-            document.add(new Paragraph("  "));
-            document.add(new Paragraph("  "
-                    + ""
-                    + ""));
-            document.add(new Paragraph("Os dados do relatório contém: Nome, Endereço, Número, Bairro, Telefone, Cidade e Estado."));
-            document.add(new Paragraph("****************************************************************************************************************"));
-            document.add(new Paragraph("  "));
-            document.add(new Paragraph("  "));
-            
-            ClientesDAO cliDao = new ClientesDAO();
-            
-            List<CadastroDeClientes> lista = cliDao.GerarPDF();
-
-            for(int x=0; x < lista.size(); x++){                
-                document.add(new Paragraph((x+1) + " - " + lista.get(x).getNome() + " - " + lista.get(x).getEndereco()+ 
-                        " " + lista.get(x).getNumero()+ " " + lista.get(x).getBairro()+ " - " + lista.get(x).getTelefone()+ 
-                        " - " + lista.get(x).getCidade()+ " - " + lista.get(x).getEstado()));
-                document.add(new Paragraph(" "));
-            }
-           
-            document.add(new Paragraph("  "
-                    + ""
-                    + ""));
-            document.add(new Paragraph("                                                             Fim da Lista!"));
-        } catch (FileNotFoundException | DocumentException ex) {
-            JOptionPane.showMessageDialog(null, ex);
-        } finally {
-            document.close();
-        }
-
-        try {
-            Desktop.getDesktop().open(new File("clientes.pdf"));
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, ex);
-        }
+        GeradorDePdf geraPdf = new GeradorDePdf();
+        geraPdf.GeraPDFClientes();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTabbedPane1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MousePressed

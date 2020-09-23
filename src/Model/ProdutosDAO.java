@@ -2,7 +2,7 @@
 package Model;
 
 import Controller.CadastroDeProdutos;
-import Controller.ProdutoTableModel;
+import Controller.ProdutoTableModelOrdemDeServico;
 import View.FormClientes;
 import View.FormProdutos;
 import java.sql.Connection;
@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 
 public class ProdutosDAO {
     
-    ProdutoTableModel tableModel = new ProdutoTableModel();
+    ProdutoTableModelOrdemDeServico tableModel = new ProdutoTableModelOrdemDeServico();
     
     DefaultListModel MODELO;
     
@@ -138,23 +138,23 @@ public class ProdutosDAO {
         }
     }
     
-    public List<String> ListaDePesquisa(ProdutosDAO pro){
+    public List<CadastroDeProdutos> ListaDePesquisa(CadastroDeProdutos pro){ // crio o metodo de arrailist passando parametros de cadastro de produtos
                 
-        List<String> lista = new ArrayList<>();
-       
-        CadastroDeProdutos cadPro = new CadastroDeProdutos();
+        List<CadastroDeProdutos> lista = new ArrayList<>(); // Crio a lista Setando o cadastro de produtos
                 
         Conexao();
-        
-        
-        
+        System.out.println(pro.getDescricao());
         try {
-            PreparedStatement busca = con.prepareStatement("select * from produtos where descricao like '%"+cadPro.getDescricao()+"%' Order by descricao");
+            PreparedStatement busca = con.prepareStatement("select * from produtos where descricao like '%"+pro.getDescricao()+"%' Order by descricao");
             
             ResultSet rs = busca.executeQuery();
 
             while(rs.next()){
-                lista.add(rs.getString("descricao")); 
+                CadastroDeProdutos pro2 = new CadastroDeProdutos();
+                
+                pro2.setDescricao(rs.getString("descricao"));
+                
+                lista.add(pro2); // adiciono itens na lista do tipo CadastroDeProdutos
             }
 
            con.close();
@@ -163,4 +163,64 @@ public class ProdutosDAO {
         }
         return lista;
     }
+    
+    public List<CadastroDeProdutos> InsereDadosNaTabela(){
+        Conexao();
+        
+        List<CadastroDeProdutos> lista = new ArrayList<CadastroDeProdutos>();
+        
+        try {
+            PreparedStatement busca = con.prepareStatement("SELECT * FROM produtos ORDER BY descricao");
+            
+            ResultSet rs = busca.executeQuery();
+            
+            while(rs.next()){
+                CadastroDeProdutos pro = new CadastroDeProdutos();
+                
+                pro.setCodigo(rs.getString("codigo"));
+                pro.setDescricao(rs.getString("descricao"));
+                pro.setValor(rs.getString("valor"));
+                pro.setQuantidade(rs.getString("quantidade"));
+                
+                lista.add(pro);
+            }
+            
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProdutosDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
+    }
+    
+    public List<CadastroDeProdutos> GerarPDF(){
+        List<CadastroDeProdutos> lista = new ArrayList<>();
+        
+        Conexao();
+        
+        try {
+            PreparedStatement busca = con.prepareStatement("SELECT * FROM produtos ORDER BY descricao");
+            
+            ResultSet rs = busca.executeQuery();
+            
+            while(rs.next()){
+                CadastroDeProdutos pro = new CadastroDeProdutos();
+                
+                pro.setCodigo(rs.getString("codigo"));
+                pro.setDescricao(rs.getString("descricao"));
+                pro.setCodigoBarras(rs.getString("codigo_barras"));
+                pro.setValor(rs.getString("valor"));
+                pro.setQuantidade(rs.getString("quantidade"));
+                
+                lista.add(pro);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ProdutosDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        return lista;
+    }
+    
+    
 }

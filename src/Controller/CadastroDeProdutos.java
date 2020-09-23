@@ -47,6 +47,5 @@ public class CadastroDeProdutos {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
-
         
 }

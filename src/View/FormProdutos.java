@@ -6,15 +6,12 @@
 package View;
 
 import Controller.CadastroDeProdutos;
-import Model.Database;
+import Controller.GeradorDePdf;
 import Controller.ProdutoTableModel;
+import Model.Database;
 import Model.ProdutosDAO;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 import javax.swing.DefaultListModel;
 
 /**
@@ -25,7 +22,7 @@ public class FormProdutos extends javax.swing.JFrame {
 
     private Connection con;
     
-    ProdutoTableModel tableModel = new ProdutoTableModel();
+    ProdutoTableModel tabelaProdutos = new ProdutoTableModel();
     
     DefaultListModel MODELO;
     
@@ -38,6 +35,7 @@ public class FormProdutos extends javax.swing.JFrame {
         MODELO = new DefaultListModel();
         Lista.setModel(MODELO);
         txtCodigo.setEnabled(false);
+        jtableProdutos.setModel(tabelaProdutos);
     }
 
     /**
@@ -51,6 +49,13 @@ public class FormProdutos extends javax.swing.JFrame {
 
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        btnSalvar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
+        btnBuscar1 = new javax.swing.JButton();
+        btnSalvar1 = new javax.swing.JButton();
+        btnSair = new javax.swing.JButton();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel4 = new javax.swing.JPanel();
         Lista = new javax.swing.JList<>();
         txtDescricao = new javax.swing.JTextField();
@@ -63,12 +68,12 @@ public class FormProdutos extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         txtValor = new javax.swing.JTextField();
         txtQuantidade = new javax.swing.JTextField();
-        jPanel1 = new javax.swing.JPanel();
-        btnSalvar = new javax.swing.JButton();
-        btnEditar = new javax.swing.JButton();
-        btnBuscar1 = new javax.swing.JButton();
-        btnSalvar1 = new javax.swing.JButton();
-        btnSair = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtableProdutos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Produtos");
@@ -96,55 +101,6 @@ public class FormProdutos extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
-
-        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel4.setOpaque(false);
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        Lista.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                ListaMousePressed(evt);
-            }
-        });
-        jPanel4.add(Lista, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, 510, 110));
-
-        txtDescricao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDescricaoActionPerformed(evt);
-            }
-        });
-        txtDescricao.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtDescricaoKeyReleased(evt);
-            }
-        });
-        jPanel4.add(txtDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 510, -1));
-
-        jLabel2.setText("Codigo:");
-        jPanel4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 32, -1, -1));
-        jPanel4.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(74, 29, 60, -1));
-
-        jLabel4.setText("Código de Barras:");
-        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(217, 32, -1, -1));
-        jPanel4.add(txtCodigoBarras, new org.netbeans.lib.awtextra.AbsoluteConstraints(326, 29, 250, -1));
-
-        jLabel6.setText("Quantidade:");
-        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 160, -1, -1));
-
-        jLabel3.setText("Descricão:");
-        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 95, -1, -1));
-
-        jLabel5.setText("Valor:");
-        jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 160, -1, -1));
-
-        txtValor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtValorActionPerformed(evt);
-            }
-        });
-        jPanel4.add(txtValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 157, 70, -1));
-        jPanel4.add(txtQuantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(319, 157, 90, -1));
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -236,6 +192,133 @@ public class FormProdutos extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel4.setOpaque(false);
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        Lista.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                ListaMousePressed(evt);
+            }
+        });
+        jPanel4.add(Lista, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, 510, 110));
+
+        txtDescricao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDescricaoActionPerformed(evt);
+            }
+        });
+        txtDescricao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtDescricaoKeyReleased(evt);
+            }
+        });
+        jPanel4.add(txtDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 510, -1));
+
+        jLabel2.setText("Codigo:");
+        jPanel4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 32, -1, -1));
+        jPanel4.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(74, 29, 60, -1));
+
+        jLabel4.setText("Código de Barras:");
+        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(217, 32, -1, -1));
+        jPanel4.add(txtCodigoBarras, new org.netbeans.lib.awtextra.AbsoluteConstraints(326, 29, 250, -1));
+
+        jLabel6.setText("Quantidade:");
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 160, -1, -1));
+
+        jLabel3.setText("Descricão:");
+        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 95, -1, -1));
+
+        jLabel5.setText("Valor:");
+        jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 160, -1, -1));
+
+        txtValor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtValorActionPerformed(evt);
+            }
+        });
+        jPanel4.add(txtValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 157, 70, -1));
+        jPanel4.add(txtQuantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(319, 157, 90, -1));
+
+        jTabbedPane1.addTab("Cadastro", jPanel4);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/buscar.png"))); // NOI18N
+        jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/pdf.png"))); // NOI18N
+        jButton2.setText("PDF");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jPanel5.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jtableProdutos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jtableProdutos);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 559, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(159, 159, 159)
+                        .addComponent(jButton2))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Consulta", jPanel2);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -245,10 +328,9 @@ public class FormProdutos extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 596, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 588, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -256,11 +338,11 @@ public class FormProdutos extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
@@ -271,44 +353,26 @@ public class FormProdutos extends javax.swing.JFrame {
     }//GEN-LAST:event_txtValorActionPerformed
 
      private void ListaDePesquisa(){
+     
         MODELO.removeAllElements();
 
-        Conexao();
+        CadastroDeProdutos pro = new CadastroDeProdutos();
+        pro.setDescricao(txtDescricao.getText());
         
-        try {
-            PreparedStatement busca = con.prepareStatement("select * from produtos where descricao like '%"+txtDescricao.getText()+"%' Order by descricao");
-            
-            ResultSet rs = busca.executeQuery();
-            int v = 0;
-            while(rs.next()){
-                MODELO.addElement(rs.getString("descricao"));
-                v++;
+        ProdutosDAO proDao = new ProdutosDAO();
+        
+        List<CadastroDeProdutos> lista = proDao.ListaDePesquisa(pro);
+        
+            boolean validador = false;
+            for(int x=0; x < lista.size(); x++){
+                MODELO.addElement(lista.get(x).getDescricao());
+                validador = true;
             }
-            if(v >= 1){
+            if(validador){
                 Lista.setVisible(true);
             }else{
                 Lista.setVisible(false);
             }
-            
-           con.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(FormClientes.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    private void MostrarPesquisa(){
-    /*    int Linha = Lista.getSelectedIndex();
-        if(Linha >=0){
-            Conexao();
-            try {
-                PreparedStatement buscar = con.prepareStatement("SELECT * FROM produtos where descricao like '%"
-                        +txtDescricao.getText()+"%' ORDER BY descricao LIMI"+ Linha +" , 1");
-                con.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(FormOrdemDeServico.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }*/
-        txtDescricao.setText(Lista.getSelectedValue());
     }
     
     //CRUD
@@ -420,13 +484,37 @@ public class FormProdutos extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDescricaoKeyReleased
 
     private void ListaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListaMousePressed
-        MostrarPesquisa();
+        txtDescricao.setText(Lista.getSelectedValue());
         Lista.setVisible(false);
     }//GEN-LAST:event_ListaMousePressed
 
     private void btnBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscar1ActionPerformed
         Limpar();
     }//GEN-LAST:event_btnBuscar1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        ProdutosDAO proDao = new ProdutosDAO();
+        
+        List<CadastroDeProdutos> lista = proDao.InsereDadosNaTabela();
+        
+        for(int x=0; x < lista.size(); x++){
+            CadastroDeProdutos pro = new CadastroDeProdutos();
+            
+            pro.setCodigo(lista.get(x).getCodigo());
+            pro.setDescricao(lista.get(x).getDescricao());
+            pro.setValor(lista.get(x).getValor());
+            pro.setQuantidade(lista.get(x).getQuantidade());
+            
+            tabelaProdutos.addRow(pro);
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        GeradorDePdf geraPdf = new GeradorDePdf();
+        geraPdf.GeraPDFProdutos();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -473,6 +561,8 @@ public class FormProdutos extends javax.swing.JFrame {
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnSalvar1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -480,8 +570,13 @@ public class FormProdutos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jtableProdutos;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtCodigoBarras;
     private javax.swing.JTextField txtDescricao;

@@ -7,7 +7,7 @@ package View;
 
 import Model.Database;
 import Controller.CadastroDeServico;
-import Controller.ProdutoTableModel;
+import Controller.ProdutoTableModelOrdemDeServico;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,7 +26,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
     private Connection con;
     
-    ProdutoTableModel tableModel = new ProdutoTableModel();
+    ProdutoTableModelOrdemDeServico tableModel = new ProdutoTableModelOrdemDeServico();
     
     DefaultListModel MODELO;
     
