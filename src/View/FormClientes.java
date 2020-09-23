@@ -540,7 +540,7 @@ public class FormClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBairroActionPerformed
 
     private void ListaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListaMousePressed
-        MostrarPesquisa();
+        txtNome.setText(Lista.getSelectedValue());
         Lista.setVisible(false);
     }//GEN-LAST:event_ListaMousePressed
 
@@ -600,15 +600,6 @@ public class FormClientes extends javax.swing.JFrame {
                 document.add(new Paragraph(" "));
             }
            
-            /*     int cont = tabelaClientes.getRowCount();
-
-           for(int x=0 ; x<cont ;x++){
-               String nome = tabelaClientes.getValueAt(x, 0).toString();
-               String endereco = tabelaClientes.getValueAt(x, 1).toString();
-               String telefone = tabelaClientes.getValueAt(x, 2).toString();
-               String data = tabelaClientes.getValueAt(x, 3).toString();
-               document.add(new Paragraph((x+1)+" "+nome+ " - "+endereco+" - "+telefone+" - "+data));
-           } */
             document.add(new Paragraph("  "
                     + ""
                     + ""));
@@ -682,64 +673,27 @@ public class FormClientes extends javax.swing.JFrame {
     }
 
     private void ListaDePesquisa() {
-       MODELO.removeAllElements();
-       CadastroDeClientes cli = new CadastroDeClientes();
+       MODELO.removeAllElements(); // Remove os elementos
+       CadastroDeClientes cli = new CadastroDeClientes(); // chama a classe de cadastro
+      
+       cli.setNome(txtNome.getText()); // Busca os valores digitados no campo de nome
        
-       cli.setNome(txtNome.getText());
-       
-       ClientesDAO cliDao = new ClientesDAO();
+       ClientesDAO cliDao = new ClientesDAO(); // chama a classe de CkietesDAO
 
-       List<CadastroDeClientes> lista = cliDao.ListaDePesquisa();
+       List<CadastroDeClientes> lista = cliDao.ListaDePesquisa(cli); //Chama a lista da Chasse DAO pegando os parametros da Classe de Cadastro e Enviando esse parametros para ela
+       
         
-            int v = 0;
+            boolean validador = false; // Validador da LISTA ficar oculta ou não
             for(int x=0; x < lista.size(); x++) {
-                MODELO.addElement(lista.get(x));
-                v++;
+                MODELO.addElement(lista.get(x).getNome()); // Adiciona na lista o Array que foi adiocionado na classe DAO no metodo da Lista de Pesquisa
+                validador = true;
             }
-            if (v >= 1) {
+            if (validador) {
                 Lista.setVisible(true);
             } else {
                 Lista.setVisible(false);
-            }
-        
-       /*  MODELO.removeAllElements();
-
-        Conexao();
-
-        try {
-            PreparedStatement busca = con.prepareStatement("select nome from clientes where nome like '%" + txtNome.getText() + "%' Order by nome");
-
-            ResultSet rs = busca.executeQuery();
-            int v = 0;
-            while (rs.next()) {
-                MODELO.addElement(rs.getString("nome"));
-                v++;
-            }
-            if (v >= 1) {
-                Lista.setVisible(true);
-            } else {
-                Lista.setVisible(false);
-            }
-
-            con.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(FormClientes.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
-    }
-
-    private void MostrarPesquisa() {
-        int Linha = Lista.getSelectedIndex();
-        if (Linha >= 0) {
-            Conexao();
-            try {
-                PreparedStatement buscar = con.prepareStatement("SELECT * FROM clientes where nome like '%"
-                        + txtNome.getText() + "%' ORDER BY nome LIMI" + Linha + " , 1");
-                con.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(FormOrdemDeServico.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        txtNome.setText(Lista.getSelectedValue());
+            } 
+            
     }
 
     // CRUD

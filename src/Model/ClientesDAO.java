@@ -264,15 +264,13 @@ public class ClientesDAO {
     }
     
     
-    public List<CadastroDeClientes> ListaDePesquisa(){
+    public List<CadastroDeClientes> ListaDePesquisa(CadastroDeClientes cli){
         List<CadastroDeClientes> lista = new ArrayList<>();
-         Conexao();
-         CadastroDeClientes cli = new CadastroDeClientes();
-         String nome = cli.getNome();
-         System.out.println(nome);
+        
+        Conexao();
          
         try {
-            PreparedStatement busca = con.prepareStatement("select nome from clientes where nome like '%" + nome + "%' Order by nome");
+            PreparedStatement busca = con.prepareStatement("select nome from clientes where nome like '%" + cli.getNome() + "%' Order by nome");
 
             ResultSet rs = busca.executeQuery();
             while (rs.next()) {
