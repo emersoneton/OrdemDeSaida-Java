@@ -26,8 +26,8 @@ public class FilialDAO {
 
         try {
             PreparedStatement salvar = con.prepareStatement("INSERT INTO filial (bairro,cidade,cnpj,estado,razao_fantasia,"
-                    + "inscricao_estadual, inscricao_municipal, numero, pais, razao_social, telefone_comercial, telefone_celular, endereco"
-                    + ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                    + "inscricao_estadual, inscricao_municipal, numero, pais, razao_social, telefone_comercial, telefone_celular, endereco, cep"
+                    + ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
             salvar.setString(1, fil.getBairro());
             salvar.setString(2, fil.getCidade());
@@ -42,6 +42,7 @@ public class FilialDAO {
             salvar.setString(11, fil.getTelefoneComercial());
             salvar.setString(12, fil.getTelefoneCelular());
             salvar.setString(13, fil.getEndereco());
+            salvar.setString(14, fil.getCep());
 
             salvar.executeUpdate();
 
@@ -81,6 +82,7 @@ public class FilialDAO {
                     fil.setPais(rs.getString("pais"));
                     fil.setTelefoneComercial(rs.getString("telefone_comercial"));
                     fil.setTelefoneCelular(rs.getString("telefone_celular"));
+                    fil.setCep(rs.getString("cep"));
                     validador = true;
                     break;
                 }
@@ -105,7 +107,7 @@ public class FilialDAO {
         try {
             PreparedStatement update = con.prepareStatement("UPDATE filial SET bairro = ?, cidade = ?, cnpj = ?, estado = ?,"
                     + "razao_fantasia = ?, inscricao_estadual = ?, inscricao_municipal = ?, numero = ?, pais = ?, razao_social = ?,"
-                    + "telefone_comercial = ?, telefone_celular = ?, endereco = ? WHERE codigo = ?");
+                    + "telefone_comercial = ?, telefone_celular = ?, endereco = ?, cep = ? WHERE codigo = ?");
 
             update.setString(1, fil.getBairro());
             update.setString(2, fil.getCidade());
@@ -120,8 +122,9 @@ public class FilialDAO {
             update.setString(11, fil.getTelefoneComercial());
             update.setString(12, fil.getTelefoneCelular());
             update.setString(13, fil.getEndereco());
+            update.setString(14, fil.getCep());
 
-            update.setString(14, fil.getCodigo());
+            update.setString(15, fil.getCodigo());
 
             update.executeUpdate();
 

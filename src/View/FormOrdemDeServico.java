@@ -5,27 +5,22 @@
  */
 package View;
 
-import Controller.CadastroDeProdutos;
+import Controller.CadastroDeClientes;
 import Model.Database;
 import Controller.CadastroDeServico;
+import Controller.GeradorDePdf;
 import Controller.ProdutoTableModelOrdemDeServico;
 import Model.OrdemDeServicoDAO;
-import com.itextpdf.text.Paragraph;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
 
@@ -522,18 +517,24 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         txtDesconto.setText("");
         txtQuantidade.setText("1");
         jDataDoAgendamento.setText("");
+        textoValor.setText("0");
+        txtDesconto.setText("0");
     }
     
     private void ListaDePesquisa(){
-        Conexao();
+
         MODELO.removeAllElements();
-        try {
-            PreparedStatement buscar = con.prepareStatement("SELECT * FROM clientes where nome like '%"+txtPesquisaCliente.getText()+"%' ORDER BY nome");
-            
-            ResultSet rs = buscar.executeQuery();
+        
+        CadastroDeServico ser = new CadastroDeServico();
+        ser.setCliente(txtPesquisaCliente.getText());
+        
+        OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
+        List<CadastroDeServico> lista = serDao.ListaDePesquisa(ser);
+        
+       
             int v = 0;
-            while(rs.next()){
-                MODELO.addElement(rs.getString("nome"));
+            for(int x = 0; x < lista.size(); x++){
+                MODELO.addElement(lista.get(x).getCliente());
                 v++;
             }
             if(v >= 1){
@@ -541,81 +542,42 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             }else{
                 Lista.setVisible(false);
             }
-            
-            con.close();
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(FormOrdemDeServico.class.getName()).log(Level.SEVERE, null, ex);
-        }
         
     }
     
     private void MostrarPesquisa(){
-        int Linha = Lista.getSelectedIndex();
-        if(Linha >=0){
-            Conexao();
-            try {
-                PreparedStatement buscar = con.prepareStatement("SELECT * FROM clientes where nome like '%"
-                        +txtPesquisaCliente.getText()+"%' ORDER BY nome LIMI"+ Linha +" , 1");
-                con.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(FormOrdemDeServico.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+       
         txtPesquisaCliente.setText(Lista.getSelectedValue());
+        
     }
     
     private void BuscarProdutos(){
-        Conexao();
+      
+        CadastroDeServico ser = new CadastroDeServico();
         
-        try {
-            PreparedStatement buscar = con.prepareStatement("SELECT descricao,valor FROM produtos ORDER BY descricao");
-            
-            ResultSet rs = buscar.executeQuery();
-            
-            while(rs.next()){
-                String descricao = rs.getString("descricao");
-              //  String valor = rs.getString("valor");
-              //  String dados = descricao + " - R$ " + valor;
-                comboBoxProduto.addItem(descricao);
-            }
-            
-            con.close();
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(FormOrdemDeServico.class.getName()).log(Level.SEVERE, null, ex);
+        OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
+        
+        List<String> lista = serDao.BuscarProdutos(ser);
+        
+        for(int x=0; x < lista.size(); x++){
+            comboBoxProduto.addItem(lista.get(x));
         }
-
+        
     }
     
    
     
-    private double InsereValor(){
-        Conexao();
+    private double InsereValorNaTabela(){
+       
+        CadastroDeServico ser = new CadastroDeServico();
+        ser.setDescricao((String) comboBoxProduto.getSelectedItem());
         
-        try {
-            PreparedStatement buscar = con.prepareStatement("SELECT descricao,valor FROM produtos");
-            
-            ResultSet rs = buscar.executeQuery();
-            
-            while(rs.next()){
-                String descricao = rs.getString("descricao");
-                if(descricao.trim().equals(comboBoxProduto.getSelectedItem().toString())){
-                    
-                  CadastroDeServico ser = new CadastroDeServico();
-                  
-                  double valor = (rs.getDouble("valor"));
-                  return valor;
-                }
-
-            }
-            
-            con.close();
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(FormOrdemDeServico.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return 0;
+        OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
+        serDao.InsereValorNaTabela(ser);
+        
+        double valor = ser.getValorTotal();
+      
+        return valor; 
     }
     
     private void ContadorDaTabela(){
@@ -637,20 +599,25 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
 
+        InserirNaTabela();
+        
+    }//GEN-LAST:event_btnAdicionarActionPerformed
+
+    private void InserirNaTabela(){
         CadastroDeServico p = new CadastroDeServico();
 
         //Pegando os Valores dos campos e jogando para a TableModal
         p.setDescricao(comboBoxProduto.getSelectedItem().toString()); 
         CadastroDeServico ser = new CadastroDeServico();
-        p.setValorTotal(InsereValor());
+        p.setValorTotal(InsereValorNaTabela());
         p.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
        
         // Adiciono os itens na tabela pela classe da TableModal
         tableModel.addRow(p); 
         
         ContadorDaTabela(); //Chama o metodo de Somar o Valor total e a quantidade de linhas na tabela
-    }//GEN-LAST:event_btnAdicionarActionPerformed
-
+    }
+    
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         
         if(tbOrdemDeServico.getSelectedRow() != -1){
@@ -665,10 +632,10 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         String valor = "";
 
-        valor.valueOf(InsereValor());
+        valor.valueOf(InsereValorNaTabela());
         if(tbOrdemDeServico.getSelectedRow() != -1){ // Se for diferente de -1 existe algo na tabela.
             tableModel.setValueAt(comboBoxProduto.getSelectedItem().toString(), tbOrdemDeServico.getSelectedRow(), 0);
-            tableModel.setValueAt(valor.valueOf(InsereValor()), tbOrdemDeServico.getSelectedRow(), 1);
+            tableModel.setValueAt(valor.valueOf(InsereValorNaTabela()), tbOrdemDeServico.getSelectedRow(), 1);
             tableModel.setValueAt(txtQuantidade.getText(), tbOrdemDeServico.getSelectedRow(), 2);
             ContadorDaTabela(); //Chama o metodo de Somar o Valor total e a quantidade de linhas na tabela
         } 
@@ -679,6 +646,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
       SalvarItens();
       Salvar();
+      GerarPDF();
       
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -714,6 +682,17 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                serDao.SalvarItens(ser1);
            }
     }
+    
+    private void GerarPDF(){
+        CadastroDeServico ser = new CadastroDeServico();
+        ser.setCliente(txtPesquisaCliente.getText());
+        CadastroDeClientes cli = new CadastroDeClientes();
+        
+        GeradorDePdf geraPdf = new GeradorDePdf();
+        geraPdf.GeraPDFOrdemDeServico(ser,cli);
+        
+    }
+    
     
     private void BuscarOS(){
         CadastroDeServico ser = new CadastroDeServico();

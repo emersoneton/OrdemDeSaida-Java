@@ -483,6 +483,7 @@ public class FormFilial extends javax.swing.JFrame {
         CadastroDeFilial fil = new CadastroDeFilial();
         FilialDAO filDao = new FilialDAO();
 
+        fil.setCep(jCep.getText());
         fil.setBairro(txtBairro.getText());
         fil.setCidade(txtCidade.getText());
         fil.setCnpj(jCnpj.getText());
@@ -510,6 +511,7 @@ public class FormFilial extends javax.swing.JFrame {
 
         filDao.Buscar(fil);
 
+        jCep.setText(fil.getCep());
         txtRazaoSocial.setText(fil.getRazaoSocial());
         txtRazaoFantasia.setText(fil.getRazaoFantasia());
         jCnpj.setText(fil.getCnpj());
@@ -531,6 +533,7 @@ public class FormFilial extends javax.swing.JFrame {
         CadastroDeFilial fil = new CadastroDeFilial();
         FilialDAO filDao = new FilialDAO();
 
+        fil.setCep(jCep.getText());
         fil.setCodigo(txtCodigo.getText());
         fil.setBairro(txtBairro.getText());
         fil.setCidade(txtCidade.getText());
