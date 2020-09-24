@@ -476,7 +476,6 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Inicializar(){
-        txtOs.setEnabled(false);
         tbOrdemDeServico.setModel(tableModel);
         textoValor.setForeground(Color.green);
         txtQuantidade.setText("1");
@@ -519,6 +518,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         jDataDoAgendamento.setText("");
         textoValor.setText("0");
         txtDesconto.setText("0");
+        BuscarOS();
     }
     
     private void ListaDePesquisa(){
@@ -644,12 +644,30 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
 
-      SalvarItens();
-      Salvar();
-      GerarPDF();
-      
+        VerificaCodigoNoBanco(); // verifico se ja tem algum código cadastrado no banco para fazer a alteração ou a inserção dos dados pelo botão Salvar
+   
     }//GEN-LAST:event_btnSalvarActionPerformed
 
+    public void VerificaCodigoNoBanco(){
+ 
+        CadastroDeServico ser = new CadastroDeServico();
+        
+        ser.setOs(Integer.parseInt(txtOs.getText()));
+        
+        OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
+
+        serDao.VerificaCodigoNoBanco(ser);
+        
+        if(ser.isValidador()){
+            GerarPDF();         //Gero PDF 
+        }else{
+             //  SalvarItens(); //Salvo o Itens da Nota
+            // Salvar();         //Salvo os complementos da nota
+              GerarPDF();         //Gero PDF 
+        }
+        
+    }
+    
     public void Salvar(){
         
         OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
@@ -661,6 +679,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         ser.setData(jDataDoAgendamento.getText());
         ser.setComplemento(textoComplemento.getText());
         serDao.Salvar(ser);
+        Limpar();
         
     }
     
@@ -686,6 +705,9 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     private void GerarPDF(){
         CadastroDeServico ser = new CadastroDeServico();
         ser.setCliente(txtPesquisaCliente.getText());
+        ser.setComplemento(textoComplemento.getText());
+        ser.setData(txtDataEHora.getText());
+        ser.setDataAgendamento(jDataDoAgendamento.getText());
         CadastroDeClientes cli = new CadastroDeClientes();
         
         GeradorDePdf geraPdf = new GeradorDePdf();
@@ -708,10 +730,27 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
 
-        
+        Buscar();
 
     }//GEN-LAST:event_btnEditarActionPerformed
 
+    private void Buscar(){
+        CadastroDeServico ser = new CadastroDeServico();
+        
+        OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
+        
+        ser.setOs(Integer.parseInt(txtOs.getText()));
+        
+        serDao.Buscar(ser);
+        
+        txtPesquisaCliente.setText(ser.getCliente());
+        txtDesconto.setText(Double.toString(ser.getDesconto()));
+        jDataDoAgendamento.setText(ser.getData());
+        textoValor.setText(Double.toString(ser.getValorTotal()));
+        textoComplemento.setText(ser.getComplemento());
+        
+    }
+    
     private void btnSalvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvar1ActionPerformed
 
       

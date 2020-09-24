@@ -47,6 +47,31 @@ public class OrdemDeServicoDAO {
             Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    
+    public void Buscar(CadastroDeServico ser){
+       Conexao();
+       
+        try {
+            PreparedStatement busca = con.prepareStatement("SELECT * FROM servicos WHERE codigo = '"+ser.getOs()+"'");
+            
+            ResultSet rs = busca.executeQuery();
+            
+            while(rs.next()){
+                
+                ser.setCliente(rs.getString("cliente"));
+                ser.setValorTotal(Double.parseDouble(rs.getString("valor")));
+                ser.setDesconto(Double.parseDouble(rs.getString("desconto")));
+                ser.setData(rs.getString("data_agendamento"));
+                ser.setComplemento(rs.getString("complemento"));
+                
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 
     public void SalvarItens(CadastroDeServico ser) {
 
@@ -247,6 +272,33 @@ public class OrdemDeServicoDAO {
 
         }
 
+    }
+    
+    
+    public void VerificaCodigoNoBanco(CadastroDeServico ser){
+        
+        Conexao();
+        String Codigo = ""+ser.getOs();
+        try {
+            PreparedStatement busca = con.prepareStatement("SELECT codigo FROM servicos");
+
+            ResultSet rs = busca.executeQuery();
+
+            while (rs.next()) {
+                String codigo = rs.getString("codigo");
+                
+                if(codigo.trim().equals(Codigo)){
+                    ser.setValidador(true);
+                    
+                }
+                ser.setOs(Integer.parseInt(rs.getString("codigo")));
+            }
+
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
     
     

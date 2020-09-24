@@ -3,31 +3,18 @@ package Controller;
 import Model.ClientesDAO;
 import Model.OrdemDeServicoDAO;
 import Model.ProdutosDAO;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
-import java.awt.Color;
-import static java.awt.Color.blue;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -148,6 +135,11 @@ public class GeradorDePdf {
         }
     }
 
+    
+    
+    
+    
+    
     //GERAR PDF DA ORDEM DE SERVIÇO
     public void GeraPDFOrdemDeServico(CadastroDeServico ser, CadastroDeClientes cli) {
 
@@ -162,6 +154,7 @@ public class GeradorDePdf {
             PdfWriter.getInstance(document, new FileOutputStream("Ordem De Serviço.pdf"));
             document.open();
             Image figura = Image.getInstance("imagem.jpg");
+            figura.setAlignment(1);
             document.add(figura);
 
             // Dados do Emissor
@@ -176,7 +169,6 @@ public class GeradorDePdf {
             document.add(new Paragraph("______________________________________________________________________________"));
             
             // Numero da Ordem de Serviço
-            document.add(new Paragraph(" "));
             serDao.BuscarOS(ser);
             Paragraph p = new Paragraph("ORDEM DE SERVIÇO ("+ser.getOs()+")");
             p.setAlignment(1);
@@ -188,7 +180,42 @@ public class GeradorDePdf {
             document.add(new Paragraph("Cliente: "+cli.getNome()));
             document.add(new Paragraph("CPF/CNPJ: "+cli.getCpf()+" / "+cli.getCnpj()));
             document.add(new Paragraph("Endereço: "+cli.getEndereco()+", nº "+cli.getNumero()));
+            document.add(new Paragraph("Cidade: "+cli.getCidade()+" / "+cli.getEstado()));
             document.add(new Paragraph("Telefone: "+cli.getTelefone()));
+            
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph("Descrição de Serviço: "+ser.getComplemento()));
+            
+            
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph("Ordem de Serviço Gerada em: "+ ser.getData()));
+            document.add(new Paragraph("Agendamento Marcado para: "+ ser.getDataAgendamento()));
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph("* o serviço será realizado em até 20 dias úteis, salvo imprevisto."));
+            document.add(new Paragraph("* qualquer serviço adicional será cobrado valores de acordo com a tabela."));
+            document.add(new Paragraph("* aparelhos não retirados no prazo de 90 dias, serão descartados."));
+            document.add(new Paragraph("* todos os serviços realizados tem garantia de 90 dias ao contar da data de entrega."));
+            document.add(new Paragraph("* o serviço só será realizado após aprovação do cliente."));
+            document.add(new Paragraph("* o ponto de luz é por conta do cliente, caso executado será cobrado a parte."));
+            
+            
+            
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph(" "));
+            Paragraph tec = new Paragraph("______________________________                   ______________________________");
+            tec.setAlignment(1);
+            document.add(tec);
+            
+            document.add(new Paragraph("                                TÉCNICO                                                           CLIENTE "));
+            
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph(" "));
+            Paragraph fim = new Paragraph("AGRADECEMOS PELA SUA PREFERÊNCIA");
+            fim.setAlignment(1);
+            document.add(fim);
             
         } catch (DocumentException de) {
             System.err.println(de.getMessage());

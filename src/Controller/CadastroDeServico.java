@@ -3,9 +3,10 @@ package Controller;
 
 
 public class CadastroDeServico {
-    String cliente = null, complemento = null, descricao = null, data = null;
+    String cliente = null, complemento = null, descricao = null, data = null, dataAgendamento = null;
     int quantidade = 0, os = 0;
     double valorTotal = 0, desconto = 0, contador = 0;
+    boolean validador = false;
 
 
     public String getCliente() {
@@ -80,6 +81,22 @@ public class CadastroDeServico {
 
     public void setContador(double contador) {
         this.contador = contador;
+    }
+
+    public boolean isValidador() {
+        return validador;
+    }
+
+    public void setValidador(boolean validador) {
+        this.validador = validador;
+    }
+
+    public String getDataAgendamento() {
+        return dataAgendamento;
+    }
+
+    public void setDataAgendamento(String dataAgendamento) {
+        this.dataAgendamento = dataAgendamento;
     }
 
     
