@@ -23,7 +23,6 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.text.MaskFormatter;
 
-
 /**
  *
  * @author Emerson
@@ -31,13 +30,13 @@ import javax.swing.text.MaskFormatter;
 public class FormOrdemDeServico extends javax.swing.JFrame {
 
     private Connection con;
-    
+
     ProdutoTableModelOrdemDeServico tableModel = new ProdutoTableModelOrdemDeServico();
-    
+
     DefaultListModel MODELO;
-    
+
     int Enter = 0;
-    
+
     public FormOrdemDeServico() {
         initComponents();
         BuscarProdutos();
@@ -49,7 +48,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         Lista.setModel(MODELO);
         Data();
         BuscarOS();
-       // AutoCompleteDecorator.decorate(comboBoxCliente); //Chama a API autocomplete do JcomboBox
+        // AutoCompleteDecorator.decorate(comboBoxCliente); //Chama a API autocomplete do JcomboBox
     }
 
     /**
@@ -90,6 +89,8 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         jDataDoAgendamento = new javax.swing.JFormattedTextField();
         jLabel8 = new javax.swing.JLabel();
         txtOs = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jHorarioAgendamento = new javax.swing.JFormattedTextField();
         jPanel4 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         btnSalvar = new javax.swing.JButton();
@@ -203,6 +204,14 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
         txtOs.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
+        jLabel9.setText("Horario:");
+
+        jHorarioAgendamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jHorarioAgendamentoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -215,32 +224,6 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(13, 13, 13)
-                                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(jLabel5)
-                                .addGap(9, 9, 9)
-                                .addComponent(textoQuantidadeDeItens, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(17, 17, 17)
-                                .addComponent(jLabel4)
-                                .addGap(5, 5, 5)
-                                .addComponent(textoValor, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(19, 19, 19)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jDataDoAgendamento, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,7 +254,37 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtDataEHora, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnAdicionar, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(btnAdicionar, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(13, 13, 13)
+                                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(jLabel5)
+                                .addGap(9, 9, 9)
+                                .addComponent(textoQuantidadeDeItens, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(17, 17, 17)
+                                .addComponent(jLabel4)
+                                .addGap(5, 5, 5)
+                                .addComponent(textoValor, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(19, 19, 19)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jDataDoAgendamento, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jHorarioAgendamento, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -327,7 +340,9 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                     .addComponent(txtDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel6)
-                    .addComponent(jDataDoAgendamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDataDoAgendamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)
+                    .addComponent(jHorarioAgendamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(4, 4, 4))
         );
 
@@ -475,285 +490,302 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void Inicializar(){
+    private void Inicializar() {
         tbOrdemDeServico.setModel(tableModel);
         textoValor.setForeground(Color.green);
         txtQuantidade.setText("1");
         Mascaras();
     }
 
-    
-    private void Data(){
+    private void Data() {
         Date data = new Date(System.currentTimeMillis());
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
-      // DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        // DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String dataFormatada = dateFormat.format(data);
         txtDataEHora.setText(dataFormatada);
     }
-            
-    
+
     //CRUD
-    private void Conexao(){
+    private void Conexao() {
         this.con = Database.getConnection();
     }
-    
+
     private void Mascaras() {
 
-        MaskFormatter maskTelefone, maskCnpj, maskCpf, maskCep;
+        MaskFormatter maskDataAgendamento, maskHorarioAgendamento;
 
         try {
+
+            maskDataAgendamento = new MaskFormatter("##/##/####");
+            maskDataAgendamento.install(jDataDoAgendamento);
             
-            maskTelefone = new MaskFormatter("##/##/####");
-            maskTelefone.install(jDataDoAgendamento);
+            maskHorarioAgendamento = new MaskFormatter("##:##");
+            maskHorarioAgendamento.install(jHorarioAgendamento);
 
         } catch (ParseException ex) {
             Logger.getLogger(FormClientes.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
-    
-    private void Limpar(){
+
+    private void Limpar() {
         txtDesconto.setText("");
         txtQuantidade.setText("1");
         jDataDoAgendamento.setText("");
         textoValor.setText("0");
         txtDesconto.setText("0");
+        jHorarioAgendamento.setText("");
+        textoComplemento.setText("");
+        txtPesquisaCliente.setText("");
         BuscarOS();
     }
-    
-    private void ListaDePesquisa(){
+
+    private void ListaDePesquisa() {
 
         MODELO.removeAllElements();
-        
+
         CadastroDeServico ser = new CadastroDeServico();
         ser.setCliente(txtPesquisaCliente.getText());
-        
+
         OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
         List<CadastroDeServico> lista = serDao.ListaDePesquisa(ser);
-        
-       
-            int v = 0;
-            for(int x = 0; x < lista.size(); x++){
-                MODELO.addElement(lista.get(x).getCliente());
-                v++;
-            }
-            if(v >= 1){
-                Lista.setVisible(true);
-            }else{
-                Lista.setVisible(false);
-            }
-        
+
+        int v = 0;
+        for (int x = 0; x < lista.size(); x++) {
+            MODELO.addElement(lista.get(x).getCliente());
+            v++;
+        }
+        if (v >= 1) {
+            Lista.setVisible(true);
+        } else {
+            Lista.setVisible(false);
+        }
+
     }
-    
-    private void MostrarPesquisa(){
-       
+
+    private void MostrarPesquisa() {
+
         txtPesquisaCliente.setText(Lista.getSelectedValue());
-        
+
     }
-    
-    private void BuscarProdutos(){
-      
+
+    private void BuscarProdutos() {
+
         CadastroDeServico ser = new CadastroDeServico();
-        
+
         OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
-        
+
         List<String> lista = serDao.BuscarProdutos(ser);
-        
-        for(int x=0; x < lista.size(); x++){
+
+        for (int x = 0; x < lista.size(); x++) {
             comboBoxProduto.addItem(lista.get(x));
         }
-        
+
     }
-    
-   
-    
-    private double InsereValorNaTabela(){
-       
+
+    private double InsereValorNaTabela() {
+
         CadastroDeServico ser = new CadastroDeServico();
         ser.setDescricao((String) comboBoxProduto.getSelectedItem());
-        
+
         OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
         serDao.InsereValorNaTabela(ser);
-        
+
         double valor = ser.getValorTotal();
-      
-        return valor; 
+
+        return valor;
     }
-    
-    private void ContadorDaTabela(){
+
+    private void ContadorDaTabela() {
         // Soma a quantidade de linhas na Tabela
-        int somaLinhas = tableModel.getRowCount(); 
+        int somaLinhas = tableModel.getRowCount();
         textoQuantidadeDeItens.setText(Integer.toString(somaLinhas));
-        
+
         // Conta a Coluna Valor 
-        double somaTotal=0;
-        double Total=0;
-        double quantidade=0;
-        for (int i=0; i<tableModel.getRowCount();i++){
-             Total = Double.parseDouble(tableModel.getValueAt(i, 1).toString());
-             quantidade = Double.parseDouble(tableModel.getValueAt(i, 2).toString());
-             somaTotal += (Total * quantidade);
+        double somaTotal = 0;
+        double Total = 0;
+        double quantidade = 0;
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+            Total = Double.parseDouble(tableModel.getValueAt(i, 1).toString());
+            quantidade = Double.parseDouble(tableModel.getValueAt(i, 2).toString());
+            somaTotal += (Total * quantidade);
         }
-        textoValor.setText(""+somaTotal);
+        textoValor.setText("" + somaTotal);
     }
-    
+
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
 
         InserirNaTabela();
-        
+
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
-    private void InserirNaTabela(){
+    private void InserirNaTabela() {
         CadastroDeServico p = new CadastroDeServico();
 
         //Pegando os Valores dos campos e jogando para a TableModal
-        p.setDescricao(comboBoxProduto.getSelectedItem().toString()); 
+        p.setDescricao(comboBoxProduto.getSelectedItem().toString());
         CadastroDeServico ser = new CadastroDeServico();
         p.setValorTotal(InsereValorNaTabela());
         p.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
-       
+
         // Adiciono os itens na tabela pela classe da TableModal
-        tableModel.addRow(p); 
-        
+        tableModel.addRow(p);
+
         ContadorDaTabela(); //Chama o metodo de Somar o Valor total e a quantidade de linhas na tabela
     }
-    
+
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        
-        if(tbOrdemDeServico.getSelectedRow() != -1){
-            
+
+        if (tbOrdemDeServico.getSelectedRow() != -1) {
+
             tableModel.removeRow(tbOrdemDeServico.getSelectedRow());
             ContadorDaTabela(); //Chama o metodo de Somar o Valor total e a quantidade de linhas na tabela
-            
+
         }
-        
+
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         String valor = "";
 
         valor.valueOf(InsereValorNaTabela());
-        if(tbOrdemDeServico.getSelectedRow() != -1){ // Se for diferente de -1 existe algo na tabela.
+        if (tbOrdemDeServico.getSelectedRow() != -1) { // Se for diferente de -1 existe algo na tabela.
             tableModel.setValueAt(comboBoxProduto.getSelectedItem().toString(), tbOrdemDeServico.getSelectedRow(), 0);
             tableModel.setValueAt(valor.valueOf(InsereValorNaTabela()), tbOrdemDeServico.getSelectedRow(), 1);
             tableModel.setValueAt(txtQuantidade.getText(), tbOrdemDeServico.getSelectedRow(), 2);
             ContadorDaTabela(); //Chama o metodo de Somar o Valor total e a quantidade de linhas na tabela
-        } 
-        
+        }
+
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
 
+        /*
+            O cliente gera uma OS somente com o  problema relatado e os dados do cliente
+            Depois de fazer a visita ao seu cliente ele busca a OS e adiciona os Itens na OS
+        */
         VerificaCodigoNoBanco(); // verifico se ja tem algum código cadastrado no banco para fazer a alteração ou a inserção dos dados pelo botão Salvar
-   
+
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    public void VerificaCodigoNoBanco(){
- 
+    public void VerificaCodigoNoBanco() {
+
         CadastroDeServico ser = new CadastroDeServico();
-        
+
         ser.setOs(Integer.parseInt(txtOs.getText()));
-        
+
         OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
 
         serDao.VerificaCodigoNoBanco(ser);
-        
-        if(ser.isValidador()){
-            GerarPDF();         //Gero PDF 
-        }else{
-             //  SalvarItens(); //Salvo o Itens da Nota
-            // Salvar();         //Salvo os complementos da nota
-              GerarPDF();         //Gero PDF 
+
+        if (ser.isValidador()) {   //UPDATE
+          SalvarItens(); //Salvo o Itens da Nota
+          GerarPDF(); //Gero PDF 
+          
+        } else {                   //INSERT
+          Salvar(); //Salvo os complementos da nota
+          GerarPDF(); //Gero PDF 
         }
         
+        Limpar();
+      
     }
-    
-    public void Salvar(){
-        
+
+    public void Salvar() {
+
         OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
         CadastroDeServico ser = new CadastroDeServico();
-        
+
         ser.setCliente(txtPesquisaCliente.getText());
         ser.setValorTotal(Double.parseDouble(textoValor.getText()));
         ser.setDesconto(Double.parseDouble(txtDesconto.getText()));
-        ser.setData(jDataDoAgendamento.getText());
+        ser.setDataAgendamento(jDataDoAgendamento.getText());
+        ser.setHorarioAgendamento(jHorarioAgendamento.getText());
+        ser.setData(txtDataEHora.getText());
         ser.setComplemento(textoComplemento.getText());
+        ser.setOs(Integer.parseInt(txtOs.getText()));
+
+        
         serDao.Salvar(ser);
-        Limpar();
         
     }
-    
-    public void SalvarItens(){
-           CadastroDeServico ser = new CadastroDeServico();
-           
-           int cont = tbOrdemDeServico.getRowCount();
 
-           ser.setContador(cont); // Crio um Contador para receber o valor da Tabela para validar no DAO
-
-           for(int x=0 ; x<cont ;x++){
-               CadastroDeServico ser1 = new CadastroDeServico();
-               ser1.setOs(Integer.parseInt(txtOs.getText()));
-               ser1.setDescricao(tableModel.getValueAt(x, 0).toString());
-               ser1.setValorTotal(Double.parseDouble(tableModel.getValueAt(x, 1).toString()));
-               ser1.setQuantidade(Integer.parseInt(tableModel.getValueAt(x, 2).toString()));
-               
-               OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
-               serDao.SalvarItens(ser1);
-           }
-    }
-    
-    private void GerarPDF(){
+    public void SalvarItens() {
         CadastroDeServico ser = new CadastroDeServico();
+
+        int cont = tbOrdemDeServico.getRowCount();
+
+        ser.setContador(cont); // Crio um Contador para receber o valor da Tabela para validar no DAO
+
+        for (int x = 0; x < cont; x++) {
+            CadastroDeServico ser1 = new CadastroDeServico();
+            ser1.setOs(Integer.parseInt(txtOs.getText()));
+            ser1.setDescricao(tableModel.getValueAt(x, 0).toString());
+            ser1.setValorTotal(Double.parseDouble(tableModel.getValueAt(x, 1).toString()));
+            ser1.setQuantidade(Integer.parseInt(tableModel.getValueAt(x, 2).toString()));
+
+            OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
+            serDao.SalvarItens(ser1);
+        }
+    }
+
+    private void GerarPDF() {
+        CadastroDeServico ser = new CadastroDeServico();
+        
+        ser.setOs(Integer.parseInt(txtOs.getText()));
         ser.setCliente(txtPesquisaCliente.getText());
         ser.setComplemento(textoComplemento.getText());
         ser.setData(txtDataEHora.getText());
         ser.setDataAgendamento(jDataDoAgendamento.getText());
+        ser.setHorarioAgendamento(jHorarioAgendamento.getText());
+        ser.setValorTotal(Double.parseDouble(textoValor.getText()));
+        ser.setDesconto(Double.parseDouble(txtDesconto.getText()));
+        
         CadastroDeClientes cli = new CadastroDeClientes();
-        
+
         GeradorDePdf geraPdf = new GeradorDePdf();
-        geraPdf.GeraPDFOrdemDeServico(ser,cli);
+        geraPdf.GeraPDFOrdemDeServico(ser, cli);
         
     }
-    
-    
-    private void BuscarOS(){
+
+    private void BuscarOS() {
         CadastroDeServico ser = new CadastroDeServico();
-        
+
         OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
-        
+
         serDao.BuscarOS(ser);
-        
+
         txtOs.setText(Integer.toString(ser.getOs()));
-        
+
     }
-    
-    
+
+
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
 
         Buscar();
 
     }//GEN-LAST:event_btnEditarActionPerformed
 
-    private void Buscar(){
+    private void Buscar() {
         CadastroDeServico ser = new CadastroDeServico();
-        
+
         OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
-        
+
         ser.setOs(Integer.parseInt(txtOs.getText()));
-        
+
         serDao.Buscar(ser);
-        
+
         txtPesquisaCliente.setText(ser.getCliente());
         txtDesconto.setText(Double.toString(ser.getDesconto()));
-        jDataDoAgendamento.setText(ser.getData());
+        jDataDoAgendamento.setText(ser.getDataAgendamento());
         textoValor.setText(Double.toString(ser.getValorTotal()));
         textoComplemento.setText(ser.getComplemento());
-        
+        jHorarioAgendamento.setText(ser.getHorarioAgendamento());
+
     }
-    
+
     private void btnSalvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvar1ActionPerformed
 
-      
 
     }//GEN-LAST:event_btnSalvar1ActionPerformed
 
@@ -767,9 +799,9 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPesquisaClienteActionPerformed
 
     private void txtPesquisaClienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaClienteKeyReleased
-        if(Enter == 0){
+        if (Enter == 0) {
             ListaDePesquisa();
-        }else{
+        } else {
             Enter = 0;
         }
     }//GEN-LAST:event_txtPesquisaClienteKeyReleased
@@ -782,6 +814,10 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     private void btnBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscar1ActionPerformed
         Limpar();
     }//GEN-LAST:event_btnBuscar1ActionPerformed
+
+    private void jHorarioAgendamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jHorarioAgendamentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jHorarioAgendamentoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -833,6 +869,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     private javax.swing.JButton btnSalvar1;
     private javax.swing.JComboBox<String> comboBoxProduto;
     private javax.swing.JFormattedTextField jDataDoAgendamento;
+    private javax.swing.JFormattedTextField jHorarioAgendamento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -841,6 +878,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

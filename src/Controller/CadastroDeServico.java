@@ -3,7 +3,7 @@ package Controller;
 
 
 public class CadastroDeServico {
-    String cliente = null, complemento = null, descricao = null, data = null, dataAgendamento = null;
+    String cliente = null, complemento = null, descricao = null, data = null, dataAgendamento = null, horarioAgendamento = null;
     int quantidade = 0, os = 0;
     double valorTotal = 0, desconto = 0, contador = 0;
     boolean validador = false;
@@ -97,6 +97,14 @@ public class CadastroDeServico {
 
     public void setDataAgendamento(String dataAgendamento) {
         this.dataAgendamento = dataAgendamento;
+    }
+
+    public String getHorarioAgendamento() {
+        return horarioAgendamento;
+    }
+
+    public void setHorarioAgendamento(String horarioAgendamento) {
+        this.horarioAgendamento = horarioAgendamento;
     }
 
     

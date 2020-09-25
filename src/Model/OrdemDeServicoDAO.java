@@ -2,6 +2,7 @@ package Model;
 
 import Controller.CadastroDeClientes;
 import Controller.CadastroDeFilial;
+import Controller.CadastroDeProdutos;
 import Controller.CadastroDeServico;
 import View.FormOrdemDeServico;
 import java.sql.Connection;
@@ -27,14 +28,18 @@ public class OrdemDeServicoDAO {
         Conexao();
 
         try {
-            PreparedStatement busca = con.prepareStatement("INSERT INTO servicos(cliente,valor,desconto,data_agendamento,complemento) "
-                    + "VALUES (?,?,?,?,?)");
+            PreparedStatement busca = con.prepareStatement("INSERT INTO servicos(cliente,valor,desconto,data_agendamento,"
+                    + "complemento,horario_agendamento,data_os) "
+                    + "VALUES (?,?,?,?,?,?,?)");
 
             busca.setString(1, ser.getCliente());
             busca.setString(2, "" + ser.getValorTotal());
             busca.setString(3, "" + ser.getDesconto());
-            busca.setString(4, ser.getData());
+            busca.setString(4, ser.getDataAgendamento());
             busca.setString(5, ser.getComplemento());
+            busca.setString(6, ser.getHorarioAgendamento());
+            busca.setString(7, ser.getData());
+            
 
             busca.executeUpdate();
 
@@ -62,7 +67,8 @@ public class OrdemDeServicoDAO {
                 ser.setCliente(rs.getString("cliente"));
                 ser.setValorTotal(Double.parseDouble(rs.getString("valor")));
                 ser.setDesconto(Double.parseDouble(rs.getString("desconto")));
-                ser.setData(rs.getString("data_agendamento"));
+                ser.setDataAgendamento(rs.getString("data_agendamento"));
+                ser.setHorarioAgendamento(rs.getString("horario_agendamento"));
                 ser.setComplemento(rs.getString("complemento"));
                 
             }
@@ -302,7 +308,33 @@ public class OrdemDeServicoDAO {
     }
     
     
-    
+    public List<CadastroDeProdutos> BuscarItensDoServico(CadastroDeProdutos pro, CadastroDeServico ser){
+        
+        Conexao();
+        
+        List<CadastroDeProdutos> lista = new ArrayList<>();
+        
+         try {
+            PreparedStatement busca = con.prepareStatement("SELECT * FROM itens_servico WHERE cod_servico = '"+ser.getOs()+"'");
+            
+            ResultSet rs = busca.executeQuery();
+            
+            while(rs.next()){
+                CadastroDeProdutos pro1 = new CadastroDeProdutos();
+                
+                pro1.setDescricao(rs.getString("descricao"));
+                pro1.setValor(rs.getString("valor"));
+                pro1.setQuantidade(rs.getString("quantidade"));
+                               
+                lista.add(pro1);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
+    }
+
     
     
     
