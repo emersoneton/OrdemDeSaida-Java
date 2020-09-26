@@ -6,6 +6,7 @@
 package View;
 
 import Controller.CadastroDeClientes;
+import Controller.CadastroDeProdutos;
 import Model.Database;
 import Controller.CadastroDeServico;
 import Controller.GeradorDePdf;
@@ -40,6 +41,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     public FormOrdemDeServico() {
         initComponents();
         BuscarProdutos();
+        txtPesquisaCliente.requestFocus();
         Inicializar();
         textoValor.setText("0");
         txtDesconto.setText("0");
@@ -61,7 +63,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     private void initComponents() {
 
         jLayeredPane1 = new javax.swing.JLayeredPane();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jtConsultaOrdens = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         Lista = new javax.swing.JList<>();
@@ -92,6 +94,11 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jHorarioAgendamento = new javax.swing.JFormattedTextField();
         jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tabelaConsultaOrdens = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         btnSalvar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
@@ -245,7 +252,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtOs, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel2)
@@ -283,7 +290,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jHorarioAgendamento, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jHorarioAgendamento, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -346,20 +353,93 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                 .addGap(4, 4, 4))
         );
 
-        jTabbedPane1.addTab("Ordem de Serviço", jPanel1);
+        jtConsultaOrdens.addTab("Ordem de Serviço", jPanel1);
+
+        jPanel5.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 146, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+
+        jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        tabelaConsultaOrdens.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(tabelaConsultaOrdens);
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 771, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(280, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 781, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 538, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Consulta Ordens", jPanel4);
+        jtConsultaOrdens.addTab("Consulta Ordens", jPanel4);
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -449,7 +529,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLayeredPane1.setLayer(jTabbedPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jtConsultaOrdens, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jPanel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
@@ -458,7 +538,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtConsultaOrdens, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -466,7 +546,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtConsultaOrdens, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -518,7 +598,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
             maskDataAgendamento = new MaskFormatter("##/##/####");
             maskDataAgendamento.install(jDataDoAgendamento);
-            
+
             maskHorarioAgendamento = new MaskFormatter("##:##");
             maskHorarioAgendamento.install(jHorarioAgendamento);
 
@@ -537,6 +617,15 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         jHorarioAgendamento.setText("");
         textoComplemento.setText("");
         txtPesquisaCliente.setText("");
+        textoQuantidadeDeItens.setText("");
+        
+        int contadorTabela = tableModel.getRowCount();
+        System.out.println(contadorTabela);
+        
+        for(int x=0; x < contadorTabela; x++){
+            tableModel.removeRow(0);
+        }
+        
         BuscarOS();
     }
 
@@ -663,7 +752,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         /*
             O cliente gera uma OS somente com o  problema relatado e os dados do cliente
             Depois de fazer a visita ao seu cliente ele busca a OS e adiciona os Itens na OS
-        */
+         */
         VerificaCodigoNoBanco(); // verifico se ja tem algum código cadastrado no banco para fazer a alteração ou a inserção dos dados pelo botão Salvar
 
     }//GEN-LAST:event_btnSalvarActionPerformed
@@ -677,18 +766,23 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
 
         serDao.VerificaCodigoNoBanco(ser);
+        serDao.VerificaCodigoDeItensNoBanco(ser);
 
-        if (ser.isValidador()) {   //UPDATE
-          SalvarItens(); //Salvo o Itens da Nota
-          GerarPDF(); //Gero PDF 
-          
-        } else {                   //INSERT
-          Salvar(); //Salvo os complementos da nota
-          GerarPDF(); //Gero PDF 
+        if (ser.isValidadorItens()) { // se o codigo da nota existir no banco
+            GerarPDF(); //Gero PDF 
+        }else{
+             if (ser.isValidadorNota()) {   //UPDATE
+                SalvarItens(); //Salvo o Itens da Nota
+                GerarPDF(); //Gero PDF 
+
+            } else {                   //INSERT
+                Salvar(); //Salvo os complementos da nota
+                GerarPDF(); //Gero PDF 
+            }
         }
-        
+
         Limpar();
-      
+
     }
 
     public void Salvar() {
@@ -705,9 +799,8 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         ser.setComplemento(textoComplemento.getText());
         ser.setOs(Integer.parseInt(txtOs.getText()));
 
-        
         serDao.Salvar(ser);
-        
+
     }
 
     public void SalvarItens() {
@@ -731,7 +824,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
     private void GerarPDF() {
         CadastroDeServico ser = new CadastroDeServico();
-        
+
         ser.setOs(Integer.parseInt(txtOs.getText()));
         ser.setCliente(txtPesquisaCliente.getText());
         ser.setComplemento(textoComplemento.getText());
@@ -740,12 +833,12 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         ser.setHorarioAgendamento(jHorarioAgendamento.getText());
         ser.setValorTotal(Double.parseDouble(textoValor.getText()));
         ser.setDesconto(Double.parseDouble(txtDesconto.getText()));
-        
+
         CadastroDeClientes cli = new CadastroDeClientes();
 
         GeradorDePdf geraPdf = new GeradorDePdf();
         geraPdf.GeraPDFOrdemDeServico(ser, cli);
-        
+
     }
 
     private void BuscarOS() {
@@ -774,6 +867,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         ser.setOs(Integer.parseInt(txtOs.getText()));
 
         serDao.Buscar(ser);
+        serDao.BuscarItensDoServico(ser);
 
         txtPesquisaCliente.setText(ser.getCliente());
         txtDesconto.setText(Double.toString(ser.getDesconto()));
@@ -782,6 +876,18 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         textoComplemento.setText(ser.getComplemento());
         jHorarioAgendamento.setText(ser.getHorarioAgendamento());
 
+        List<CadastroDeServico> lista = serDao.BuscarItensDoServico(ser);
+        for (int x = 0; x < lista.size(); x++) {
+
+            CadastroDeServico ser1 = new CadastroDeServico();
+
+            ser1.setDescricao(lista.get(x).getDescricao());
+            ser1.setQuantidade(lista.get(x).getQuantidade());
+            ser1.setValorTotal(lista.get(x).getValorTotal());
+
+            tableModel.addRow(ser1);
+        }
+        ContadorDaTabela(); //Chama o metodo de Somar o Valor total e a quantidade de linhas na tabela
     }
 
     private void btnSalvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvar1ActionPerformed
@@ -884,9 +990,14 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTabbedPane jtConsultaOrdens;
+    private javax.swing.JTable tabelaConsultaOrdens;
     private javax.swing.JTable tbOrdemDeServico;
     private javax.swing.JTextPane textoComplemento;
     private javax.swing.JLabel textoQuantidadeDeItens;

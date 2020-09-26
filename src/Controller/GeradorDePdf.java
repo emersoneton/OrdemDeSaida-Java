@@ -66,13 +66,13 @@ public class GeradorDePdf {
             ClientesDAO cliDao = new ClientesDAO();
 
             List<CadastroDeClientes> lista = cliDao.GerarPDF();
-
+            
             for (int x = 0; x < lista.size(); x++) {
                 document.add(new Paragraph((x + 1) + " - " + lista.get(x).getNome() + " - " + lista.get(x).getEndereco()
                         + " " + lista.get(x).getNumero() + " " + lista.get(x).getBairro() + " - " + lista.get(x).getTelefone()
                         + " - " + lista.get(x).getCidade() + " - " + lista.get(x).getEstado()));
                 document.add(new Paragraph(" "));
-            }
+            } 
 
             document.add(new Paragraph("  "
                     + ""
@@ -166,32 +166,23 @@ public class GeradorDePdf {
             document.open();
 
             Image figura = Image.getInstance("imagem.jpg");
-            figura.scaleToFit(200, 40);
+            figura.scaleToFit(400, 200);
             figura.setAlignment(1);
-            // document.add(figura);
-
-            PdfPTable table1 = new PdfPTable(new float[]{40f, 90f});
+            
+            PdfPTable table1 = new PdfPTable(new float[]{50, 120f});
             PdfPCell foto = new PdfPCell(new Phrase("Descrição"));
             foto.setHorizontalAlignment(Element.ALIGN_CENTER);
+            foto.setVerticalAlignment(0);
             PdfPCell dados = new PdfPCell(new Phrase("Quantidade"));
-            // dados.setHorizontalAlignment(Element.ALIGN_CENTER);
             table1.addCell(figura);
+            // Dados do Emissor
             table1.addCell(" Razão Social: " + fil.getRazaoSocial() + "\n CNPJ: " + fil.getCnpj() + "\n Cep: " + fil.getCep()
                     + "\n Endereço: " + fil.getEndereco() + ", nº " + fil.getNumero() + "\n Bairro: " + fil.getBairro()
                     + "\n Cidade: " + fil.getCidade() + " / " + fil.getEstado() + "\n Telefone: " + fil.getTelefoneCelular());
             document.add(table1);
 
-            // Dados do Emissor
-            /*    document.add(new Paragraph("_______________________________Dados do Emissor________________________________"));
-            document.add(new Paragraph(" "));
-            document.add(new Paragraph("Razão Social: " + fil.getRazaoSocial() + "                  CNPJ: " + fil.getCnpj(), fontePadrao));
-            document.add(new Paragraph("Cep: " + fil.getCep(), fontePadrao));
-            document.add(new Paragraph("Endereço: " + fil.getEndereco() + ", nº " + fil.getNumero(), fontePadrao));
-            document.add(new Paragraph("Bairro: " + fil.getBairro(), fontePadrao));
-            document.add(new Paragraph("Cidade: " + fil.getCidade() + " / " + fil.getEstado(), fontePadrao));
-            document.add(new Paragraph("Telefone: " + fil.getTelefoneCelular(), fontePadrao));
-            document.add(new Paragraph("______________________________________________________________________________"));
-             */
+            
+            
             // Numero da Ordem de Serviço
             Paragraph p = new Paragraph("ORDEM DE SERVIÇO (" + ser.getOs() + ")", fonteCabecalho);
             p.setAlignment(1);
@@ -209,24 +200,13 @@ public class GeradorDePdf {
 
             document.add(new Paragraph("Descrição de Serviço: " + ser.getComplemento(), fontePadrao));
 
-            /*   Paragraph tb = new Paragraph();
-            tb.add(new Phrase("DESCRIÇÃO", fontePadrao));
-            tb.setAlignment(Element.ALIGN_JUSTIFIED);
-            tb.setIndentationLeft(18);
-            tb.setFirstLineIndent(-18);
-            tb.add("                                                                                                  ");
-            tb.add(new Phrase("QUANTIDADE", fontePadrao));
-            tb.add("      ");
-            tb.add(new Phrase("VALOR", fontePadrao));
-            document.add(tb); */
             document.add(new Paragraph(" "));
 
             // Buscar Itens do Banco
-            CadastroDeProdutos pro = new CadastroDeProdutos();
-            serDao.BuscarItensDoServico(pro, ser);
-            List<CadastroDeProdutos> lista = serDao.BuscarItensDoServico(pro, ser);
+            serDao.BuscarItensDoServico(ser);
+            List<CadastroDeServico> lista = serDao.BuscarItensDoServico(ser);
 
-            PdfPTable table = new PdfPTable(new float[]{20f, 5f, 5f}); // crio a tabela para ser vista de fora ou dentro do IF
+            PdfPTable table = new PdfPTable(new float[]{20f, 10f, 10f}); // crio a tabela para ser vista de fora ou dentro do IF
             if (lista.size() > 1) {
                 PdfPCell Nome = new PdfPCell(new Phrase("Descrição"));
                 Nome.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -240,34 +220,25 @@ public class GeradorDePdf {
                 table.addCell(Valor);
             }
             //Crio o tabela de produtos
-
+            int Quantidade = 0;
             for (int x = 0; x < lista.size(); x++) {
-
+                 Quantidade = lista.get(x).getQuantidade();
+                
                 PdfPCell celula1 = new PdfPCell(new Phrase(lista.get(x).getDescricao()));
-                PdfPCell celula2 = new PdfPCell(new Phrase(lista.get(x).getQuantidade()));
+                PdfPCell celula2 = new PdfPCell(new Phrase(String.valueOf(lista.get(x).getQuantidade())));
                 celula2.setHorizontalAlignment(Element.ALIGN_CENTER);
-                PdfPCell celula3 = new PdfPCell(new Phrase(String.valueOf(lista.get(x).getValor())));
+                PdfPCell celula3 = new PdfPCell(new Phrase(String.valueOf(lista.get(x).getValorTotal())));
 
                 table.addCell(celula1);
                 table.addCell(celula2);
                 table.addCell(celula3);
 
-                /*    Paragraph p1 = new Paragraph();
-                p1.add(new Phrase((x + 1) + " - "));
-                p1.add(lista.get(x).getDescricao());
-                p1.setAlignment(Element.ALIGN_JUSTIFIED);
-                p1.setIndentationLeft(18);
-                p1.setFirstLineIndent(-18);
-                p1.add("                          ");
-                p1.add(lista.get(x).getQuantidade());
-                p1.add("      ");
-                p1.add(lista.get(x).getValor());
-
-                document.add(p1);*/
             }
 
             document.add(table); // Adiciono dados na tabela  
-
+            
+            document.add(new Paragraph(Quantidade));
+                            
             if (lista.size() > 1) {
                  // Valor Total
             Paragraph valorTotal = new Paragraph("Valor Total:        ");

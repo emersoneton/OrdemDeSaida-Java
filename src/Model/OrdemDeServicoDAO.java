@@ -29,8 +29,8 @@ public class OrdemDeServicoDAO {
 
         try {
             PreparedStatement busca = con.prepareStatement("INSERT INTO servicos(cliente,valor,desconto,data_agendamento,"
-                    + "complemento,horario_agendamento,data_os) "
-                    + "VALUES (?,?,?,?,?,?,?)");
+                    + "complemento,horario_agendamento,data_os,status_os) "
+                    + "VALUES (?,?,?,?,?,?,?,?)");
 
             busca.setString(1, ser.getCliente());
             busca.setString(2, "" + ser.getValorTotal());
@@ -39,8 +39,8 @@ public class OrdemDeServicoDAO {
             busca.setString(5, ser.getComplemento());
             busca.setString(6, ser.getHorarioAgendamento());
             busca.setString(7, ser.getData());
+            busca.setString(8, ""+ser.getStatus());
             
-
             busca.executeUpdate();
 
             JOptionPane.showMessageDialog(null, "Registro inserido com sucesso!", "Mensagem",
@@ -106,6 +106,7 @@ public class OrdemDeServicoDAO {
     }
 
     public void BuscarOS(CadastroDeServico ser) {
+        
         Conexao();
 
         try {
@@ -114,9 +115,12 @@ public class OrdemDeServicoDAO {
             ResultSet rs = busca.executeQuery();
 
             while (rs.next()) {
-                ser.setOs(Integer.parseInt(rs.getString("codigo")));
+
+                    ser.setOs(Integer.parseInt(rs.getString("codigo")));
+                    
             }
 
+                
             con.close();
         } catch (SQLException ex) {
             Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -294,10 +298,38 @@ public class OrdemDeServicoDAO {
                 String codigo = rs.getString("codigo");
                 
                 if(codigo.trim().equals(Codigo)){
-                    ser.setValidador(true);
+                    
+                    ser.setValidadorNota(true);
                     
                 }
-                ser.setOs(Integer.parseInt(rs.getString("codigo")));
+               // ser.setOs(Integer.parseInt(rs.getString("codigo")));
+            }
+
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    public void VerificaCodigoDeItensNoBanco(CadastroDeServico ser){
+        
+        Conexao();
+        String Codigo = ""+ser.getOs();
+        try {
+            PreparedStatement busca = con.prepareStatement("SELECT * FROM itens_servico WHERE cod_servico = '"+ser.getOs()+"'");
+
+            ResultSet rs = busca.executeQuery();
+
+            while (rs.next()) {
+                String codigo = rs.getString("cod_servico");
+                
+                if(codigo.trim().equals(Codigo)){
+                    
+                    ser.setValidadorItens(true);
+
+                }
+                ser.setOs(Integer.parseInt(rs.getString("cod_servico")));
             }
 
             con.close();
@@ -308,11 +340,11 @@ public class OrdemDeServicoDAO {
     }
     
     
-    public List<CadastroDeProdutos> BuscarItensDoServico(CadastroDeProdutos pro, CadastroDeServico ser){
+    public List<CadastroDeServico> BuscarItensDoServico(CadastroDeServico ser){
         
         Conexao();
         
-        List<CadastroDeProdutos> lista = new ArrayList<>();
+        List<CadastroDeServico> lista = new ArrayList<>();
         
          try {
             PreparedStatement busca = con.prepareStatement("SELECT * FROM itens_servico WHERE cod_servico = '"+ser.getOs()+"'");
@@ -320,13 +352,13 @@ public class OrdemDeServicoDAO {
             ResultSet rs = busca.executeQuery();
             
             while(rs.next()){
-                CadastroDeProdutos pro1 = new CadastroDeProdutos();
+                CadastroDeServico ser1 = new CadastroDeServico();
                 
-                pro1.setDescricao(rs.getString("descricao"));
-                pro1.setValor(rs.getString("valor"));
-                pro1.setQuantidade(rs.getString("quantidade"));
-                               
-                lista.add(pro1);
+                ser1.setDescricao(rs.getString("descricao"));
+                ser1.setValorTotal(Double.parseDouble(rs.getString("valor")));
+                ser1.setQuantidade(Integer.parseInt(rs.getString("quantidade")));
+     
+                lista.add(ser1);
             }
             
         } catch (SQLException ex) {

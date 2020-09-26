@@ -5,6 +5,7 @@
  */
 package View;
 
+import Classes.SoNumeros;
 import Controller.CadastroDeProdutos;
 import Controller.GeradorDePdf;
 import Controller.ProdutoTableModel;
@@ -30,6 +31,9 @@ public class FormProdutos extends javax.swing.JFrame {
     
     public FormProdutos() {
         initComponents();
+        txtCodigoBarras.setDocument(new SoNumeros());
+        txtQuantidade.setDocument(new SoNumeros());
+        txtValor.setDocument(new SoNumeros());
         BuscarCodigoDoProduto(); // Busca do ultimo registro valido no banco
         Lista.setVisible(false);
         MODELO = new DefaultListModel();
@@ -387,9 +391,8 @@ public class FormProdutos extends javax.swing.JFrame {
         
         pro.setCodigoBarras(txtCodigoBarras.getText());
         pro.setDescricao(txtDescricao.getText());
-        pro.setValor(txtValor.getText());
+        pro.setValor(Double.parseDouble(txtValor.getText().replace(',', '.')));
         pro.setQuantidade(txtQuantidade.getText());
-        
         proDao.Salvar(pro);
         Limpar();
         BuscarCodigoDoProduto();
@@ -415,7 +418,7 @@ public class FormProdutos extends javax.swing.JFrame {
         txtCodigo.setText(pro.getCodigo());
         txtCodigoBarras.setText(pro.getCodigoBarras());
         txtDescricao.setText(pro.getDescricao());
-        txtValor.setText(pro.getValor());
+        txtValor.setText(Double.toString(pro.getValor()));
         txtQuantidade.setText(pro.getQuantidade());
         
     }
@@ -430,7 +433,7 @@ public class FormProdutos extends javax.swing.JFrame {
         pro.setCodigoBarras(txtCodigoBarras.getText());
         pro.setDescricao(txtDescricao.getText());
         pro.setQuantidade(txtQuantidade.getText());
-        pro.setValor(txtValor.getText());
+        pro.setValor(Double.parseDouble(txtValor.getText().replace(',', '.')));
         pro.setCodigo(txtCodigo.getText());
         
         proDao.Alterar(pro);
@@ -444,6 +447,13 @@ public class FormProdutos extends javax.swing.JFrame {
         txtDescricao.setText("");
         txtQuantidade.setText("");
         txtValor.setText("");
+        
+        int cont = tabelaProdutos.getRowCount();
+        
+        for(int x=0; x < cont; x++){
+            tabelaProdutos.removeRow(0);
+        }
+        
         BuscarCodigoDoProduto();
     }
     

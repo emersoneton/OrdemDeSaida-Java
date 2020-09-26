@@ -4,9 +4,10 @@ package Controller;
 public class CadastroDeProdutos {
    public String codigoBarras = null
            , descricao = null
-           , valor = null
            , quantidade = null
            , codigo = null;
+   
+   double valor = 0;
 
     public String getCodigoBarras() {
         return codigoBarras;
@@ -24,13 +25,14 @@ public class CadastroDeProdutos {
         this.descricao = descricao;
     }
 
-    public String getValor() {
+    public double getValor() {
         return valor;
     }
 
-    public void setValor(String valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
+
 
     public String getQuantidade() {
         return quantidade;
