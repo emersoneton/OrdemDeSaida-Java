@@ -368,9 +368,59 @@ public class OrdemDeServicoDAO {
     }
 
     
+    public List<CadastroDeServico> BuscarNotasDeServico(CadastroDeServico ser){ // Busca todas as notas de Serviços
+        List<CadastroDeServico> lista = new ArrayList<>();
+        
+        
+        Conexao();
+        
+        try {
+            PreparedStatement busca = con.prepareStatement("SELECT * FROM servicos ORDER BY codigo");
+            
+            ResultSet rs = busca.executeQuery();
+            
+            while(rs.next()){
+                
+                CadastroDeServico ser1 = new CadastroDeServico();
+                
+                ser1.setOs(Integer.parseInt(rs.getString("codigo")));
+                ser1.setCliente(rs.getString("cliente"));
+                ser1.setDataAgendamento(rs.getString("data_agendamento"));
+                ser1.setData(rs.getString("data_os"));
+                ser1.setStatus((rs.getString("status_os")));
+                
+                lista.add(ser1);
+                
+            }
+                    
+                    } catch (SQLException ex) {
+            Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
+    }
     
     
     
+    public void SalvarStatusDaNota(CadastroDeServico ser){ // salvar o status de aberto para fechado
+        Conexao();
+        
+        try {
+            PreparedStatement alterar = con.prepareStatement("UPDATE servicos SET status_os = ? where codigo = ?");
+            
+            alterar.setString(1, ser.getStatus());
+            
+            alterar.setString(2, ""+ser.getOs());
+            
+            alterar.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "Registro alterado com sucesso!", "Mensagem",
+                    JOptionPane.INFORMATION_MESSAGE);
+            
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     
 

@@ -33,7 +33,6 @@ public class FormProdutos extends javax.swing.JFrame {
         initComponents();
         txtCodigoBarras.setDocument(new SoNumeros());
         txtQuantidade.setDocument(new SoNumeros());
-        txtValor.setDocument(new SoNumeros());
         BuscarCodigoDoProduto(); // Busca do ultimo registro valido no banco
         Lista.setVisible(false);
         MODELO = new DefaultListModel();
@@ -86,7 +85,6 @@ public class FormProdutos extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(255, 0, 0));
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
         jLabel1.setText("CADASTRO DE PRODUTOS");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);

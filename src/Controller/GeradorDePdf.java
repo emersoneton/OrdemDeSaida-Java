@@ -3,6 +3,7 @@ package Controller;
 import Model.ClientesDAO;
 import Model.OrdemDeServicoDAO;
 import Model.ProdutosDAO;
+import View.FormOrdemDeServico;
 import com.itextpdf.text.Image;
 import java.awt.Desktop;
 import java.io.File;
@@ -296,6 +297,5 @@ public class GeradorDePdf {
         }
     }
 
-   
 
 }

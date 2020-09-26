@@ -3,8 +3,9 @@ package Controller;
 
 
 public class CadastroDeServico {
-    String cliente = null, complemento = null, descricao = null, data = null, dataAgendamento = null, horarioAgendamento = null;
-    int quantidade = 0, os = 0, status = 1;
+    String cliente = null, complemento = null, descricao = null, data = null, 
+            dataAgendamento = null, horarioAgendamento = null, status = "ABERTO";
+    int quantidade = 0, os = 0;
     double valorTotal = 0, desconto = 0, contador = 0;
     boolean validadorNota = false, validadorItens = false;
 
@@ -117,13 +118,15 @@ public class CadastroDeServico {
         this.horarioAgendamento = horarioAgendamento;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
+
+ 
 
     
 
