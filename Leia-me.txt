@@ -1,0 +1,3 @@
+#################################
+1 - Criar uma pasta "PDF" no disco C
+2 - Criar 2 pastas "Cadastros" e "OS" dentro da pasta PDF

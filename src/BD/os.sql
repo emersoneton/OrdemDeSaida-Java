@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 26-Set-2020 às 02:42
+-- Tempo de geração: 29-Set-2020 às 00:28
 -- Versão do servidor: 10.4.14-MariaDB
 -- versão do PHP: 7.4.9
 
@@ -20,6 +20,25 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `os`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `acesso`
+--
+
+CREATE TABLE `acesso` (
+  `codigo` int(11) NOT NULL,
+  `login` varchar(100) DEFAULT NULL,
+  `senha` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `acesso`
+--
+
+INSERT INTO `acesso` (`codigo`, `login`, `senha`) VALUES
+(1, 'admin', 'admin');
 
 -- --------------------------------------------------------
 
@@ -155,9 +174,12 @@ CREATE TABLE `itens_servico` (
 
 INSERT INTO `itens_servico` (`codigo`, `cod_servico`, `descricao`, `valor`, `quantidade`) VALUES
 (32, 37, 'Fusivel de Compresão', 5.5, 1),
-(33, 39, 'Fusivel de Compresão', 5.5, 1),
-(34, 39, 'motor de ar', 189, 1),
-(35, 39, 'Motor de compresao', 190, 3);
+(36, 40, 'Fusivel de Compresão', 5.5, 2),
+(37, 40, 'motor de ar', 189, 3),
+(38, 40, 'controle remoto', 22.5, 1),
+(39, 39, 'controle remoto', 22.5, 1),
+(40, 39, 'dijuntor', 15, 1),
+(41, 39, 'Fusivel de Compresão', 5.5, 1);
 
 -- --------------------------------------------------------
 
@@ -5774,7 +5796,7 @@ INSERT INTO `produtos` (`codigo`, `descricao`, `codigo_barras`, `valor`, `quanti
 (3, 'dijuntor', '1113333444', 15, 10),
 (8, 'fuzil', '10101010', 10.5, 10),
 (9, 'Fusivel de Compresão', '', 5.5, 13),
-(13, '1', '1', 1, 1),
+(13, 'Fusor de Agua', '85579968', 2.5, 2),
 (14, 'Motor de compresao', '11111', 190, 11),
 (15, 'motor de ar', '1234', 189, 2),
 (16, 'Controle', '999999999', 13.5, 1),
@@ -5796,7 +5818,7 @@ CREATE TABLE `servicos` (
   `horario_agendamento` varchar(5) NOT NULL,
   `complemento` text NOT NULL,
   `data_os` varchar(20) NOT NULL,
-  `status_os` int(1) DEFAULT NULL
+  `status_os` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -5804,14 +5826,20 @@ CREATE TABLE `servicos` (
 --
 
 INSERT INTO `servicos` (`codigo`, `cliente`, `valor`, `desconto`, `data_agendamento`, `horario_agendamento`, `complemento`, `data_os`, `status_os`) VALUES
-(36, 'NELSON RODRIGUES', 0, 0, '  /  /    ', '  :  ', '', '25/09/2020 - 20:50', 1),
-(37, 'EMERSON DA SILVA JONAS DE LIMA JR', 0, 0, '11/11/1111', '11:11', 'casa', '25/09/2020 - 20:53', 1),
-(38, '', 11, 0, '  /  /    ', '  :  ', '', '25/09/2020 - 20:53', 1),
-(39, 'ABNER DA SILVA JUNIOR', 0, 0, '11/11/1111', '11:11', 'asdasfsafadsfadsf', '25/09/2020 - 20:55', 1);
+(36, 'NELSON RODRIGUES', 0, 0, '  /  /    ', '  :  ', '', '25/09/2020 - 20:50', 'ABERTO'),
+(37, 'EMERSON DA SILVA JONAS DE LIMA JR', 0, 0, '11/11/1111', '11:11', 'casa', '25/09/2020 - 20:53', 'FECHADO'),
+(39, 'ABNER DA SILVA JUNIOR', 0, 0, '11/11/1111', '11:11', 'asdasfsafadsfadsf', '25/09/2020 - 20:55', 'ABERTO'),
+(40, 'EMERSON DA SILVA JONAS DE LIMA JR', 0, 0, '27/09/2020', '18:00', 'AR NÃO ESTÁ GELANDO', '26/09/2020 - 11:00', 'FECHADO');
 
 --
 -- Índices para tabelas despejadas
 --
+
+--
+-- Índices para tabela `acesso`
+--
+ALTER TABLE `acesso`
+  ADD PRIMARY KEY (`codigo`);
 
 --
 -- Índices para tabela `clientes`
@@ -5854,6 +5882,12 @@ ALTER TABLE `servicos`
 --
 
 --
+-- AUTO_INCREMENT de tabela `acesso`
+--
+ALTER TABLE `acesso`
+  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de tabela `clientes`
 --
 ALTER TABLE `clientes`
@@ -5869,7 +5903,7 @@ ALTER TABLE `filial`
 -- AUTO_INCREMENT de tabela `itens_servico`
 --
 ALTER TABLE `itens_servico`
-  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT de tabela `municipio`
@@ -5887,7 +5921,7 @@ ALTER TABLE `produtos`
 -- AUTO_INCREMENT de tabela `servicos`
 --
 ALTER TABLE `servicos`
-  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

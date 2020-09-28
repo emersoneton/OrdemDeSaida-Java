@@ -42,7 +42,7 @@ public class GeradorDePdf {
         com.itextpdf.text.Document document = new com.itextpdf.text.Document();
 
         try {
-            PdfWriter.getInstance(document, new FileOutputStream("Clientes.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream("c:/PDF/Cadastros/Clientes.pdf"));
 
             document.open();
             document.open();
@@ -90,7 +90,7 @@ public class GeradorDePdf {
         }
 
         try {
-            Desktop.getDesktop().open(new File("clientes.pdf"));
+            Desktop.getDesktop().open(new File("c:/PDF/Cadastros/Clientes.pdf"));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
@@ -101,7 +101,7 @@ public class GeradorDePdf {
         com.itextpdf.text.Document document = new com.itextpdf.text.Document();
 
         try {
-            PdfWriter.getInstance(document, new FileOutputStream("Produtos.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream("c:/PDF/Cadastros/Produtos.pdf"));
 
             document.open();
             Paragraph p = new Paragraph("RELATÓRIO DE PRODUTOS");
@@ -146,7 +146,7 @@ public class GeradorDePdf {
         }
 
         try {
-            Desktop.getDesktop().open(new File("Produtos.pdf"));
+            Desktop.getDesktop().open(new File("c:/PDF/Cadastros/Produtos.pdf"));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
@@ -163,10 +163,10 @@ public class GeradorDePdf {
         Document document = new Document();
         try {
 
-            PdfWriter.getInstance(document, new FileOutputStream("Ordem De Serviço.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream("c:/PDF/OS/Ordem De Serviço.pdf"));
             document.open();
 
-            Image figura = Image.getInstance("imagem.jpg");
+            Image figura = Image.getInstance("src/Imagens/imagem.jpg");
             figura.scaleToFit(400, 200);
             figura.setAlignment(1);
             
@@ -291,7 +291,7 @@ public class GeradorDePdf {
         document.close();
 
         try {
-            Desktop.getDesktop().open(new File("Ordem De Serviço.pdf"));
+            Desktop.getDesktop().open(new File("c:/PDF/OS/Ordem De Serviço.pdf"));
         } catch (IOException ex) {
             Logger.getLogger(GeradorDePdf.class.getName()).log(Level.SEVERE, null, ex);
         }

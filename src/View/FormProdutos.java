@@ -80,6 +80,7 @@ public class FormProdutos extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Produtos");
+        setLocation(new java.awt.Point(5, 47));
 
         jPanel3.setBackground(new java.awt.Color(102, 102, 102));
 

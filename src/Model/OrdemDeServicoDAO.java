@@ -39,8 +39,8 @@ public class OrdemDeServicoDAO {
             busca.setString(5, ser.getComplemento());
             busca.setString(6, ser.getHorarioAgendamento());
             busca.setString(7, ser.getData());
-            busca.setString(8, ""+ser.getStatus());
-            
+            busca.setString(8, "" + ser.getStatus());
+
             busca.executeUpdate();
 
             JOptionPane.showMessageDialog(null, "Registro inserido com sucesso!", "Mensagem",
@@ -52,32 +52,30 @@ public class OrdemDeServicoDAO {
             Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
-    public void Buscar(CadastroDeServico ser){
-       Conexao();
-       
+
+    public void Buscar(CadastroDeServico ser) {
+        Conexao();
+
         try {
-            PreparedStatement busca = con.prepareStatement("SELECT * FROM servicos WHERE codigo = '"+ser.getOs()+"'");
-            
+            PreparedStatement busca = con.prepareStatement("SELECT * FROM servicos WHERE codigo = '" + ser.getOs() + "'");
+
             ResultSet rs = busca.executeQuery();
-            
-            while(rs.next()){
-                
+
+            while (rs.next()) {
+
                 ser.setCliente(rs.getString("cliente"));
                 ser.setValorTotal(Double.parseDouble(rs.getString("valor")));
                 ser.setDesconto(Double.parseDouble(rs.getString("desconto")));
                 ser.setDataAgendamento(rs.getString("data_agendamento"));
                 ser.setHorarioAgendamento(rs.getString("horario_agendamento"));
                 ser.setComplemento(rs.getString("complemento"));
-                
+
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
 
     public void SalvarItens(CadastroDeServico ser) {
 
@@ -106,7 +104,7 @@ public class OrdemDeServicoDAO {
     }
 
     public void BuscarOS(CadastroDeServico ser) {
-        
+
         Conexao();
 
         try {
@@ -116,11 +114,10 @@ public class OrdemDeServicoDAO {
 
             while (rs.next()) {
 
-                    ser.setOs(Integer.parseInt(rs.getString("codigo")));
-                    
+                ser.setOs(Integer.parseInt(rs.getString("codigo")));
+
             }
 
-                
             con.close();
         } catch (SQLException ex) {
             Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -247,7 +244,7 @@ public class OrdemDeServicoDAO {
 
     public void BuscarClienteParaGerarPDF(CadastroDeServico ser, CadastroDeClientes cli) {
         Conexao();
-        
+
         try (PreparedStatement busca = con.prepareStatement("select * from clientes")) {
 
             ResultSet rs = busca.executeQuery();
@@ -283,12 +280,11 @@ public class OrdemDeServicoDAO {
         }
 
     }
-    
-    
-    public void VerificaCodigoNoBanco(CadastroDeServico ser){
-        
+
+    public void VerificaCodigoNoBanco(CadastroDeServico ser) {
+
         Conexao();
-        String Codigo = ""+ser.getOs();
+        String Codigo = "" + ser.getOs();
         try {
             PreparedStatement busca = con.prepareStatement("SELECT codigo FROM servicos");
 
@@ -296,36 +292,36 @@ public class OrdemDeServicoDAO {
 
             while (rs.next()) {
                 String codigo = rs.getString("codigo");
-                
-                if(codigo.trim().equals(Codigo)){
-                    
+
+                if (codigo.trim().equals(Codigo)) {
+
                     ser.setValidadorNota(true);
-                    
+
                 }
-               // ser.setOs(Integer.parseInt(rs.getString("codigo")));
+                // ser.setOs(Integer.parseInt(rs.getString("codigo")));
             }
 
             con.close();
         } catch (SQLException ex) {
             Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
-    public void VerificaCodigoDeItensNoBanco(CadastroDeServico ser){
-        
+
+    public void VerificaCodigoDeItensNoBanco(CadastroDeServico ser) {
+
         Conexao();
-        String Codigo = ""+ser.getOs();
+        String Codigo = "" + ser.getOs();
         try {
-            PreparedStatement busca = con.prepareStatement("SELECT * FROM itens_servico WHERE cod_servico = '"+ser.getOs()+"'");
+            PreparedStatement busca = con.prepareStatement("SELECT * FROM itens_servico WHERE cod_servico = '" + ser.getOs() + "'");
 
             ResultSet rs = busca.executeQuery();
 
             while (rs.next()) {
                 String codigo = rs.getString("cod_servico");
-                
-                if(codigo.trim().equals(Codigo)){
-                    
+
+                if (codigo.trim().equals(Codigo)) {
+
                     ser.setValidadorItens(true);
 
                 }
@@ -336,92 +332,192 @@ public class OrdemDeServicoDAO {
         } catch (SQLException ex) {
             Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
-    
-    public List<CadastroDeServico> BuscarItensDoServico(CadastroDeServico ser){
-        
+
+    public List<CadastroDeServico> BuscarItensDoServico(CadastroDeServico ser) {
+
         Conexao();
-        
+
         List<CadastroDeServico> lista = new ArrayList<>();
-        
-         try {
-            PreparedStatement busca = con.prepareStatement("SELECT * FROM itens_servico WHERE cod_servico = '"+ser.getOs()+"'");
-            
+
+        try {
+            PreparedStatement busca = con.prepareStatement("SELECT * FROM itens_servico WHERE cod_servico = '" + ser.getOs() + "'");
+
             ResultSet rs = busca.executeQuery();
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 CadastroDeServico ser1 = new CadastroDeServico();
-                
+
                 ser1.setDescricao(rs.getString("descricao"));
                 ser1.setValorTotal(Double.parseDouble(rs.getString("valor")));
                 ser1.setQuantidade(Integer.parseInt(rs.getString("quantidade")));
-     
+
                 lista.add(ser1);
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return lista;
     }
 
-    
-    public List<CadastroDeServico> BuscarNotasDeServico(CadastroDeServico ser){ // Busca todas as notas de Serviços
+    public List<CadastroDeServico> BuscarNotasDeServico(CadastroDeServico ser) { // Busca todas as notas de Serviços
         List<CadastroDeServico> lista = new ArrayList<>();
-        
-        
+
         Conexao();
-        
+
         try {
-            PreparedStatement busca = con.prepareStatement("SELECT * FROM servicos ORDER BY codigo");
+
+            if (ser.getClicked() == "OS") { // Busca por OS
+
+                PreparedStatement busca = con.prepareStatement("SELECT * FROM servicos WHERE codigo = ? ORDER BY codigo");
+
+                busca.setString(1, "" + ser.getOs());
+
+                ResultSet rs = busca.executeQuery();
+
+                while (rs.next()) {
+
+                    CadastroDeServico ser1 = new CadastroDeServico();
+
+                    ser1.setOs(Integer.parseInt(rs.getString("codigo")));
+                    ser1.setCliente(rs.getString("cliente"));
+                    ser1.setDataAgendamento(rs.getString("data_agendamento"));
+                    ser1.setData(rs.getString("data_os"));
+                    ser1.setStatus((rs.getString("status_os")));
+
+                    lista.add(ser1);
+
+                }
+
+            } // Fim da Busca por OS
+
+            if (ser.getClicked() == "CLIENTE") { // Busca por CLIENTE
+
+                PreparedStatement busca = con.prepareStatement("SELECT * FROM servicos WHERE cliente = ? ORDER BY codigo");
+
+                busca.setString(1, "" + ser.getCliente());
+
+                ResultSet rs = busca.executeQuery();
+
+                while (rs.next()) {
+
+                    CadastroDeServico ser1 = new CadastroDeServico();
+
+                    ser1.setOs(Integer.parseInt(rs.getString("codigo")));
+                    ser1.setCliente(rs.getString("cliente"));
+                    ser1.setDataAgendamento(rs.getString("data_agendamento"));
+                    ser1.setData(rs.getString("data_os"));
+                    ser1.setStatus((rs.getString("status_os")));
+
+                    lista.add(ser1);
+
+                }
+
+            } // Fim da Busca por CLIENTE
             
-            ResultSet rs = busca.executeQuery();
             
-            while(rs.next()){
-                
-                CadastroDeServico ser1 = new CadastroDeServico();
-                
-                ser1.setOs(Integer.parseInt(rs.getString("codigo")));
-                ser1.setCliente(rs.getString("cliente"));
-                ser1.setDataAgendamento(rs.getString("data_agendamento"));
-                ser1.setData(rs.getString("data_os"));
-                ser1.setStatus((rs.getString("status_os")));
-                
-                lista.add(ser1);
-                
-            }
-                    
-                    } catch (SQLException ex) {
+            if (ser.getClicked() == "ABERTO") { // Busca por Notas em Aberto
+
+                PreparedStatement busca = con.prepareStatement("SELECT * FROM servicos WHERE status_os = ? ORDER BY codigo");
+
+                busca.setString(1, "" + ser.getStatus());
+
+                ResultSet rs = busca.executeQuery();
+
+                while (rs.next()) {
+
+                    CadastroDeServico ser1 = new CadastroDeServico();
+
+                    ser1.setOs(Integer.parseInt(rs.getString("codigo")));
+                    ser1.setCliente(rs.getString("cliente"));
+                    ser1.setDataAgendamento(rs.getString("data_agendamento"));
+                    ser1.setData(rs.getString("data_os"));
+                    ser1.setStatus((rs.getString("status_os")));
+
+                    lista.add(ser1);
+
+                }
+
+            } // Fim da Busca por CLIENTE em ABERTO
+            
+            
+             if (ser.getClicked() == "FECHADO") { // Busca por Notas em Fechado
+
+                PreparedStatement busca = con.prepareStatement("SELECT * FROM servicos WHERE status_os = ? ORDER BY codigo");
+
+                busca.setString(1, "" + ser.getStatus());
+
+                ResultSet rs = busca.executeQuery();
+
+                while (rs.next()) {
+
+                    CadastroDeServico ser1 = new CadastroDeServico();
+
+                    ser1.setOs(Integer.parseInt(rs.getString("codigo")));
+                    ser1.setCliente(rs.getString("cliente"));
+                    ser1.setDataAgendamento(rs.getString("data_agendamento"));
+                    ser1.setData(rs.getString("data_os"));
+                    ser1.setStatus((rs.getString("status_os")));
+
+                    lista.add(ser1);
+
+                }
+
+            } // Fim da Busca por CLIENTE em Fechado
+            
+            
+
+            if (ser.getClicked() == "TODOS") { // Busca por TODOS
+
+                PreparedStatement busca = con.prepareStatement("SELECT * FROM servicos ORDER BY codigo");
+
+                ResultSet rs = busca.executeQuery();
+
+                while (rs.next()) {
+
+                    CadastroDeServico ser1 = new CadastroDeServico();
+
+                    ser1.setOs(Integer.parseInt(rs.getString("codigo")));
+                    ser1.setCliente(rs.getString("cliente"));
+                    ser1.setDataAgendamento(rs.getString("data_agendamento"));
+                    ser1.setData(rs.getString("data_os"));
+                    ser1.setStatus((rs.getString("status_os")));
+
+                    lista.add(ser1);
+
+                }
+
+            }// Fim da Busca por TODOS
+
+            con.close();
+        } catch (SQLException ex) {
             Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         return lista;
     }
-    
-    
-    
-    public void SalvarStatusDaNota(CadastroDeServico ser){ // salvar o status de aberto para fechado
+
+    public void SalvarStatusDaNota(CadastroDeServico ser) { // salvar o status de aberto para fechado
         Conexao();
-        
+
         try {
             PreparedStatement alterar = con.prepareStatement("UPDATE servicos SET status_os = ? where codigo = ?");
-            
+
             alterar.setString(1, ser.getStatus());
-            
-            alterar.setString(2, ""+ser.getOs());
-            
+
+            alterar.setString(2, "" + ser.getOs());
+
             alterar.executeUpdate();
-            
+
             JOptionPane.showMessageDialog(null, "Registro alterado com sucesso!", "Mensagem",
                     JOptionPane.INFORMATION_MESSAGE);
-            
+
             con.close();
         } catch (SQLException ex) {
             Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
 
 }
