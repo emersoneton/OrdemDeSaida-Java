@@ -152,13 +152,20 @@ public class ClientesDAO {
     public void BuscarCodigoDeCliente(CadastroDeClientes cli){
         Conexao();
 
+        String codigo = null;
         try {
             PreparedStatement busca = con.prepareStatement("SELECT MAX(codigo +1) AS codigo FROM clientes");
 
             ResultSet rs = busca.executeQuery();
             rs.next();
-
-            cli.setCodigo(rs.getString("codigo"));
+            
+            codigo = rs.getString("codigo");
+                        
+            if(codigo != null){
+                cli.setCodigo(codigo);
+            }else{
+                cli.setCodigo("1");
+            }
 
             con.close();
         } catch (SQLException ex) {

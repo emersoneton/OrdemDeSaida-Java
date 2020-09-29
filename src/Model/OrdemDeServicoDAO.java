@@ -2,7 +2,6 @@ package Model;
 
 import Controller.CadastroDeClientes;
 import Controller.CadastroDeFilial;
-import Controller.CadastroDeProdutos;
 import Controller.CadastroDeServico;
 import View.FormOrdemDeServico;
 import java.sql.Connection;
@@ -107,6 +106,7 @@ public class OrdemDeServicoDAO {
 
         Conexao();
 
+        String codigo = null;
         try {
             PreparedStatement busca = con.prepareStatement("SELECT MAX(codigo+1) AS codigo FROM servicos");
 
@@ -114,10 +114,16 @@ public class OrdemDeServicoDAO {
 
             while (rs.next()) {
 
-                ser.setOs(Integer.parseInt(rs.getString("codigo")));
-
+                codigo = rs.getString("codigo");
+                
             }
 
+            if(codigo != null){
+                ser.setOs(Integer.parseInt(codigo));
+            }else{
+                ser.setOs(Integer.parseInt("1"));
+            }
+            
             con.close();
         } catch (SQLException ex) {
             Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);

@@ -125,13 +125,22 @@ public class ProdutosDAO {
     public void CodigoDoProduto(CadastroDeProdutos pro){
          Conexao();
         
+        String codigo = null;
         try {
             PreparedStatement busca = con.prepareStatement("select MAX(codigo + 1) AS codigo from produtos");
             
             ResultSet rs = busca.executeQuery();
             while(rs.next()){
-                pro.setCodigo(rs.getString("codigo"));
+                codigo = rs.getString("codigo");
+                
             }
+            
+            if(codigo != null){
+                pro.setCodigo(codigo);
+            }else{
+                pro.setCodigo("1");
+            }
+            
             con.close();
                     } catch (SQLException ex) {
             Logger.getLogger(FormProdutos.class.getName()).log(Level.SEVERE, null, ex);

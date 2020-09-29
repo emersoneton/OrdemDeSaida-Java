@@ -141,13 +141,22 @@ public class FilialDAO {
     public void BuscarCodigoDeFilial(CadastroDeFilial fil){
         Conexao();
 
+        
+        String codigo = null;
         try {
             PreparedStatement busca = con.prepareStatement("select MAX(codigo + 1) AS codigo from filial");
 
             ResultSet rs = busca.executeQuery();
             while (rs.next()) {
-                fil.setCodigo(rs.getString("codigo"));
+                codigo = rs.getString("codigo");
             }
+            
+            if(codigo != null){
+                fil.setCodigo(codigo);
+            }else{
+                fil.setCodigo("1");
+            }
+            
             con.close();
         } catch (SQLException ex) {
             Logger.getLogger(FormProdutos.class.getName()).log(Level.SEVERE, null, ex);

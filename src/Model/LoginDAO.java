@@ -2,8 +2,6 @@
 package Model;
 
 import Controller.VerificaLogin;
-import View.FormMenu;
-import View.FormOrdemDeServico;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
