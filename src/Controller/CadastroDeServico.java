@@ -6,8 +6,8 @@ public class CadastroDeServico {
     String cliente = null, complemento = null, descricao = null, data = null, 
             dataAgendamento = null, horarioAgendamento = null, status = "ABERTO", 
             clicked = null; // serve para ver os itens clicado na busca por notas
-    int quantidade = 0, os = 0;
-    double valorTotal = 0, desconto = 0, contador = 0;
+    int quantidade = 0, os = 0, contador = 0;
+    double valorTotal = 0, desconto = 0;
     boolean validadorNota = false, validadorItens = false;
 
 
@@ -76,13 +76,14 @@ public class CadastroDeServico {
         this.data = data;
     }
 
-    public double getContador() {
+    public int getContador() {
         return contador;
     }
 
-    public void setContador(double contador) {
+    public void setContador(int contador) {
         this.contador = contador;
     }
+
 
     public boolean isValidadorNota() {
         return validadorNota;

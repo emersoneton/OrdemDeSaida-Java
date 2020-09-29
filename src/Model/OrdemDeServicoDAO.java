@@ -213,6 +213,49 @@ public class OrdemDeServicoDAO {
             }
         } */
     }
+    
+    
+    
+    public List<CadastroDeServico> ListaDePesquisaConsulta(CadastroDeServico ser) {
+        List<CadastroDeServico> lista = new ArrayList<>();
+
+        Conexao();
+
+        try {
+            PreparedStatement buscar = con.prepareStatement("SELECT * FROM clientes where nome like '%" + ser.getCliente() + "%' ORDER BY nome");
+
+            ResultSet rs = buscar.executeQuery();
+
+            while (rs.next()) {
+                CadastroDeServico ser2 = new CadastroDeServico();
+
+                ser2.setCliente(rs.getString("nome"));
+
+                lista.add(ser2);
+
+            }
+
+            con.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(FormOrdemDeServico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
+    }
+
+    public void MostrarPesquisaConsulta() {
+        /* int Linha = Lista.getSelectedIndex();
+        if(Linha >=0){
+            Conexao();
+            try {
+                PreparedStatement buscar = con.prepareStatement("SELECT * FROM clientes where nome like '%"
+                        +txtPesquisaCliente.getText()+"%' ORDER BY nome LIMI"+ Linha +" , 1");
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(FormOrdemDeServico.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } */
+    }
 
     public void BuscaDadosFilialPDF(CadastroDeFilial fil) {
         Conexao();
@@ -386,6 +429,7 @@ public class OrdemDeServicoDAO {
                     ser1.setDataAgendamento(rs.getString("data_agendamento"));
                     ser1.setData(rs.getString("data_os"));
                     ser1.setStatus((rs.getString("status_os")));
+                    ser1.setHorarioAgendamento((rs.getString("horario_agendamento")));
 
                     lista.add(ser1);
 
@@ -410,6 +454,7 @@ public class OrdemDeServicoDAO {
                     ser1.setDataAgendamento(rs.getString("data_agendamento"));
                     ser1.setData(rs.getString("data_os"));
                     ser1.setStatus((rs.getString("status_os")));
+                    ser1.setHorarioAgendamento((rs.getString("horario_agendamento")));
 
                     lista.add(ser1);
 
@@ -435,6 +480,7 @@ public class OrdemDeServicoDAO {
                     ser1.setDataAgendamento(rs.getString("data_agendamento"));
                     ser1.setData(rs.getString("data_os"));
                     ser1.setStatus((rs.getString("status_os")));
+                    ser1.setHorarioAgendamento((rs.getString("horario_agendamento")));
 
                     lista.add(ser1);
 
@@ -460,6 +506,7 @@ public class OrdemDeServicoDAO {
                     ser1.setDataAgendamento(rs.getString("data_agendamento"));
                     ser1.setData(rs.getString("data_os"));
                     ser1.setStatus((rs.getString("status_os")));
+                    ser1.setHorarioAgendamento((rs.getString("horario_agendamento")));
 
                     lista.add(ser1);
 
@@ -484,6 +531,7 @@ public class OrdemDeServicoDAO {
                     ser1.setDataAgendamento(rs.getString("data_agendamento"));
                     ser1.setData(rs.getString("data_os"));
                     ser1.setStatus((rs.getString("status_os")));
+                    ser1.setHorarioAgendamento((rs.getString("horario_agendamento")));
 
                     lista.add(ser1);
 

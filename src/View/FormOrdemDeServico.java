@@ -41,6 +41,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     DefaultListModel MODELO;
 
     int Enter = 0;
+    int Enter1 = 0;
 
     public FormOrdemDeServico() {
         initComponents();
@@ -55,8 +56,10 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         textoValor.setText("0");
         txtDesconto.setText("0");
         Lista.setVisible(false);
+        listaConsultaCliente.setVisible(false);
         MODELO = new DefaultListModel();
         Lista.setModel(MODELO);
+        listaConsultaCliente.setModel(MODELO);
         Data();
         BuscarOS();
     }
@@ -103,6 +106,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         jHorarioAgendamento = new javax.swing.JFormattedTextField();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
+        listaConsultaCliente = new javax.swing.JList<>();
         jPanel6 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         cmdAberto = new javax.swing.JCheckBox();
@@ -126,6 +130,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         comboBoxStatusConsulta = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
+        btnPdf = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         btnSalvar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
@@ -283,7 +288,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtOs, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel2)
@@ -386,8 +391,16 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
         jtConsultaOrdens.addTab("Ordem de Serviço", jPanel1);
 
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         jPanel5.setBackground(new java.awt.Color(204, 204, 204));
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        listaConsultaCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                listaConsultaClienteMousePressed(evt);
+            }
+        });
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ações", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
 
@@ -519,7 +532,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtOsConsultaInformar, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                .addComponent(txtOsConsultaInformar, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
@@ -532,13 +545,24 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cliente", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
 
+        txtPesquisaClienteConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPesquisaClienteConsultaActionPerformed(evt);
+            }
+        });
+        txtPesquisaClienteConsulta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPesquisaClienteConsultaKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtPesquisaClienteConsulta)
+                .addComponent(txtPesquisaClienteConsulta, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
@@ -554,32 +578,44 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(10, 10, 10)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(24, 24, 24)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(300, 300, 300)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel5Layout.createSequentialGroup()
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(listaConsultaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+                            .addGap(20, 20, 20)
+                            .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(6, 6, 6))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGap(11, 11, 11)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(9, 9, 9)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(9, 9, 9)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(90, 90, 90)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addComponent(listaConsultaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
+
+        jPanel4.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 800, 160));
 
         jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -627,70 +663,62 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             }
         });
 
+        btnPdf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/pdf.png"))); // NOI18N
+        btnPdf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPdfActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 786, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtOsConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(clien)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtClienteConsulta)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboBoxStatusConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(307, 307, 307)
+                .addGap(306, 306, 306)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(287, 287, 287)
+                .addComponent(btnPdf)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane4)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel10)
+                .addGap(4, 4, 4)
+                .addComponent(txtOsConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(clien)
+                .addGap(4, 4, 4)
+                .addComponent(txtClienteConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(comboBoxStatusConsulta, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtOsConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(clien)
                     .addComponent(txtClienteConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11)
-                    .addComponent(comboBoxStatusConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5))
-        );
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, 0))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBoxStatusConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addComponent(clien)
+                            .addComponent(jLabel11))))
                 .addGap(18, 18, 18)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPdf, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel4.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 189, 800, 340));
 
         jtConsultaOrdens.addTab("Consulta Ordens", jPanel4);
 
@@ -759,13 +787,13 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
+                .addGap(18, 18, 18)
                 .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnSalvar1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSalvar1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -879,18 +907,24 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         txtPesquisaClienteConsulta.setText("");
 
         int contadorTabela = tableModel.getRowCount();
-        System.out.println(contadorTabela);
 
         for (int x = 0; x < contadorTabela; x++) {
             tableModel.removeRow(0);
         }
 
         int contadorTabelaConsulta = tabelaConsulta.getRowCount();
-        System.out.println(contadorTabelaConsulta);
 
         for (int x = 0; x < contadorTabelaConsulta; x++) {
             tabelaConsultaOrdem.removeRow(0);
         }
+
+        cmdOs.setSelected(false);
+        cmdCliente.setSelected(false);
+        cmdAberto.setSelected(false);
+        cmdFechado.setSelected(false);
+        cmdTodos.setSelected(false);
+        txtOsConsultaInformar.setEnabled(false);
+        txtOsConsultaInformar.setEnabled(false);
         
         BuscarOS();
     }
@@ -921,6 +955,35 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     private void MostrarPesquisa() {
 
         txtPesquisaCliente.setText(Lista.getSelectedValue());
+
+    }
+
+    private void ListaDePesquisaConsulta() {
+
+        MODELO.removeAllElements();
+
+        CadastroDeServico ser = new CadastroDeServico();
+        ser.setCliente(txtPesquisaClienteConsulta.getText());
+
+        OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
+        List<CadastroDeServico> lista = serDao.ListaDePesquisaConsulta(ser);
+
+        int v = 0;
+        for (int x = 0; x < lista.size(); x++) {
+            MODELO.addElement(lista.get(x).getCliente());
+            v++;
+        }
+        if (v >= 1) {
+            listaConsultaCliente.setVisible(true);
+        } else {
+            listaConsultaCliente.setVisible(false);
+        }
+
+    }
+
+    private void MostrarPesquisaConsulta() {
+
+        txtPesquisaClienteConsulta.setText(listaConsultaCliente.getSelectedValue());
 
     }
 
@@ -1004,15 +1067,15 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         serDao.VerificaCodigoNoBanco(ser);
         serDao.VerificaCodigoDeItensNoBanco(ser);
 
-        if (ser.isValidadorItens()) { // se o codigo da nota existir no banco
+        if (ser.isValidadorItens()) { // se o codigo da nota existir no banco NA TABELA DE ITENS
             GerarPDF(); //Gero PDF 
         } else {
             if (ser.isValidadorNota()) {   //UPDATE
-                //   SalvarItens(); //Salvo o Itens da Nota
+                SalvarItens(); //Salvo o Itens da Nota
                 GerarPDF(); //Gero PDF 
 
             } else {                   //INSERT
-                //   Salvar(); //Salvo os complementos da nota
+                Salvar(); //Salvo os complementos da nota
                 GerarPDF(); //Gero PDF 
             }
         }
@@ -1217,40 +1280,40 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarMousePressed
 
     private void cmdAbertoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmdAbertoMousePressed
-      
+
         cmdFechado.setSelected(false);
         cmdTodos.setSelected(false);
         cmdOs.setSelected(false);
         txtOsConsultaInformar.setEnabled(false);
         cmdCliente.setSelected(false);
         txtPesquisaClienteConsulta.setEnabled(false);
-        
+
     }//GEN-LAST:event_cmdAbertoMousePressed
 
     private void cmdFechadoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmdFechadoMousePressed
-      
+
         cmdAberto.setSelected(false);
         cmdTodos.setSelected(false);
         cmdOs.setSelected(false);
         txtOsConsultaInformar.setEnabled(false);
         cmdCliente.setSelected(false);
         txtPesquisaClienteConsulta.setEnabled(false);
-        
+
     }//GEN-LAST:event_cmdFechadoMousePressed
 
     private void cmdTodosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmdTodosMousePressed
-    
+
         cmdAberto.setSelected(false);
         cmdFechado.setSelected(false);
         cmdOs.setSelected(false);
         txtOsConsultaInformar.setEnabled(false);
         cmdCliente.setSelected(false);
         txtPesquisaClienteConsulta.setEnabled(false);
-        
+
     }//GEN-LAST:event_cmdTodosMousePressed
 
     private void cmdOsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmdOsMousePressed
-      
+
         if (cmdOs.isSelected()) {
 
             txtOsConsultaInformar.setEnabled(false);
@@ -1275,11 +1338,11 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             txtPesquisaClienteConsulta.setEnabled(false);
 
         } else {
-            
+
             txtPesquisaClienteConsulta.setEnabled(true);
-            
+
         }
-        
+
         cmdOs.setSelected(false);
         txtOsConsultaInformar.setEnabled(false);
         cmdAberto.setSelected(false);
@@ -1292,6 +1355,67 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
     }//GEN-LAST:event_cmdOsMouseClicked
 
+    private void btnPdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPdfActionPerformed
+        GerarPdfBuscaNotas();
+    }//GEN-LAST:event_btnPdfActionPerformed
+
+    private void txtPesquisaClienteConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesquisaClienteConsultaActionPerformed
+        listaConsultaCliente.setVisible(false);
+        Enter1 = 1;
+    }//GEN-LAST:event_txtPesquisaClienteConsultaActionPerformed
+
+    private void txtPesquisaClienteConsultaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaClienteConsultaKeyReleased
+        if (Enter1 == 0) {
+            ListaDePesquisaConsulta();
+        } else {
+            Enter1 = 0;
+        }
+    }//GEN-LAST:event_txtPesquisaClienteConsultaKeyReleased
+
+    private void listaConsultaClienteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaConsultaClienteMousePressed
+        MostrarPesquisaConsulta();
+        listaConsultaCliente.setVisible(false);
+    }//GEN-LAST:event_listaConsultaClienteMousePressed
+
+    private void GerarPdfBuscaNotas() {
+
+        CadastroDeServico ser = new CadastroDeServico();
+        ser.setCliente(txtPesquisaClienteConsulta.getText());
+
+        if (cmdOs.isSelected()) {
+
+            ser.setOs(Integer.parseInt(txtOsConsultaInformar.getText()));
+            ser.setClicked("OS");
+
+        } else if (cmdCliente.isSelected()) {
+
+            ser.setClicked("CLIENTE");
+
+        } else if (cmdAberto.isSelected()) {
+
+            ser.setStatus("ABERTO");
+            ser.setClicked("ABERTO");
+
+        } else if (cmdFechado.isSelected()) {
+
+            ser.setStatus("FECHADO");
+            ser.setClicked("FECHADO");
+
+        } else if (cmdTodos.isSelected()) {
+
+            ser.setClicked("TODOS");
+
+        } else {
+            JOptionPane.showMessageDialog(null, "SELECIONE UMA DAS OPÇÕES DE AÇÕES", "Mensagem",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        GeradorDePdf pdf = new GeradorDePdf();
+
+        pdf.GerarPDFBuscaDeNotas(ser);
+
+    }
+
     private void SalvarStatus() {
         CadastroDeServico ser = new CadastroDeServico();
 
@@ -1299,8 +1423,13 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         ser.setOs(Integer.parseInt(txtOsConsulta.getText()));
         ser.setStatus((String) comboBoxStatusConsulta.getSelectedItem());
 
-        OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
-        serDao.SalvarStatusDaNota(ser);
+        int resposta = JOptionPane.showConfirmDialog(null, "TEM CERTEZA QUE DESEJA MUDAR O STATUS DESSA NOTA PARA '" + comboBoxStatusConsulta.getSelectedItem() + "'", "escolha dois", JOptionPane.YES_NO_OPTION);
+        //verfica se a resposta é verdadeira
+        if (resposta == JOptionPane.YES_OPTION) {
+            OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
+            serDao.SalvarStatusDaNota(ser);
+        }
+
     }
 
     public void BuscarNotasDeServicos() {
@@ -1309,37 +1438,35 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
 
         ser.setCliente(txtPesquisaClienteConsulta.getText());
-        
-   
-        if(cmdOs.isSelected()){
+
+        if (cmdOs.isSelected()) {
 
             ser.setOs(Integer.parseInt(txtOsConsultaInformar.getText()));
             ser.setClicked("OS");
-            
-        }else if(cmdCliente.isSelected()){
-             
+
+        } else if (cmdCliente.isSelected()) {
+
             ser.setClicked("CLIENTE");
-            
-        }else if(cmdAberto.isSelected()){
-            
+
+        } else if (cmdAberto.isSelected()) {
+
             ser.setStatus("ABERTO");
             ser.setClicked("ABERTO");
-            
-        }else if(cmdFechado.isSelected()){
-            
+
+        } else if (cmdFechado.isSelected()) {
+
             ser.setStatus("FECHADO");
             ser.setClicked("FECHADO");
-            
-        }else if(cmdTodos.isSelected()){
-            
+
+        } else if (cmdTodos.isSelected()) {
+
             ser.setClicked("TODOS");
-            
-        }else{
+
+        } else {
             JOptionPane.showMessageDialog(null, "SELECIONE UMA DAS OPÇÕES DE AÇÕES", "Mensagem",
                     JOptionPane.INFORMATION_MESSAGE);
         }
-        
-        
+
         List<CadastroDeServico> lista = serDao.BuscarNotasDeServico(ser);
 
         for (int x = 0; x < lista.size(); x++) {
@@ -1353,8 +1480,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
             tabelaConsultaOrdem.addRow(ser1);
         }
-        
-        
+
     }
 
     /**
@@ -1403,6 +1529,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscar1;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnPdf;
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnSalvar1;
@@ -1444,6 +1571,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jtConsultaOrdens;
+    private javax.swing.JList<String> listaConsultaCliente;
     private javax.swing.JTable tabelaConsulta;
     private javax.swing.JTable tbOrdemDeServico;
     private javax.swing.JTextPane textoComplemento;

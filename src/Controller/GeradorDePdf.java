@@ -3,7 +3,6 @@ package Controller;
 import Model.ClientesDAO;
 import Model.OrdemDeServicoDAO;
 import Model.ProdutosDAO;
-import View.FormOrdemDeServico;
 import com.itextpdf.text.Image;
 import java.awt.Desktop;
 import java.io.File;
@@ -67,13 +66,13 @@ public class GeradorDePdf {
             ClientesDAO cliDao = new ClientesDAO();
 
             List<CadastroDeClientes> lista = cliDao.GerarPDF();
-            
+
             for (int x = 0; x < lista.size(); x++) {
                 document.add(new Paragraph((x + 1) + " - " + lista.get(x).getNome() + " - " + lista.get(x).getEndereco()
                         + " " + lista.get(x).getNumero() + " " + lista.get(x).getBairro() + " - " + lista.get(x).getTelefone()
                         + " - " + lista.get(x).getCidade() + " - " + lista.get(x).getEstado()));
                 document.add(new Paragraph(" "));
-            } 
+            }
 
             document.add(new Paragraph("  "
                     + ""
@@ -152,6 +151,12 @@ public class GeradorDePdf {
         }
     }
 
+    
+    
+    
+    
+    
+    
     //GERAR PDF DA ORDEM DE SERVIÇO
     public void GeraPDFOrdemDeServico(CadastroDeServico ser, CadastroDeClientes cli) {
 
@@ -163,13 +168,13 @@ public class GeradorDePdf {
         Document document = new Document();
         try {
 
-            PdfWriter.getInstance(document, new FileOutputStream("c:/PDF/OS/Ordem De Serviço.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream("c:/PDF/OS/OS_"+ser.getOs()+"_"+ser.getCliente()+".pdf"));
             document.open();
 
             Image figura = Image.getInstance("src/Imagens/imagem.jpg");
             figura.scaleToFit(400, 200);
             figura.setAlignment(1);
-            
+
             PdfPTable table1 = new PdfPTable(new float[]{50, 120f});
             PdfPCell foto = new PdfPCell(new Phrase("Descrição"));
             foto.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -182,8 +187,6 @@ public class GeradorDePdf {
                     + "\n Cidade: " + fil.getCidade() + " / " + fil.getEstado() + "\n Telefone: " + fil.getTelefoneCelular());
             document.add(table1);
 
-            
-            
             // Numero da Ordem de Serviço
             Paragraph p = new Paragraph("ORDEM DE SERVIÇO (" + ser.getOs() + ")", fonteCabecalho);
             p.setAlignment(1);
@@ -209,11 +212,11 @@ public class GeradorDePdf {
 
             PdfPTable table = new PdfPTable(new float[]{20f, 10f, 10f}); // crio a tabela para ser vista de fora ou dentro do IF
             if (lista.size() > 1) {
-                PdfPCell Nome = new PdfPCell(new Phrase("Descrição"));
+                PdfPCell Nome = new PdfPCell(new Phrase("Descrição", fontePadrao));
                 Nome.setHorizontalAlignment(Element.ALIGN_CENTER);
-                PdfPCell Quantidade = new PdfPCell(new Phrase("Quantidade"));
+                PdfPCell Quantidade = new PdfPCell(new Phrase("Quantidade", fontePadrao));
                 Quantidade.setHorizontalAlignment(Element.ALIGN_CENTER);
-                PdfPCell Valor = new PdfPCell(new Phrase("Valor"));
+                PdfPCell Valor = new PdfPCell(new Phrase("Valor", fontePadrao));
                 Valor.setHorizontalAlignment(Element.ALIGN_CENTER);
 
                 table.addCell(Nome);
@@ -223,12 +226,12 @@ public class GeradorDePdf {
             //Crio o tabela de produtos
             int Quantidade = 0;
             for (int x = 0; x < lista.size(); x++) {
-                 Quantidade = lista.get(x).getQuantidade();
-                
-                PdfPCell celula1 = new PdfPCell(new Phrase(lista.get(x).getDescricao()));
-                PdfPCell celula2 = new PdfPCell(new Phrase(String.valueOf(lista.get(x).getQuantidade())));
+                Quantidade = lista.get(x).getQuantidade();
+
+                PdfPCell celula1 = new PdfPCell(new Phrase(lista.get(x).getDescricao(), fontePadrao));
+                PdfPCell celula2 = new PdfPCell(new Phrase(String.valueOf(lista.get(x).getQuantidade()), fontePadrao));
                 celula2.setHorizontalAlignment(Element.ALIGN_CENTER);
-                PdfPCell celula3 = new PdfPCell(new Phrase(String.valueOf(lista.get(x).getValorTotal())));
+                PdfPCell celula3 = new PdfPCell(new Phrase(String.valueOf(lista.get(x).getValorTotal()), fontePadrao));
 
                 table.addCell(celula1);
                 table.addCell(celula2);
@@ -237,23 +240,22 @@ public class GeradorDePdf {
             }
 
             document.add(table); // Adiciono dados na tabela  
-            
-            document.add(new Paragraph(Quantidade));
-                            
-            if (lista.size() > 1) {
-                 // Valor Total
-            Paragraph valorTotal = new Paragraph("Valor Total:        ");
-            valorTotal.add(new Phrase("" + ser.getValorTotal(), negrito));
-            valorTotal.setAlignment(0);
-            document.add(valorTotal);
 
-            // Valor de Desconto
-            Paragraph desconto = new Paragraph("Valor Desconto: ");
-            desconto.add(new Phrase("" + ser.getDesconto(), negrito));
-            desconto.setAlignment(0);
-            document.add(desconto);
+            document.add(new Paragraph(Quantidade));
+
+            if (lista.size() > 1) {
+                // Valor Total
+                Paragraph valorTotal = new Paragraph("Valor Total:        ", fontePadrao);
+                valorTotal.add(new Phrase("" + ser.getValorTotal(), negrito));
+                valorTotal.setAlignment(0);
+                document.add(valorTotal);
+
+                // Valor de Desconto
+                Paragraph desconto = new Paragraph("Valor Desconto: ", fontePadrao);
+                desconto.add(new Phrase("" + ser.getDesconto(), negrito));
+                desconto.setAlignment(0);
+                document.add(desconto);
             }
-           
 
             document.add(new Paragraph(" "));
             document.add(new Paragraph(" "));
@@ -291,11 +293,93 @@ public class GeradorDePdf {
         document.close();
 
         try {
-            Desktop.getDesktop().open(new File("c:/PDF/OS/Ordem De Serviço.pdf"));
+            Desktop.getDesktop().open(new File("c:/PDF/OS/OS_"+ser.getOs()+"_"+ser.getCliente()+".pdf"));
         } catch (IOException ex) {
             Logger.getLogger(GeradorDePdf.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    public void GerarPDFBuscaDeNotas(CadastroDeServico ser) {
+
+        OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
+        List<CadastroDeServico> lista = serDao.BuscarNotasDeServico(ser);
+        
+        Document document = new Document();
+
+        try {
+            PdfWriter.getInstance(document, new FileOutputStream("c:/PDF/OS/Notas de Serviços.pdf"));
+            document.open();
+
+            // Numero da Ordem de Serviço
+            Paragraph p = new Paragraph("NOTAS DE SERVIÇOS", fonteCabecalho);
+            p.setAlignment(1);
+            document.add(p);
+            
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph(" "));
+
+           
+            document.add(new Paragraph(" "));
+            PdfPTable table = new PdfPTable(new float[]{10f, 40f, 30f,30f,30f}); // crio a tabela para ser vista de fora ou dentro do IF
+
+            PdfPCell os = new PdfPCell(new Phrase("OS", fontePadrao));
+            os.setHorizontalAlignment(Element.ALIGN_CENTER);
+            PdfPCell cliente = new PdfPCell(new Phrase("CLIENTE", fontePadrao));
+            cliente.setHorizontalAlignment(Element.ALIGN_CENTER);
+            PdfPCell dataAgendamento = new PdfPCell(new Phrase("DATA DO AGENDAMENTO", fontePadrao));
+            dataAgendamento.setHorizontalAlignment(Element.ALIGN_CENTER);
+            PdfPCell dataNota = new PdfPCell(new Phrase("DATA DA NOTA", fontePadrao));
+            dataNota.setHorizontalAlignment(Element.ALIGN_CENTER);
+            PdfPCell statusNota = new PdfPCell(new Phrase("STATUS DA NOTA", fontePadrao));
+            statusNota.setHorizontalAlignment(Element.ALIGN_CENTER);
+
+            table.addCell(os);
+            table.addCell(cliente);
+            table.addCell(dataAgendamento);
+            table.addCell(dataNota);
+            table.addCell(statusNota);
+            
+           
+            for (int x = 0; x < lista.size(); x++) {
+                
+                PdfPCell celula1 = new PdfPCell(new Phrase(String.valueOf(lista.get(x).getOs()), fontePadrao));
+                celula1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                PdfPCell celula2 = new PdfPCell(new Phrase(lista.get(x).getCliente(), fontePadrao));
+                PdfPCell celula3 = new PdfPCell(new Phrase(lista.get(x).getDataAgendamento()+" - "+lista.get(x).getHorarioAgendamento(), fontePadrao));
+                celula3.setHorizontalAlignment(Element.ALIGN_CENTER);
+                PdfPCell celula4 = new PdfPCell(new Phrase(lista.get(x).getData(), fontePadrao));
+                celula4.setHorizontalAlignment(Element.ALIGN_CENTER);
+                PdfPCell celula5 = new PdfPCell(new Phrase(lista.get(x).getStatus(), fontePadrao));
+                celula5.setHorizontalAlignment(Element.ALIGN_CENTER);
+                
+                
+                table.addCell(celula1);
+                table.addCell(celula2);
+                table.addCell(celula3);
+                table.addCell(celula4);
+                table.addCell(celula5);
+            }
+            
+            document.add(table); // Adiciono dados na tabela 
+            
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph(" "));
+            Paragraph fim = new Paragraph("FIM DA LISTA", fonteVermelha);
+            fim.setAlignment(1);
+            document.add(fim);
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(GeradorDePdf.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(GeradorDePdf.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        document.close();
+        
+        try {
+            Desktop.getDesktop().open(new File("c:/PDF/OS/Notas de Serviços.pdf"));
+        } catch (IOException ex) {
+            Logger.getLogger(GeradorDePdf.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 }
