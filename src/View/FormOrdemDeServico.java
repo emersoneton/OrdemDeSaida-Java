@@ -1092,7 +1092,17 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             if (ser.isValidadorNota()) {   //UPDATE
                 SalvarItens(); //Salvo o Itens da Nota
                 GerarPDF(); //Gero PDF 
-                AlterarNota();
+
+                ser.setCliente(txtPesquisaCliente.getText());
+                ser.setOs(Integer.parseInt(txtOs.getText()));
+                ser.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
+                ser.setComplemento(textoComplemento.getText());
+                ser.setDesconto(Double.parseDouble(txtDesconto.getText().replace(",", ".")));
+                ser.setValorTotal(Double.parseDouble(textoValor.getText().replace(",", ".")));
+                ser.setDataAgendamento(jDataDoAgendamento.getText());
+                ser.setHorarioAgendamento(jHorarioAgendamento.getText());
+
+                serDao.AlterarNota(ser);
 
             } else {                   //INSERT
                 Salvar(); //Salvo os complementos da nota
@@ -1236,17 +1246,35 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
         serDao.VerificaCodigoNoBanco(ser);
         serDao.VerificaCodigoDeItensNoBanco(ser);
-        
+
         if (ser.isValidadorNota()) {   //ALTERA A NOTA SE TIVER
-            
+
             serDao.AlterarNota(ser);
 
         }
 
         if (ser.isValidadorItens()) { // ALTERAR OS ITENS SE TIVER
-            System.out.println("encontrou os itens");
-        }
 
+            int cont = tbOrdemDeServico.getRowCount();
+
+            ser.setContador(cont); // Crio um Contador para receber o valor da Tabela para validar no DAO
+            System.out.println(ser.getContador());
+            
+            serDao.DeletaItens(ser); // DELETA TODOS OS ITENS DA TABELA 
+            for (int x = 0; x < cont; x++) {
+
+                CadastroDeServico ser1 = new CadastroDeServico();
+                ser1.setOs(Integer.parseInt(txtOs.getText()));
+                ser1.setDescricao(tableModel.getValueAt(x, 0).toString());
+                ser1.setValorTotal(Double.parseDouble(tableModel.getValueAt(x, 1).toString()));
+                ser1.setQuantidade(Integer.parseInt(tableModel.getValueAt(x, 2).toString()));
+
+                serDao.SalvarItens(ser1); // CRIA TODOS OS NOVOS ITENS DA TABELA
+            }
+            
+            
+
+        }
 
         Limpar();
     }

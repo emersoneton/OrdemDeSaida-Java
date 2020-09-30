@@ -130,6 +130,27 @@ public class OrdemDeServicoDAO {
     }
     
     
+     public void DeletaItens(CadastroDeServico ser) {
+
+        Conexao();
+
+        try {
+            // DELETA AS INFORMAÇÕES DA TABELA
+            PreparedStatement delete = con.prepareStatement("DELETE FROM itens_servico WHERE cod_servico = ?");
+
+                delete.setString(1, "" + ser.getOs());
+
+                delete.executeUpdate();
+    
+            con.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    
     public void BuscarOS(CadastroDeServico ser) {
 
         Conexao();
