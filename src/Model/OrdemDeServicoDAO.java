@@ -94,9 +94,6 @@ public class OrdemDeServicoDAO {
                 busca.executeUpdate();
             }
             
-            JOptionPane.showMessageDialog(null, "Itens SALVO com sucesso!", "Mensagem",
-                    JOptionPane.INFORMATION_MESSAGE);
-
             con.close();
 
         } catch (SQLException ex) {
@@ -105,6 +102,34 @@ public class OrdemDeServicoDAO {
 
     }
 
+    
+    public void AlterarNota(CadastroDeServico ser){
+        
+        Conexao();
+        
+        try {
+            PreparedStatement alterar = con.prepareStatement("UPDATE servicos SET cliente = ?, complemento = ?, data_agendamento = ?, horario_agendamento = ?, valor = ?, desconto = ?"
+                    + "WHERE codigo = ?");
+            
+            alterar.setString(1, ser.getCliente());
+            alterar.setString(2, ser.getComplemento());
+            alterar.setString(3, ser.getDataAgendamento());
+            alterar.setString(4, ser.getHorarioAgendamento());
+            alterar.setString(5, ""+ser.getValorTotal());
+            alterar.setString(6, ""+ser.getDesconto());
+            
+            alterar.setString(7, ""+ser.getOs());
+            
+            alterar.executeUpdate();
+            
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    
     public void BuscarOS(CadastroDeServico ser) {
 
         Conexao();

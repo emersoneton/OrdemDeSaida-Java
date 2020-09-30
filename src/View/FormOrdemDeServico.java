@@ -105,6 +105,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         txtOs = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jHorarioAgendamento = new javax.swing.JFormattedTextField();
+        jButton2 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         listaConsultaCliente = new javax.swing.JList<>();
@@ -261,19 +262,28 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setBackground(new java.awt.Color(153, 153, 153));
+        jButton2.setForeground(new java.awt.Color(153, 153, 153));
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/pdf.png"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -304,14 +314,9 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                                 .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtDataEHora, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(btnAdicionar, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(13, 13, 13)
-                                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(9, 9, 9)
                                 .addComponent(jLabel5)
                                 .addGap(9, 9, 9)
@@ -320,7 +325,12 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                                 .addComponent(jLabel4)
                                 .addGap(5, 5, 5)
                                 .addComponent(textoValor, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(13, 13, 13)
+                                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -333,7 +343,8 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jHorarioAgendamento, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -376,7 +387,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnExcluir)
                     .addComponent(btnAlterar))
-                .addGap(67, 67, 67)
+                .addGap(47, 47, 47)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(textoQuantidadeDeItens, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -385,14 +396,16 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel6)
-                    .addComponent(jDataDoAgendamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addComponent(jHorarioAgendamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(4, 4, 4))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel6)
+                        .addComponent(jDataDoAgendamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel9)
+                        .addComponent(jHorarioAgendamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         jtConsultaOrdens.addTab("Ordem de Serviço", jPanel1);
@@ -1079,6 +1092,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             if (ser.isValidadorNota()) {   //UPDATE
                 SalvarItens(); //Salvo o Itens da Nota
                 GerarPDF(); //Gero PDF 
+                AlterarNota();
 
             } else {                   //INSERT
                 Salvar(); //Salvo os complementos da nota
@@ -1126,6 +1140,9 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
             serDao.SalvarItens(ser1);
         }
+
+        JOptionPane.showMessageDialog(null, "Itens da Nota SALVO com sucesso!", "Mensagem",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void GerarPDF() {
@@ -1198,8 +1215,41 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
     private void btnSalvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvar1ActionPerformed
 
+        AlterarNota();
 
+        JOptionPane.showMessageDialog(null, "Nota ALTERADA com sucesso!", "Mensagem",
+                JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnSalvar1ActionPerformed
+
+    private void AlterarNota() {
+        CadastroDeServico ser = new CadastroDeServico();
+
+        ser.setCliente(txtPesquisaCliente.getText());
+        ser.setOs(Integer.parseInt(txtOs.getText()));
+        ser.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
+        ser.setComplemento(textoComplemento.getText());
+        ser.setDesconto(Double.parseDouble(txtDesconto.getText().replace(",", ".")));
+        ser.setValorTotal(Double.parseDouble(textoValor.getText().replace(",", ".")));
+        ser.setDataAgendamento(jDataDoAgendamento.getText());
+        ser.setHorarioAgendamento(jHorarioAgendamento.getText());
+
+        OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
+        serDao.VerificaCodigoNoBanco(ser);
+        serDao.VerificaCodigoDeItensNoBanco(ser);
+        
+        if (ser.isValidadorNota()) {   //ALTERA A NOTA SE TIVER
+            
+            serDao.AlterarNota(ser);
+
+        }
+
+        if (ser.isValidadorItens()) { // ALTERAR OS ITENS SE TIVER
+            System.out.println("encontrou os itens");
+        }
+
+
+        Limpar();
+    }
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         dispose();
@@ -1208,55 +1258,6 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     private void btnBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscar1ActionPerformed
         Limpar();
     }//GEN-LAST:event_btnBuscar1ActionPerformed
-
-    private void jHorarioAgendamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jHorarioAgendamentoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jHorarioAgendamentoActionPerformed
-
-    private void txtPesquisaClienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaClienteKeyReleased
-        if (Enter == 0) {
-            ListaDePesquisa();
-        } else {
-            Enter = 0;
-        }
-    }//GEN-LAST:event_txtPesquisaClienteKeyReleased
-
-    private void txtPesquisaClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesquisaClienteActionPerformed
-        Lista.setVisible(false);
-        Enter = 1;
-    }//GEN-LAST:event_txtPesquisaClienteActionPerformed
-
-    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        String valor = "";
-
-        valor.valueOf(InsereValorNaTabela());
-        if (tbOrdemDeServico.getSelectedRow() != -1) { // Se for diferente de -1 existe algo na tabela.
-            tableModel.setValueAt(comboBoxProduto.getSelectedItem().toString(), tbOrdemDeServico.getSelectedRow(), 0);
-            tableModel.setValueAt(valor.valueOf(InsereValorNaTabela()), tbOrdemDeServico.getSelectedRow(), 1);
-            tableModel.setValueAt(txtQuantidade.getText(), tbOrdemDeServico.getSelectedRow(), 2);
-            ContadorDaTabela(); //Chama o metodo de Somar o Valor total e a quantidade de linhas na tabela
-        }
-    }//GEN-LAST:event_btnAlterarActionPerformed
-
-    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-
-        if (tbOrdemDeServico.getSelectedRow() != -1) {
-
-            tableModel.removeRow(tbOrdemDeServico.getSelectedRow());
-            ContadorDaTabela(); //Chama o metodo de Somar o Valor total e a quantidade de linhas na tabela
-
-        }
-    }//GEN-LAST:event_btnExcluirActionPerformed
-
-    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-
-        InserirNaTabela();
-    }//GEN-LAST:event_btnAdicionarActionPerformed
-
-    private void ListaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListaMousePressed
-        MostrarPesquisa();
-        Lista.setVisible(false);
-    }//GEN-LAST:event_ListaMousePressed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         BuscarNotasDeServicos();
@@ -1383,9 +1384,62 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         listaConsultaCliente.setVisible(false);
     }//GEN-LAST:event_listaConsultaClienteMousePressed
 
+    private void jHorarioAgendamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jHorarioAgendamentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jHorarioAgendamentoActionPerformed
+
+    private void txtPesquisaClienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaClienteKeyReleased
+        if (Enter == 0) {
+            ListaDePesquisa();
+        } else {
+            Enter = 0;
+        }
+    }//GEN-LAST:event_txtPesquisaClienteKeyReleased
+
+    private void txtPesquisaClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesquisaClienteActionPerformed
+        Lista.setVisible(false);
+        Enter = 1;
+    }//GEN-LAST:event_txtPesquisaClienteActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        String valor = "";
+
+        valor.valueOf(InsereValorNaTabela());
+        if (tbOrdemDeServico.getSelectedRow() != -1) { // Se for diferente de -1 existe algo na tabela.
+            tableModel.setValueAt(comboBoxProduto.getSelectedItem().toString(), tbOrdemDeServico.getSelectedRow(), 0);
+            tableModel.setValueAt(valor.valueOf(InsereValorNaTabela()), tbOrdemDeServico.getSelectedRow(), 1);
+            tableModel.setValueAt(txtQuantidade.getText(), tbOrdemDeServico.getSelectedRow(), 2);
+            ContadorDaTabela(); //Chama o metodo de Somar o Valor total e a quantidade de linhas na tabela
+        }
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+
+        if (tbOrdemDeServico.getSelectedRow() != -1) {
+
+            tableModel.removeRow(tbOrdemDeServico.getSelectedRow());
+            ContadorDaTabela(); //Chama o metodo de Somar o Valor total e a quantidade de linhas na tabela
+
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+
+        InserirNaTabela();
+    }//GEN-LAST:event_btnAdicionarActionPerformed
+
     private void btnAdicionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarMouseClicked
         txtQuantidade.setText("1");
     }//GEN-LAST:event_btnAdicionarMouseClicked
+
+    private void ListaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListaMousePressed
+        MostrarPesquisa();
+        Lista.setVisible(false);
+    }//GEN-LAST:event_ListaMousePressed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        GerarPDF();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void GerarPdfBuscaNotas() {
 
@@ -1561,6 +1615,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboBoxProduto;
     private javax.swing.JComboBox<String> comboBoxStatusConsulta;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JFormattedTextField jDataDoAgendamento;
     private javax.swing.JFormattedTextField jHorarioAgendamento;
     private javax.swing.JLabel jLabel1;
