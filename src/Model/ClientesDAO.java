@@ -59,7 +59,7 @@ public class ClientesDAO {
 
             stmt.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Registro inserido com sucesso!", "Mensagem",
+            JOptionPane.showMessageDialog(null, "Cadastro SALVO com sucesso!", "Mensagem",
                     JOptionPane.INFORMATION_MESSAGE);
 
         } catch (SQLException ex) {
@@ -226,7 +226,7 @@ public class ClientesDAO {
 
             edit.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Registro Atualizado com sucesso!", "Mensagem",
+            JOptionPane.showMessageDialog(null, "Cadastro Atualizado com sucesso!", "Mensagem",
                     JOptionPane.INFORMATION_MESSAGE);
 
         } catch (SQLException ex) {

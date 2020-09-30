@@ -46,7 +46,7 @@ public class FilialDAO {
 
             salvar.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Registro inserido com sucesso!", "Mensagem",
+            JOptionPane.showMessageDialog(null, "Cadastro SALVO com sucesso!", "Mensagem",
                     JOptionPane.INFORMATION_MESSAGE);
 
             con.close();
@@ -128,7 +128,7 @@ public class FilialDAO {
 
             update.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Registro inserido com sucesso!", "Mensagem",
+            JOptionPane.showMessageDialog(null, "Cadastro ALTERADO com sucesso!", "Mensagem",
                     JOptionPane.INFORMATION_MESSAGE);
 
             con.close();

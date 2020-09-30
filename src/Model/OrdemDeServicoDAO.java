@@ -40,10 +40,9 @@ public class OrdemDeServicoDAO {
             busca.setString(7, ser.getData());
             busca.setString(8, "" + ser.getStatus());
 
-        //    busca.executeUpdate();
-            System.out.println("" + ser.getDesconto());
+            busca.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Registro inserido com sucesso!", "Mensagem",
+            JOptionPane.showMessageDialog(null, "Nota SALVA com sucesso!", "Mensagem",
                     JOptionPane.INFORMATION_MESSAGE);
 
             con.close();
@@ -94,6 +93,9 @@ public class OrdemDeServicoDAO {
 
                 busca.executeUpdate();
             }
+            
+            JOptionPane.showMessageDialog(null, "Itens SALVO com sucesso!", "Mensagem",
+                    JOptionPane.INFORMATION_MESSAGE);
 
             con.close();
 
@@ -566,7 +568,7 @@ public class OrdemDeServicoDAO {
 
             alterar.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Registro alterado com sucesso!", "Mensagem",
+            JOptionPane.showMessageDialog(null, "Alteração de Status SALVO com sucesso!", "Mensagem",
                     JOptionPane.INFORMATION_MESSAGE);
 
             con.close();

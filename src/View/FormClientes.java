@@ -811,6 +811,11 @@ public class FormClientes extends javax.swing.JFrame {
         jTelefone.setText("");
         txtBairro.setText("");
         BuscarCodigoDeCliente();
+        
+        int contadorTabela = tabelaClientes.getRowCount();
+        for(int x=0; x < contadorTabela; x++){
+            tabelaClientes.removeRow(0);
+        }
     }
 
     /**

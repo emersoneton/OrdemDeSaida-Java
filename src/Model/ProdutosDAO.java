@@ -45,7 +45,7 @@ public class ProdutosDAO {
             
             salvar.executeUpdate();
             
-            JOptionPane.showMessageDialog(null, "Registro inserido com sucesso!", "Mensagem",
+            JOptionPane.showMessageDialog(null, "Cadastro SALVO com sucesso!", "Mensagem",
                     JOptionPane.INFORMATION_MESSAGE);
         
 
@@ -111,7 +111,7 @@ public class ProdutosDAO {
             
             alterar.executeUpdate();
             
-            JOptionPane.showMessageDialog(null, "Registro alterado com sucesso!", "Mensagem",
+            JOptionPane.showMessageDialog(null, "Cadastro ALTERADO com sucesso!", "Mensagem",
                     JOptionPane.INFORMATION_MESSAGE);
              
              
