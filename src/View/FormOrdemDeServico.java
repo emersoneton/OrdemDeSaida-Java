@@ -45,9 +45,10 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
     public FormOrdemDeServico() {
         initComponents();
+        setResizable(false);//Não permite editar o tamanho
+        this.setLocationRelativeTo(null);//Centralizar Jframe
         BuscarProdutos();
         txtPesquisaCliente.requestFocus();
-        txtDesconto.setDocument(new SoNumeros());
         txtOs.setDocument(new SoNumeros());
         txtQuantidade.setDocument(new SoNumeros());
         txtOsConsulta.setEditable(false);
@@ -183,6 +184,11 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         }
 
         btnAdicionar.setText("Adicionar");
+        btnAdicionar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAdicionarMouseClicked(evt);
+            }
+        });
         btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAdicionarActionPerformed(evt);
@@ -925,7 +931,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         cmdTodos.setSelected(false);
         txtOsConsultaInformar.setEnabled(false);
         txtOsConsultaInformar.setEnabled(false);
-        
+
         BuscarOS();
     }
 
@@ -1091,7 +1097,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
         ser.setCliente(txtPesquisaCliente.getText());
         ser.setValorTotal(Double.parseDouble(textoValor.getText()));
-        ser.setDesconto(Double.parseDouble(txtDesconto.getText()));
+        ser.setDesconto(Double.parseDouble(txtDesconto.getText().replace(",", ".")));
         ser.setDataAgendamento(jDataDoAgendamento.getText());
         ser.setHorarioAgendamento(jHorarioAgendamento.getText());
         ser.setData(txtDataEHora.getText());
@@ -1132,7 +1138,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         ser.setDataAgendamento(jDataDoAgendamento.getText());
         ser.setHorarioAgendamento(jHorarioAgendamento.getText());
         ser.setValorTotal(Double.parseDouble(textoValor.getText()));
-        ser.setDesconto(Double.parseDouble(txtDesconto.getText()));
+        ser.setDesconto(Double.parseDouble(txtDesconto.getText().replace(",", ".")));
 
         CadastroDeClientes cli = new CadastroDeClientes();
 
@@ -1377,6 +1383,10 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         listaConsultaCliente.setVisible(false);
     }//GEN-LAST:event_listaConsultaClienteMousePressed
 
+    private void btnAdicionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdicionarMouseClicked
+        txtQuantidade.setText("1");
+    }//GEN-LAST:event_btnAdicionarMouseClicked
+
     private void GerarPdfBuscaNotas() {
 
         CadastroDeServico ser = new CadastroDeServico();
@@ -1428,6 +1438,15 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         if (resposta == JOptionPane.YES_OPTION) {
             OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
             serDao.SalvarStatusDaNota(ser);
+
+            txtOsConsulta.setText("");
+            txtClienteConsulta.setText("");
+            int contadorTabelaConsulta = tabelaConsulta.getRowCount();
+
+            for (int x = 0; x < contadorTabelaConsulta; x++) {
+                tabelaConsultaOrdem.removeRow(0);
+            }
+            BuscarNotasDeServicos();
         }
 
     }

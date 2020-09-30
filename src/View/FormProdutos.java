@@ -31,6 +31,8 @@ public class FormProdutos extends javax.swing.JFrame {
     
     public FormProdutos() {
         initComponents();
+        setResizable(false);//Não permite editar o tamanho
+        this.setLocationRelativeTo(null);//Centralizar Jframe
         txtCodigoBarras.setDocument(new SoNumeros());
         txtQuantidade.setDocument(new SoNumeros());
         BuscarCodigoDoProduto(); // Busca do ultimo registro valido no banco
@@ -105,7 +107,7 @@ public class FormProdutos extends javax.swing.JFrame {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnSalvar.setBackground(new java.awt.Color(255, 255, 255));
@@ -225,6 +227,12 @@ public class FormProdutos extends javax.swing.JFrame {
 
         jLabel4.setText("Código de Barras:");
         jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(217, 32, -1, -1));
+
+        txtCodigoBarras.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtCodigoBarrasMouseClicked(evt);
+            }
+        });
         jPanel4.add(txtCodigoBarras, new org.netbeans.lib.awtextra.AbsoluteConstraints(326, 29, 250, -1));
 
         jLabel6.setText("Quantidade:");
@@ -524,6 +532,10 @@ public class FormProdutos extends javax.swing.JFrame {
         GeradorDePdf geraPdf = new GeradorDePdf();
         geraPdf.GeraPDFProdutos();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtCodigoBarrasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCodigoBarrasMouseClicked
+        Lista.setVisible(false);
+    }//GEN-LAST:event_txtCodigoBarrasMouseClicked
 
     /**
      * @param args the command line arguments

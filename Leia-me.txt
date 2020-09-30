@@ -1,3 +1,5 @@
 #################################
-1 - Criar uma pasta "PDF" no disco C
-2 - Criar 2 pastas "Cadastros" e "OS" dentro da pasta PDF
+1 - Criar uma pasta "SISOS" no disco C
+2 - Dentro da pasta SISOS criar 2 pastas "Imagem" e "PDF" 
+3 - Dentro da pasta Imagem vai ter o logo da empresa nas notas de Serviço com o nome "imagem.jpg"
+4 - Dentro da pasta PDF crie mais 2 pastas "Cadastros" e "OS"

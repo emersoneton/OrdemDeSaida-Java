@@ -40,7 +40,8 @@ public class OrdemDeServicoDAO {
             busca.setString(7, ser.getData());
             busca.setString(8, "" + ser.getStatus());
 
-            busca.executeUpdate();
+        //    busca.executeUpdate();
+            System.out.println("" + ser.getDesconto());
 
             JOptionPane.showMessageDialog(null, "Registro inserido com sucesso!", "Mensagem",
                     JOptionPane.INFORMATION_MESSAGE);

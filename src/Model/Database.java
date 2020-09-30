@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 
 public class Database {
@@ -24,7 +25,11 @@ public class Database {
          return DriverManager.getConnection(URL, USER, PASS);
      } catch (ClassNotFoundException | SQLException ex) {
          //Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+         JOptionPane.showMessageDialog(null, "* ERRO DE CONEXÃO COM O BANCO DE DADOS *\n\n"
+                 + "  CERTIFIQUE-SE QUE A CONEXÃO FOI INICIADA \n\n"
+                 + "    FECHE A APLICAÇÃO E INICIE NOVAMENTE!");
          throw new RuntimeException("Erro na Conexão", ex);
+         
      }
      
      

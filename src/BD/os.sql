@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 29-Set-2020 às 00:28
+-- Tempo de geração: 29-Set-2020 às 22:31
 -- Versão do servidor: 10.4.14-MariaDB
 -- versão do PHP: 7.4.9
 
@@ -63,16 +63,6 @@ CREATE TABLE `clientes` (
   `bairro` varchar(50) DEFAULT NULL,
   `data` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Extraindo dados da tabela `clientes`
---
-
-INSERT INTO `clientes` (`codigo`, `nome`, `endereco`, `numero`, `cep`, `cidade`, `estado`, `pais`, `email`, `email2`, `telefone`, `cnpj`, `cpf`, `bairro`, `data`) VALUES
-(21, 'ABNER DA SILVA JUNIOR', 'rua Jardim da aucarias de são paulo RS', '12', '19878-899', 'porto alegre', 'RS', '', '', '', '(51) 3396-8877', '   .   .   -  ', '  .   .   /    -  ', 'aparecida', '19/09/2020'),
-(23, 'CASSIO', 'rua j', '23', '99999-999', '', 'AC', '', '', '', '(55) 5555-5555', '  .   .   /    -  ', '   .   .   -  ', 'aparecida', '22/09/2020'),
-(26, 'NELSON RODRIGUES', 'rua Barão', '25', '91710-566', 'Porto Alegre', 'RS', '', '', '', '(51) 3398-7788', '11.111.111/1111-11', '152.278.999-99', 'centro', '22/09/2020'),
-(27, 'EMERSON DA SILVA JONAS DE LIMA JR', 'Av Das industrias 21', '8578', '91710-564', 'PORTO ALEGRE', 'RS', '', '', '', '(51) 8899-7789', '04.995.789/0001-99', '025.714.920-12', 'aparicio', '23/09/2020');
 
 -- --------------------------------------------------------
 
@@ -147,13 +137,6 @@ CREATE TABLE `filial` (
   `cep` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Extraindo dados da tabela `filial`
---
-
-INSERT INTO `filial` (`codigo`, `razao_social`, `razao_fantasia`, `cnpj`, `inscricao_estadual`, `inscricao_municipal`, `endereco`, `numero`, `bairro`, `cidade`, `estado`, `pais`, `telefone_comercial`, `telefone_celular`, `cep`) VALUES
-(14, 'NELSON CLIMATIZAÇOES LTDA', 'climatizações', '15.557.778/0001-19', '155.778.899.654', '156254-5', 'Rua B (Jd Morada Sol)', '252', 'Coronel Aparício Borges', 'Porto Alegre', 'RS', 'Brasil', '(51) 3389-7789', '(51) 9.8485-0224', '91710-564');
-
 -- --------------------------------------------------------
 
 --
@@ -167,19 +150,6 @@ CREATE TABLE `itens_servico` (
   `valor` double DEFAULT NULL,
   `quantidade` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Extraindo dados da tabela `itens_servico`
---
-
-INSERT INTO `itens_servico` (`codigo`, `cod_servico`, `descricao`, `valor`, `quantidade`) VALUES
-(32, 37, 'Fusivel de Compresão', 5.5, 1),
-(36, 40, 'Fusivel de Compresão', 5.5, 2),
-(37, 40, 'motor de ar', 189, 3),
-(38, 40, 'controle remoto', 22.5, 1),
-(39, 39, 'controle remoto', 22.5, 1),
-(40, 39, 'dijuntor', 15, 1),
-(41, 39, 'Fusivel de Compresão', 5.5, 1);
 
 -- --------------------------------------------------------
 
@@ -5788,21 +5758,6 @@ CREATE TABLE `produtos` (
   `quantidade` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Extraindo dados da tabela `produtos`
---
-
-INSERT INTO `produtos` (`codigo`, `descricao`, `codigo_barras`, `valor`, `quantidade`) VALUES
-(3, 'dijuntor', '1113333444', 15, 10),
-(8, 'fuzil', '10101010', 10.5, 10),
-(9, 'Fusivel de Compresão', '', 5.5, 13),
-(13, 'Fusor de Agua', '85579968', 2.5, 2),
-(14, 'Motor de compresao', '11111', 190, 11),
-(15, 'motor de ar', '1234', 189, 2),
-(16, 'Controle', '999999999', 13.5, 1),
-(17, 'controle remoto', '1111111', 22.5, 12),
-(18, 'controle remoto 3', '121212', 1.5, 2);
-
 -- --------------------------------------------------------
 
 --
@@ -5820,16 +5775,6 @@ CREATE TABLE `servicos` (
   `data_os` varchar(20) NOT NULL,
   `status_os` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Extraindo dados da tabela `servicos`
---
-
-INSERT INTO `servicos` (`codigo`, `cliente`, `valor`, `desconto`, `data_agendamento`, `horario_agendamento`, `complemento`, `data_os`, `status_os`) VALUES
-(36, 'NELSON RODRIGUES', 0, 0, '  /  /    ', '  :  ', '', '25/09/2020 - 20:50', 'ABERTO'),
-(37, 'EMERSON DA SILVA JONAS DE LIMA JR', 0, 0, '11/11/1111', '11:11', 'casa', '25/09/2020 - 20:53', 'FECHADO'),
-(39, 'ABNER DA SILVA JUNIOR', 0, 0, '11/11/1111', '11:11', 'asdasfsafadsfadsf', '25/09/2020 - 20:55', 'ABERTO'),
-(40, 'EMERSON DA SILVA JONAS DE LIMA JR', 0, 0, '27/09/2020', '18:00', 'AR NÃO ESTÁ GELANDO', '26/09/2020 - 11:00', 'FECHADO');
 
 --
 -- Índices para tabelas despejadas
@@ -5891,19 +5836,19 @@ ALTER TABLE `acesso`
 -- AUTO_INCREMENT de tabela `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `filial`
 --
 ALTER TABLE `filial`
-  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `itens_servico`
 --
 ALTER TABLE `itens_servico`
-  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `municipio`
@@ -5915,13 +5860,13 @@ ALTER TABLE `municipio`
 -- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `servicos`
 --
 ALTER TABLE `servicos`
-  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

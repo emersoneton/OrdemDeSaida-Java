@@ -41,7 +41,7 @@ public class GeradorDePdf {
         com.itextpdf.text.Document document = new com.itextpdf.text.Document();
 
         try {
-            PdfWriter.getInstance(document, new FileOutputStream("c:/PDF/Cadastros/Clientes.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream("c:/SISOS/PDF/Cadastros/Clientes.pdf"));
 
             document.open();
             document.open();
@@ -89,7 +89,7 @@ public class GeradorDePdf {
         }
 
         try {
-            Desktop.getDesktop().open(new File("c:/PDF/Cadastros/Clientes.pdf"));
+            Desktop.getDesktop().open(new File("c:/SISOS/PDF/Cadastros/Clientes.pdf"));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
@@ -100,7 +100,7 @@ public class GeradorDePdf {
         com.itextpdf.text.Document document = new com.itextpdf.text.Document();
 
         try {
-            PdfWriter.getInstance(document, new FileOutputStream("c:/PDF/Cadastros/Produtos.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream("c:/SISOS/PDF/Cadastros/Produtos.pdf"));
 
             document.open();
             Paragraph p = new Paragraph("RELATÓRIO DE PRODUTOS");
@@ -127,7 +127,7 @@ public class GeradorDePdf {
 
             for (int x = 0; x < lista.size(); x++) {
                 document.add(new Paragraph((x + 1) + " -- Nome: " + lista.get(x).getDescricao() + " -- Código: " + lista.get(x).getCodigo()
-                        + " -- Código de Barras: " + lista.get(x).getCodigoBarras() + " -- Valor: " + lista.get(x).getValor() + " -- Quantidade: " + lista.get(x).getQuantidade()));
+                        + " -- Código de Barras: " + lista.get(x).getCodigoBarras() + " -- Valor: " + Double.toString(lista.get(x).getValor()).replace(".",",") + " -- Quantidade: " + lista.get(x).getQuantidade()));
                 document.add(new Paragraph(" "));
             }
 
@@ -145,7 +145,7 @@ public class GeradorDePdf {
         }
 
         try {
-            Desktop.getDesktop().open(new File("c:/PDF/Cadastros/Produtos.pdf"));
+            Desktop.getDesktop().open(new File("c:/SISOS/PDF/Cadastros/Produtos.pdf"));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
@@ -168,10 +168,10 @@ public class GeradorDePdf {
         Document document = new Document();
         try {
 
-            PdfWriter.getInstance(document, new FileOutputStream("c:/PDF/OS/OS_"+ser.getOs()+"_"+ser.getCliente()+".pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream("c:/SISOS/PDF/OS/OS_"+ser.getOs()+"_"+ser.getCliente()+".pdf"));
             document.open();
 
-            Image figura = Image.getInstance("src/Imagens/imagem.jpg");
+            Image figura = Image.getInstance("c:/SISOS/Imagem/imagem.jpg");
             figura.scaleToFit(400, 200);
             figura.setAlignment(1);
 
@@ -231,7 +231,7 @@ public class GeradorDePdf {
                 PdfPCell celula1 = new PdfPCell(new Phrase(lista.get(x).getDescricao(), fontePadrao));
                 PdfPCell celula2 = new PdfPCell(new Phrase(String.valueOf(lista.get(x).getQuantidade()), fontePadrao));
                 celula2.setHorizontalAlignment(Element.ALIGN_CENTER);
-                PdfPCell celula3 = new PdfPCell(new Phrase(String.valueOf(lista.get(x).getValorTotal()), fontePadrao));
+                PdfPCell celula3 = new PdfPCell(new Phrase(String.valueOf(lista.get(x).getValorTotal()).replace(".",","), fontePadrao));
 
                 table.addCell(celula1);
                 table.addCell(celula2);
@@ -246,13 +246,13 @@ public class GeradorDePdf {
             if (lista.size() > 1) {
                 // Valor Total
                 Paragraph valorTotal = new Paragraph("Valor Total:        ", fontePadrao);
-                valorTotal.add(new Phrase("" + ser.getValorTotal(), negrito));
+                valorTotal.add(new Phrase("" + Double.toString(ser.getValorTotal()).replace(".",","), negrito));
                 valorTotal.setAlignment(0);
                 document.add(valorTotal);
 
                 // Valor de Desconto
                 Paragraph desconto = new Paragraph("Valor Desconto: ", fontePadrao);
-                desconto.add(new Phrase("" + ser.getDesconto(), negrito));
+                desconto.add(new Phrase("" + Double.toString(ser.getDesconto()).replace(".",","), negrito));
                 desconto.setAlignment(0);
                 document.add(desconto);
             }
@@ -293,7 +293,7 @@ public class GeradorDePdf {
         document.close();
 
         try {
-            Desktop.getDesktop().open(new File("c:/PDF/OS/OS_"+ser.getOs()+"_"+ser.getCliente()+".pdf"));
+            Desktop.getDesktop().open(new File("c:/SISOS/PDF/OS/OS_"+ser.getOs()+"_"+ser.getCliente()+".pdf"));
         } catch (IOException ex) {
             Logger.getLogger(GeradorDePdf.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -307,7 +307,7 @@ public class GeradorDePdf {
         Document document = new Document();
 
         try {
-            PdfWriter.getInstance(document, new FileOutputStream("c:/PDF/OS/Notas de Serviços.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream("c:/SISOS/PDF/Relatório_OS/Notas de Serviços.pdf"));
             document.open();
 
             // Numero da Ordem de Serviço
@@ -376,7 +376,7 @@ public class GeradorDePdf {
         document.close();
         
         try {
-            Desktop.getDesktop().open(new File("c:/PDF/OS/Notas de Serviços.pdf"));
+            Desktop.getDesktop().open(new File("c:/SISOS/PDF/Relatório_OS/Notas de Serviços.pdf"));
         } catch (IOException ex) {
             Logger.getLogger(GeradorDePdf.class.getName()).log(Level.SEVERE, null, ex);
         }
