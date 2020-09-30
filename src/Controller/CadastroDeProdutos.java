@@ -4,10 +4,10 @@ package Controller;
 public class CadastroDeProdutos {
    public String codigoBarras = null
            , descricao = null
-           , quantidade = null
            , codigo = null;
    
    double valor = 0;
+   int quantidade = 0;
 
     public String getCodigoBarras() {
         return codigoBarras;
@@ -33,12 +33,11 @@ public class CadastroDeProdutos {
         this.valor = valor;
     }
 
-
-    public String getQuantidade() {
+    public int getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(String quantidade) {
+    public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
 

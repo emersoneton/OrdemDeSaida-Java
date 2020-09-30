@@ -62,7 +62,7 @@ public class ProdutoTableModel extends AbstractTableModel{
                 dados.get(linha).setValor(Double.parseDouble((String) valor));      // Insere os dados na Tabela
                 break;
            case 3:
-                dados.get(linha).setQuantidade((String) valor); // Insere os dados na Tabela
+                dados.get(linha).setQuantidade(Integer.parseInt((String) valor)); // Insere os dados na Tabela
                 break;
        }
          this.fireTableRowsUpdated(linha, linha);

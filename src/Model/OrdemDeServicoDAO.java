@@ -93,7 +93,7 @@ public class OrdemDeServicoDAO {
 
                 busca.executeUpdate();
             }
-            
+
             con.close();
 
         } catch (SQLException ex) {
@@ -102,35 +102,65 @@ public class OrdemDeServicoDAO {
 
     }
 
-    
-    public void AlterarNota(CadastroDeServico ser){
-        
+    public void AlterarEstoque(CadastroDeServico ser) {
         Conexao();
-        
+
+        try {
+            PreparedStatement busca = con.prepareStatement("SELECT * FROM produtos WHERE descricao = '" + ser.getDescricao() + "'");
+
+            ResultSet rs = busca.executeQuery();
+
+            while (rs.next()) {
+                double quantidade = Double.parseDouble(rs.getString("quantidade"));
+
+                PreparedStatement alterar = con.prepareStatement("UPDATE produtos SET quantidade = ? WHERE descricao = ?");
+
+                for (int x = 0; x <= ser.getContador(); x++) {
+                    
+                    quantidade = quantidade - ser.getQuantidade();
+                    
+                    alterar.setString(1, "" + quantidade);
+
+                    alterar.setString(2, ser.getDescricao());
+
+                    alterar.executeUpdate();
+                }
+            }
+
+            con.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void AlterarNota(CadastroDeServico ser) {
+
+        Conexao();
+
         try {
             PreparedStatement alterar = con.prepareStatement("UPDATE servicos SET cliente = ?, complemento = ?, data_agendamento = ?, horario_agendamento = ?, valor = ?, desconto = ?"
                     + "WHERE codigo = ?");
-            
+
             alterar.setString(1, ser.getCliente());
             alterar.setString(2, ser.getComplemento());
             alterar.setString(3, ser.getDataAgendamento());
             alterar.setString(4, ser.getHorarioAgendamento());
-            alterar.setString(5, ""+ser.getValorTotal());
-            alterar.setString(6, ""+ser.getDesconto());
-            
-            alterar.setString(7, ""+ser.getOs());
-            
+            alterar.setString(5, "" + ser.getValorTotal());
+            alterar.setString(6, "" + ser.getDesconto());
+
+            alterar.setString(7, "" + ser.getOs());
+
             alterar.executeUpdate();
-            
+
             con.close();
         } catch (SQLException ex) {
             Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
-    
-     public void DeletaItens(CadastroDeServico ser) {
+
+    public void DeletaItens(CadastroDeServico ser) {
 
         Conexao();
 
@@ -138,10 +168,10 @@ public class OrdemDeServicoDAO {
             // DELETA AS INFORMAÇÕES DA TABELA
             PreparedStatement delete = con.prepareStatement("DELETE FROM itens_servico WHERE cod_servico = ?");
 
-                delete.setString(1, "" + ser.getOs());
+            delete.setString(1, "" + ser.getOs());
 
-                delete.executeUpdate();
-    
+            delete.executeUpdate();
+
             con.close();
 
         } catch (SQLException ex) {
@@ -149,8 +179,7 @@ public class OrdemDeServicoDAO {
         }
 
     }
-    
-    
+
     public void BuscarOS(CadastroDeServico ser) {
 
         Conexao();
@@ -164,15 +193,15 @@ public class OrdemDeServicoDAO {
             while (rs.next()) {
 
                 codigo = rs.getString("codigo");
-                
+
             }
 
-            if(codigo != null){
+            if (codigo != null) {
                 ser.setOs(Integer.parseInt(codigo));
-            }else{
+            } else {
                 ser.setOs(Integer.parseInt("1"));
             }
-            
+
             con.close();
         } catch (SQLException ex) {
             Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -268,9 +297,7 @@ public class OrdemDeServicoDAO {
             }
         } */
     }
-    
-    
-    
+
     public List<CadastroDeServico> ListaDePesquisaConsulta(CadastroDeServico ser) {
         List<CadastroDeServico> lista = new ArrayList<>();
 
@@ -516,8 +543,7 @@ public class OrdemDeServicoDAO {
                 }
 
             } // Fim da Busca por CLIENTE
-            
-            
+
             if (ser.getClicked() == "ABERTO") { // Busca por Notas em Aberto
 
                 PreparedStatement busca = con.prepareStatement("SELECT * FROM servicos WHERE status_os = ? ORDER BY codigo");
@@ -542,9 +568,8 @@ public class OrdemDeServicoDAO {
                 }
 
             } // Fim da Busca por CLIENTE em ABERTO
-            
-            
-             if (ser.getClicked() == "FECHADO") { // Busca por Notas em Fechado
+
+            if (ser.getClicked() == "FECHADO") { // Busca por Notas em Fechado
 
                 PreparedStatement busca = con.prepareStatement("SELECT * FROM servicos WHERE status_os = ? ORDER BY codigo");
 
@@ -568,8 +593,6 @@ public class OrdemDeServicoDAO {
                 }
 
             } // Fim da Busca por CLIENTE em Fechado
-            
-            
 
             if (ser.getClicked() == "TODOS") { // Busca por TODOS
 
@@ -598,7 +621,7 @@ public class OrdemDeServicoDAO {
         } catch (SQLException ex) {
             Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return lista;
     }
 

@@ -1149,8 +1149,10 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
             OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
             serDao.SalvarItens(ser1);
+            serDao.AlterarEstoque(ser1);
         }
 
+        
         JOptionPane.showMessageDialog(null, "Itens da Nota SALVO com sucesso!", "Mensagem",
                 JOptionPane.INFORMATION_MESSAGE);
     }
@@ -1229,6 +1231,10 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
         JOptionPane.showMessageDialog(null, "Nota ALTERADA com sucesso!", "Mensagem",
                 JOptionPane.INFORMATION_MESSAGE);
+
+        GerarPDF();
+        Limpar();
+
     }//GEN-LAST:event_btnSalvar1ActionPerformed
 
     private void AlterarNota() {
@@ -1259,7 +1265,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
             ser.setContador(cont); // Crio um Contador para receber o valor da Tabela para validar no DAO
             System.out.println(ser.getContador());
-            
+
             serDao.DeletaItens(ser); // DELETA TODOS OS ITENS DA TABELA 
             for (int x = 0; x < cont; x++) {
 
@@ -1270,13 +1276,11 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                 ser1.setQuantidade(Integer.parseInt(tableModel.getValueAt(x, 2).toString()));
 
                 serDao.SalvarItens(ser1); // CRIA TODOS OS NOVOS ITENS DA TABELA
+             //   serDao.AlterarEstoque(ser1);
             }
-            
-            
 
         }
 
-        Limpar();
     }
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed

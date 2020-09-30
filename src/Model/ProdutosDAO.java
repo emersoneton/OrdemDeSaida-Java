@@ -41,7 +41,7 @@ public class ProdutosDAO {
             salvar.setString(1, pro.getCodigoBarras());
             salvar.setString(2, pro.getDescricao());
             salvar.setString(3, ""+pro.getValor());
-            salvar.setString(4, pro.getQuantidade());
+            salvar.setString(4, ""+pro.getQuantidade());
             
             salvar.executeUpdate();
             
@@ -74,7 +74,7 @@ public class ProdutosDAO {
                     pro.setCodigoBarras(rs.getString("codigo_barras"));
                     pro.setDescricao(rs.getString("descricao"));
                     pro.setValor(Double.parseDouble(rs.getString("valor")));
-                    pro.setQuantidade(rs.getString("quantidade"));
+                    pro.setQuantidade(Integer.parseInt(rs.getString("quantidade")));
                     validador = true;
                     break;
                 }
@@ -105,7 +105,7 @@ public class ProdutosDAO {
             alterar.setString(1, pro.getCodigoBarras());
             alterar.setString(2, pro.getDescricao());
             alterar.setString(3, ""+pro.getValor());
-            alterar.setString(4, pro.getQuantidade());
+            alterar.setString(4, ""+pro.getQuantidade());
             
             alterar.setString(5, pro.getCodigo());
             
@@ -189,7 +189,7 @@ public class ProdutosDAO {
                 pro.setCodigo(rs.getString("codigo"));
                 pro.setDescricao(rs.getString("descricao"));
                 pro.setValor(Double.parseDouble(rs.getString("valor")));
-                pro.setQuantidade(rs.getString("quantidade"));
+                pro.setQuantidade(Integer.parseInt(rs.getString("quantidade")));
                 
                 lista.add(pro);
             }
@@ -218,7 +218,7 @@ public class ProdutosDAO {
                 pro.setDescricao(rs.getString("descricao"));
                 pro.setCodigoBarras(rs.getString("codigo_barras"));
                 pro.setValor(Double.parseDouble(rs.getString("valor")));
-                pro.setQuantidade(rs.getString("quantidade"));
+                pro.setQuantidade(Integer.parseInt(rs.getString("quantidade")));
                 
                 lista.add(pro);
             }

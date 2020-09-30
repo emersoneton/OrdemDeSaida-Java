@@ -11,6 +11,7 @@ import Controller.GeradorDePdf;
 import Controller.ProdutoTableModel;
 import Model.Database;
 import Model.ProdutosDAO;
+import java.awt.Color;
 import java.sql.Connection;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -41,6 +42,8 @@ public class FormProdutos extends javax.swing.JFrame {
         Lista.setModel(MODELO);
         txtCodigo.setEnabled(false);
         jtableProdutos.setModel(tabelaProdutos);
+        txtQuantidade.setForeground(Color.black);
+        
     }
 
     /**
@@ -399,7 +402,7 @@ public class FormProdutos extends javax.swing.JFrame {
         pro.setCodigoBarras(txtCodigoBarras.getText());
         pro.setDescricao(txtDescricao.getText());
         pro.setValor(Double.parseDouble(txtValor.getText().replace(',', '.')));
-        pro.setQuantidade(txtQuantidade.getText());
+        pro.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
         proDao.Salvar(pro);
         Limpar();
         BuscarCodigoDoProduto();
@@ -426,7 +429,11 @@ public class FormProdutos extends javax.swing.JFrame {
         txtCodigoBarras.setText(pro.getCodigoBarras());
         txtDescricao.setText(pro.getDescricao());
         txtValor.setText(Double.toString(pro.getValor()));
-        txtQuantidade.setText(pro.getQuantidade());
+
+        if(pro.getQuantidade() < 0){
+           txtQuantidade.setForeground(Color.red);
+        }   
+        txtQuantidade.setText(Integer.toString(pro.getQuantidade()));
         
     }
     
@@ -439,7 +446,7 @@ public class FormProdutos extends javax.swing.JFrame {
         
         pro.setCodigoBarras(txtCodigoBarras.getText());
         pro.setDescricao(txtDescricao.getText());
-        pro.setQuantidade(txtQuantidade.getText());
+        pro.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
         pro.setValor(Double.parseDouble(txtValor.getText().replace(',', '.')));
         pro.setCodigo(txtCodigo.getText());
         
@@ -454,6 +461,7 @@ public class FormProdutos extends javax.swing.JFrame {
         txtDescricao.setText("");
         txtQuantidade.setText("");
         txtValor.setText("");
+        txtQuantidade.setForeground(Color.black);
         
         int cont = tabelaProdutos.getRowCount();
         

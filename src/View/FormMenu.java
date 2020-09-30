@@ -34,6 +34,7 @@ public class FormMenu extends javax.swing.JFrame {
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
         jDesktopPaynelCentral = new javax.swing.JDesktopPane();
         txtVersao = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -41,8 +42,10 @@ public class FormMenu extends javax.swing.JFrame {
         MenuCliente = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu7 = new javax.swing.JMenu();
         btnSair = new javax.swing.JMenu();
         btnLogof = new javax.swing.JMenuItem();
         btnSairSistema = new javax.swing.JMenuItem();
@@ -52,6 +55,8 @@ public class FormMenu extends javax.swing.JFrame {
 
         jMenu4.setText("Edit");
         jMenuBar2.add(jMenu4);
+
+        jMenu5.setText("jMenu5");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Controle");
@@ -79,6 +84,7 @@ public class FormMenu extends javax.swing.JFrame {
 
         jMenu1.setBorder(null);
         jMenu1.setText("CADASTRO");
+        jMenu1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         MenuCliente.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         MenuCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/menu_cliente.png"))); // NOI18N
@@ -112,7 +118,11 @@ public class FormMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        jMenu6.setText(" | ");
+        jMenuBar1.add(jMenu6);
+
         jMenu2.setText("MOVIMENTO");
+        jMenu2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jMenuItem1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/menu-servicos.png"))); // NOI18N
@@ -126,7 +136,11 @@ public class FormMenu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        jMenu7.setText(" | ");
+        jMenuBar1.add(jMenu7);
+
         btnSair.setText("SAIR");
+        btnSair.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         btnLogof.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLogof.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/menu_logof.png"))); // NOI18N
@@ -230,6 +244,9 @@ public class FormMenu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
