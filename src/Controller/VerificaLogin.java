@@ -4,8 +4,10 @@ package Controller;
 
 public class VerificaLogin {
     String login = null, 
-            senha = null;
+            senha = null,
+            valida = null;
     boolean validador = false;
+    
 
     public String getLogin() {
         return login;
@@ -29,6 +31,14 @@ public class VerificaLogin {
 
     public void setValidador(boolean validador) {
         this.validador = validador;
+    }
+
+    public String getValida() {
+        return valida;
+    }
+
+    public void setValida(String valida) {
+        this.valida = valida;
     }
     
     

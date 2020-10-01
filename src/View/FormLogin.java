@@ -7,6 +7,7 @@ package View;
 
 import Controller.VerificaLogin;
 import Model.LoginDAO;
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.sql.Date;
 import java.text.DateFormat;
@@ -197,6 +198,7 @@ public class FormLogin extends javax.swing.JFrame {
         logDao.Login(log);
         
         if(log.isValidador()){
+            
             String dataHora = null;
             dataHora = Data(dataHora);
             
@@ -205,8 +207,29 @@ public class FormLogin extends javax.swing.JFrame {
                             + "Data: "+dataHora);
             new FormMenu().setVisible(true);
             dispose();
+            
+        }else if(log.getValida()=="LOGIN"){
+            
+            JOptionPane.showMessageDialog(this, "Senha inválida, por favor, digite novamente!");
+            txtSenha.requestFocus();
+            txtSenha.selectAll();
+            txtSenha.setSelectedTextColor(Color.yellow);
+            
+        }else if(log.getValida()=="SENHA"){
+            
+            JOptionPane.showMessageDialog(this, "Login inválido, por favor, digite novamente!");
+            txtLogin.requestFocus();
+            txtLogin.selectAll();
+            txtLogin.setSelectedTextColor(Color.yellow);
+            
         }else{
+            
             JOptionPane.showMessageDialog(this, "Login ou Senha inválido, por favor, digite novamente!");
+            txtLogin.requestFocus();
+            txtLogin.selectAll();
+            txtLogin.setSelectedTextColor(Color.yellow);
+            txtSenha.setSelectedTextColor(Color.yellow);
+            
         }
     }
     

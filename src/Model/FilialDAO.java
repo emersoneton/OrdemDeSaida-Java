@@ -89,7 +89,7 @@ public class FilialDAO {
             }
 
             if (validador == false) {
-                JOptionPane.showMessageDialog(null, "Não foi encontrado registro desse Produto no Banco de Dados!", "Mensagem",
+                JOptionPane.showMessageDialog(null, "Não foi encontrado registro no Banco de Dados para o código informado!", "Mensagem",
                         JOptionPane.INFORMATION_MESSAGE);
             }
             con.close();

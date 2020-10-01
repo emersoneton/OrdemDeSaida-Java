@@ -35,6 +35,12 @@ public class LoginDAO {
               if(login.trim().equals(login_banco) && senha.trim().equals(senha_banco)){
                  log.setValidador(true);
               }
+              if(login.trim().equals(login_banco)){
+                  log.setValida("LOGIN");
+              }
+              if(senha.trim().equals(senha_banco)){
+                  log.setValida("SENHA");
+              }
               
             }
             

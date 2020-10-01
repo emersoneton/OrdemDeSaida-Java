@@ -43,7 +43,8 @@ public class FormProdutos extends javax.swing.JFrame {
         txtCodigo.setEnabled(false);
         jtableProdutos.setModel(tabelaProdutos);
         txtQuantidade.setForeground(Color.black);
-        
+        txtValor.setText("0,00");
+        txtQuantidade.setText("0");
     }
 
     /**
@@ -459,8 +460,8 @@ public class FormProdutos extends javax.swing.JFrame {
         txtCodigo.setText("");
         txtCodigoBarras.setText("");
         txtDescricao.setText("");
-        txtQuantidade.setText("");
-        txtValor.setText("");
+        txtQuantidade.setText("0");
+        txtValor.setText("0,00");
         txtQuantidade.setForeground(Color.black);
         
         int cont = tabelaProdutos.getRowCount();

@@ -116,9 +116,9 @@ public class OrdemDeServicoDAO {
                 PreparedStatement alterar = con.prepareStatement("UPDATE produtos SET quantidade = ? WHERE descricao = ?");
 
                 for (int x = 0; x <= ser.getContador(); x++) {
-                    
+
                     quantidade = quantidade - ser.getQuantidade();
-                    
+
                     alterar.setString(1, "" + quantidade);
 
                     alterar.setString(2, ser.getDescricao());
@@ -180,6 +180,7 @@ public class OrdemDeServicoDAO {
 
     }
 
+    
     public void BuscarOS(CadastroDeServico ser) {
 
         Conexao();
@@ -637,8 +638,6 @@ public class OrdemDeServicoDAO {
 
             alterar.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Alteração de Status SALVO com sucesso!", "Mensagem",
-                    JOptionPane.INFORMATION_MESSAGE);
 
             con.close();
         } catch (SQLException ex) {

@@ -47,11 +47,11 @@ public class GeradorDePdf {
 
             document.open();
             document.open();
-            Paragraph p = new Paragraph("RELATÓRIO DE CLIENTES");
+            Paragraph p = new Paragraph("RELATÓRIO DE CLIENTES",fonteCabecalho);
             p.setAlignment(1);
             document.add(p);
 
-            Paragraph linha = new Paragraph("________________________");
+            Paragraph linha = new Paragraph("_____________________________________");
             linha.setAlignment(1);
             document.add(linha);
 
@@ -71,7 +71,7 @@ public class GeradorDePdf {
 
             for (int x = 0; x < lista.size(); x++) {
                 document.add(new Paragraph((x + 1) + " - " + lista.get(x).getNome() + " - " + lista.get(x).getEndereco()
-                        + " " + lista.get(x).getNumero() + " " + lista.get(x).getBairro() + " - " + lista.get(x).getTelefone()
+                        + " ,nº" + lista.get(x).getNumero() + " - " + lista.get(x).getBairro() + " - " + lista.get(x).getTelefone()
                         + " - " + lista.get(x).getCidade() + " - " + lista.get(x).getEstado()));
                 document.add(new Paragraph(" "));
             }
@@ -80,7 +80,7 @@ public class GeradorDePdf {
                     + ""
                     + ""));
 
-            Paragraph fim = new Paragraph("FIM DA LISTA");
+            Paragraph fim = new Paragraph("FIM DA LISTA", fonteVermelha);
             fim.setAlignment(1);
             document.add(fim);
 
@@ -105,11 +105,11 @@ public class GeradorDePdf {
             PdfWriter.getInstance(document, new FileOutputStream("c:/SISOS/PDF/Cadastros/Produtos.pdf"));
 
             document.open();
-            Paragraph p = new Paragraph("RELATÓRIO DE PRODUTOS");
+            Paragraph p = new Paragraph("RELATÓRIO DE PRODUTOS", fonteCabecalho);
             p.setAlignment(1);
             document.add(p);
 
-            Paragraph linha = new Paragraph("________________________");
+            Paragraph linha = new Paragraph("_____________________________________");
             linha.setAlignment(1);
             document.add(linha);
 
@@ -127,16 +127,89 @@ public class GeradorDePdf {
 
             List<CadastroDeProdutos> lista = proDao.GerarPDF();
 
-            for (int x = 0; x < lista.size(); x++) {
-                document.add(new Paragraph((x + 1) + " -- Nome: " + lista.get(x).getDescricao() + " -- Código: " + lista.get(x).getCodigo()
-                        + " -- Código de Barras: " + lista.get(x).getCodigoBarras() + " -- Valor: " + Double.toString(lista.get(x).getValor()).replace(".",",") + " -- Quantidade: " + lista.get(x).getQuantidade()));
+            PdfPTable table = new PdfPTable(new float[]{50f,7f,25f,7f,7f}); // crio a tabela para ser vista de fora ou dentro do IF
+            if (lista.size() > 1) {
+                PdfPCell Nome = new PdfPCell(new Phrase("DESCRIÇÃO", negritoPequena));
+                Nome.setBorder(Rectangle.NO_BORDER);// Tabela sem Bordas
+                Nome.setPaddingLeft(-70);
+                
+                PdfPCell codigo = new PdfPCell(new Phrase("Código", negritoPequena));
+                codigo.setHorizontalAlignment(Element.ALIGN_CENTER);
+                codigo.setBorder(Rectangle.NO_BORDER);// Tabela sem Bordas
+                codigo.setPaddingRight(-80); // Tabela sem margem
+                
+                
+                PdfPCell codigoBarras = new PdfPCell(new Phrase("Codigo de Barras", negritoPequena));
+                codigoBarras.setHorizontalAlignment(Element.ALIGN_CENTER);
+                codigoBarras.setBorder(Rectangle.NO_BORDER);// Tabela sem Bordas
+                codigoBarras.setPaddingRight(-100); // Tabela sem margem
+                
+                PdfPCell Valor = new PdfPCell(new Phrase("valor", negritoPequena));
+                Valor.setHorizontalAlignment(Element.ALIGN_CENTER);
+                Valor.setBorder(Rectangle.NO_BORDER);// Tabela sem Bordas
+                Valor.setPaddingRight(-120); // Tabela sem margem
+                
+                PdfPCell Quantidade = new PdfPCell(new Phrase("qtd", negritoPequena));
+                Quantidade.setHorizontalAlignment(Element.ALIGN_CENTER);
+                Quantidade.setBorder(Rectangle.NO_BORDER);// Tabela sem Bordas
+                Quantidade.setPaddingRight(-150); // Tabela sem margem 
+
+                table.addCell(Nome);
+                table.addCell(codigo);
+                table.addCell(codigoBarras);
+                table.addCell(Valor);
+                table.addCell(Quantidade);
                 document.add(new Paragraph(" "));
             }
+            
+            //Crio o tabela de produtos
+            int Quantidade = 0;
+            for (int x = 0; x < lista.size(); x++) {
+                Quantidade = lista.get(x).getQuantidade();
 
+                PdfPCell celula1 = new PdfPCell(new Phrase((x+1)+" - "+lista.get(x).getDescricao(), negritoPequena));
+                celula1.setBorder(Rectangle.NO_BORDER); // Tabela sem Bordas
+                celula1.setPaddingLeft(-70); // Tabela sem margem
+                
+                PdfPCell celula2 = new PdfPCell(new Phrase(String.valueOf(lista.get(x).getCodigo()), negritoPequena));
+                celula2.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celula2.setBorder(Rectangle.NO_BORDER); // Tabela sem Bordas
+                celula2.setPaddingRight(-80); // Tabela sem margem
+                
+                PdfPCell celula3 = new PdfPCell(new Phrase(String.valueOf(lista.get(x).getCodigoBarras()), negritoPequena));
+                celula3.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celula3.setBorder(Rectangle.NO_BORDER); // Tabela sem Bordas
+                celula3.setPaddingRight(-100); // Tabela sem margem
+                
+                PdfPCell celula4 = new PdfPCell(new Phrase(Double.toString(lista.get(x).getValor()).replace(".",","), negritoPequena));
+                celula4.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celula4.setBorder(Rectangle.NO_BORDER); // Tabela sem Bordas
+                celula4.setPaddingRight(-120); // Tabela sem margem
+                
+                PdfPCell celula5 = new PdfPCell(new Phrase(String.valueOf(lista.get(x).getQuantidade()), negritoPequena));
+                celula5.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celula5.setBorder(Rectangle.NO_BORDER); // Tabela sem Bordas
+                celula5.setPaddingRight(-150); // Tabela sem margem 
+                
+                table.addCell(celula1);
+                table.addCell(celula2);
+                table.addCell(celula3);
+                table.addCell(celula4);
+                table.addCell(celula5); 
+
+            }
+
+            document.add(table); // Adiciono dados na tabela  
+
+            document.add(new Paragraph(Quantidade));
+            
+            
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph(" "));
             document.add(new Paragraph("  "
                     + ""
                     + ""));
-            Paragraph fim = new Paragraph("FIM DA LISTA");
+            Paragraph fim = new Paragraph("FIM DA LISTA", fonteVermelha);
             fim.setAlignment(1);
             document.add(fim);
 
