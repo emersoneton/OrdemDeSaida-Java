@@ -52,6 +52,7 @@ public class FormLogin extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         labelLogin = new javax.swing.JLabel();
         labeLSenha = new javax.swing.JLabel();
+        SISOS = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("LOGIN");
@@ -114,15 +115,16 @@ public class FormLogin extends javax.swing.JFrame {
         labeLSenha.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         labeLSenha.setForeground(new java.awt.Color(102, 102, 102));
 
+        SISOS.setBackground(new java.awt.Color(0, 0, 0));
+        SISOS.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
+        SISOS.setText("SISOS");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(79, 79, 79)
-                        .addComponent(jLabel3))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -142,13 +144,21 @@ public class FormLogin extends javax.swing.JFrame {
                             .addComponent(txtLogin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(67, 67, 67)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(79, 79, 79)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(99, 99, 99)
+                        .addComponent(SISOS)))
                 .addGap(21, 21, 21))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addContainerGap(12, Short.MAX_VALUE)
+                .addComponent(SISOS)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addGap(35, 35, 35)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -164,7 +174,7 @@ public class FormLogin extends javax.swing.JFrame {
                     .addComponent(labeLSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addGap(43, 43, 43)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
         );
@@ -233,19 +243,20 @@ public class FormLogin extends javax.swing.JFrame {
             dataHora = Data(dataHora);
             
             JOptionPane.showMessageDialog(this, "Login efetuado com sucesso! \n"
-                    + "Usuario: "+log.getLogin()+"\n"
+                    + "Usuario: "+log.getNome()+"\n"
                             + "Data: "+dataHora);
-            new FormMenu().setVisible(true);
+
+            new FormMenu(log).setVisible(true);
             dispose();
             
-        }else if(log.getValida()=="LOGIN"){
+        }else if(log.getValidaLogin()=="LOGIN"){
             
             JOptionPane.showMessageDialog(this, "Senha inválida, por favor, digite novamente!");
             txtSenha.requestFocus();
             txtSenha.selectAll();
             txtSenha.setSelectedTextColor(Color.yellow);
             
-        }else if(log.getValida()=="SENHA"){
+        }else if(log.getValidaSenha()=="SENHA"){
             
             JOptionPane.showMessageDialog(this, "Login inválido, por favor, digite novamente!");
             txtLogin.requestFocus();
@@ -309,6 +320,7 @@ public class FormLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel SISOS;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

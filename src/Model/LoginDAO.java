@@ -25,21 +25,23 @@ public class LoginDAO {
         Conexao();
         
         try {
-            PreparedStatement busca = con.prepareStatement("SELECT * FROM acesso");
+            PreparedStatement busca = con.prepareStatement("SELECT * FROM usuarios");
             
             ResultSet rs = busca.executeQuery();
             
             while(rs.next()){
               String login_banco = rs.getString("login");
               String senha_banco = rs.getString("senha");
+
               if(login.trim().equals(login_banco) && senha.trim().equals(senha_banco)){
                  log.setValidador(true);
+                 log.setNome(rs.getString("nome"));
               }
               if(login.trim().equals(login_banco)){
-                  log.setValida("LOGIN");
+                  log.setValidaLogin("LOGIN");
               }
               if(senha.trim().equals(senha_banco)){
-                  log.setValida("SENHA");
+                  log.setValidaSenha("SENHA");
               }
               
             }

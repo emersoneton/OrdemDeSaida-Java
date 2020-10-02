@@ -5,7 +5,7 @@
  */
 package View;
 
-import javax.swing.JFrame;
+import Controller.VerificaLogin;
 
 /**
  *
@@ -13,13 +13,18 @@ import javax.swing.JFrame;
  */
 public class FormMenu extends javax.swing.JFrame {
 
+   // VerificaLogin log = new VerificaLogin();
+    
     /**
      * Creates new form Menu
      */
-    public FormMenu() {
+    public FormMenu(VerificaLogin log) {
         initComponents();
         txtVersao.setText("Version - 1.0.0");
         setExtendedState(MAXIMIZED_BOTH); //Maximizar a tela principal do sistema
+        
+        System.out.println(log.getNome());
+        labelNomeDeUsuarioLogado.setText(log.getNome());
     }
 
     /**
@@ -37,11 +42,13 @@ public class FormMenu extends javax.swing.JFrame {
         jMenu5 = new javax.swing.JMenu();
         jDesktopPaynelCentral = new javax.swing.JDesktopPane();
         txtVersao = new javax.swing.JLabel();
+        labelNomeDeUsuarioLogado = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        MenuCliente = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        menuCadastro = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        menuCliente = new javax.swing.JMenuItem();
+        menuProdutos = new javax.swing.JMenuItem();
+        menuFilial = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -70,53 +77,68 @@ public class FormMenu extends javax.swing.JFrame {
         jDesktopPaynelCentralLayout.setHorizontalGroup(
             jDesktopPaynelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPaynelCentralLayout.createSequentialGroup()
-                .addGap(0, 305, Short.MAX_VALUE)
+                .addGap(0, 303, Short.MAX_VALUE)
                 .addComponent(txtVersao, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jDesktopPaynelCentralLayout.setVerticalGroup(
             jDesktopPaynelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPaynelCentralLayout.createSequentialGroup()
-                .addGap(0, 260, Short.MAX_VALUE)
+                .addGap(0, 246, Short.MAX_VALUE)
                 .addComponent(txtVersao, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         getContentPane().add(jDesktopPaynelCentral, java.awt.BorderLayout.CENTER);
 
-        jMenu1.setBorder(null);
-        jMenu1.setText("CADASTRO");
-        jMenu1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        labelNomeDeUsuarioLogado.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        labelNomeDeUsuarioLogado.setText("Usuario Logado");
+        labelNomeDeUsuarioLogado.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        getContentPane().add(labelNomeDeUsuarioLogado, java.awt.BorderLayout.PAGE_START);
 
-        MenuCliente.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        MenuCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/menu_cliente.png"))); // NOI18N
-        MenuCliente.setText("Cliente");
-        MenuCliente.addActionListener(new java.awt.event.ActionListener() {
+        menuCadastro.setBorder(null);
+        menuCadastro.setText("CADASTRO");
+        menuCadastro.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        jMenuItem2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/adicionar-usuario.png"))); // NOI18N
+        jMenuItem2.setText("Usuarios");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuClienteActionPerformed(evt);
+                jMenuItem2ActionPerformed(evt);
             }
         });
-        jMenu1.add(MenuCliente);
+        menuCadastro.add(jMenuItem2);
 
-        jMenuItem5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/menu_produtos.png"))); // NOI18N
-        jMenuItem5.setText("Produto");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        menuCliente.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        menuCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/menu_cliente.png"))); // NOI18N
+        menuCliente.setText("Cliente");
+        menuCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                menuClienteActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem5);
+        menuCadastro.add(menuCliente);
 
-        jMenuItem4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/menu_filial.png"))); // NOI18N
-        jMenuItem4.setText("Filial");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        menuProdutos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        menuProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/menu_produtos.png"))); // NOI18N
+        menuProdutos.setText("Produto");
+        menuProdutos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                menuProdutosActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem4);
+        menuCadastro.add(menuProdutos);
 
-        jMenuBar1.add(jMenu1);
+        menuFilial.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        menuFilial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/menu_filial.png"))); // NOI18N
+        menuFilial.setText("Filial");
+        menuFilial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuFilialActionPerformed(evt);
+            }
+        });
+        menuCadastro.add(menuFilial);
+
+        jMenuBar1.add(menuCadastro);
 
         jMenu6.setText(" | ");
         jMenuBar1.add(jMenu6);
@@ -173,9 +195,9 @@ public class FormMenu extends javax.swing.JFrame {
         new FormOrdemDeServico().setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void MenuClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuClienteActionPerformed
+    private void menuClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuClienteActionPerformed
         new FormClientes().setVisible(true);
-    }//GEN-LAST:event_MenuClienteActionPerformed
+    }//GEN-LAST:event_menuClienteActionPerformed
 
     private void btnSairSistemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairSistemaActionPerformed
 
@@ -183,13 +205,13 @@ public class FormMenu extends javax.swing.JFrame {
        
     }//GEN-LAST:event_btnSairSistemaActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void menuFilialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuFilialActionPerformed
         new FormFilial().setVisible(true);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_menuFilialActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void menuProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuProdutosActionPerformed
         new FormProdutos().setVisible(true);
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_menuProdutosActionPerformed
 
     private void btnLogofActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogofActionPerformed
 
@@ -197,6 +219,10 @@ public class FormMenu extends javax.swing.JFrame {
         new FormLogin().setVisible(true);
         
     }//GEN-LAST:event_btnLogofActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        new FormUsuarios().setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -229,18 +255,17 @@ public class FormMenu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormMenu().setVisible(true);
+                 VerificaLogin log = new VerificaLogin();
+                new FormMenu(log).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem MenuCliente;
     private javax.swing.JMenuItem btnLogof;
     private javax.swing.JMenu btnSair;
     private javax.swing.JMenuItem btnSairSistema;
     private javax.swing.JDesktopPane jDesktopPaynelCentral;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -250,8 +275,12 @@ public class FormMenu extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JLabel labelNomeDeUsuarioLogado;
+    private javax.swing.JMenu menuCadastro;
+    private javax.swing.JMenuItem menuCliente;
+    private javax.swing.JMenuItem menuFilial;
+    private javax.swing.JMenuItem menuProdutos;
     private javax.swing.JLabel txtVersao;
     // End of variables declaration//GEN-END:variables
 }

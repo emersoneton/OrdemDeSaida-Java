@@ -5,7 +5,9 @@ package Controller;
 public class VerificaLogin {
     String login = null, 
             senha = null,
-            valida = null;
+            validaLogin = null,
+            validaSenha = null,
+            nome = null;
     boolean validador = false;
     
 
@@ -33,12 +35,28 @@ public class VerificaLogin {
         this.validador = validador;
     }
 
-    public String getValida() {
-        return valida;
+    public String getNome() {
+        return nome;
     }
 
-    public void setValida(String valida) {
-        this.valida = valida;
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getValidaLogin() {
+        return validaLogin;
+    }
+
+    public void setValidaLogin(String validaLogin) {
+        this.validaLogin = validaLogin;
+    }
+
+    public String getValidaSenha() {
+        return validaSenha;
+    }
+
+    public void setValidaSenha(String validaSenha) {
+        this.validaSenha = validaSenha;
     }
     
     
