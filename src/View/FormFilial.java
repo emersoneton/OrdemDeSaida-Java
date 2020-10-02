@@ -11,6 +11,7 @@ import Classes.SoNumeros;
 import Classes.BuscaCEP;
 import Model.Database;
 import Model.FilialDAO;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.sql.Connection;
@@ -36,6 +37,7 @@ public class FormFilial extends javax.swing.JFrame {
         initComponents();
         setResizable(false);//Não permite editar o tamanho
         this.setLocationRelativeTo(null);//Centralizar Jframe
+        setIconImage(Toolkit.getDefaultToolkit().getImage("c:/SISOS/Imagem/sistema.png"));
         BuscarEstado();
         Iniciar();
         BuscarCodigoDaFilial();

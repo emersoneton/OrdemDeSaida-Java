@@ -631,8 +631,8 @@
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jPanel11" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="jPanel10" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
+                                  <Component id="jPanel10" min="-2" pref="66" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="109" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -656,25 +656,40 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="cmdAberto" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="cmdFechado" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="cmdTodos" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="cmdAberto" min="-2" max="-2" attributes="0"/>
+                                          <Component id="cmdCancelado" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="cmdTodos" min="-2" max="-2" attributes="0"/>
+                                          <Component id="cmdFechado" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace pref="27" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
                             <DimensionLayout dim="1">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="cmdAberto" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="cmdFechado" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="cmdTodos" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="cmdAberto" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                              <Component id="cmdFechado" min="-2" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
-                                      <EmptySpace max="32767" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="cmdCancelado" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="cmdTodos" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -702,6 +717,14 @@
                               </Properties>
                               <Events>
                                 <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="cmdTodosMousePressed"/>
+                              </Events>
+                            </Component>
+                            <Component class="javax.swing.JCheckBox" name="cmdCancelado">
+                              <Properties>
+                                <Property name="text" type="java.lang.String" value="Cancelado"/>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="cmdCanceladoMousePressed"/>
                               </Events>
                             </Component>
                           </SubComponents>
@@ -733,12 +756,9 @@
                             </DimensionLayout>
                             <DimensionLayout dim="1">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="cmdOs" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="cmdCliente" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="0" pref="8" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="cmdOs" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="cmdCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>

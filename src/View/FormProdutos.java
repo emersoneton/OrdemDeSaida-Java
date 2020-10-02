@@ -12,6 +12,7 @@ import Controller.ProdutoTableModel;
 import Model.Database;
 import Model.ProdutosDAO;
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -34,6 +35,7 @@ public class FormProdutos extends javax.swing.JFrame {
         initComponents();
         setResizable(false);//Não permite editar o tamanho
         this.setLocationRelativeTo(null);//Centralizar Jframe
+        setIconImage(Toolkit.getDefaultToolkit().getImage("c:/SISOS/Imagem/sistema.png"));
         txtCodigoBarras.setDocument(new SoNumeros());
         txtQuantidade.setDocument(new SoNumeros());
         BuscarCodigoDoProduto(); // Busca do ultimo registro valido no banco

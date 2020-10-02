@@ -594,6 +594,31 @@ public class OrdemDeServicoDAO {
                 }
 
             } // Fim da Busca por CLIENTE em Fechado
+            
+            if (ser.getClicked() == "CANCELADO") { // Busca por Cancelados
+
+               PreparedStatement busca = con.prepareStatement("SELECT * FROM servicos WHERE status_os = ? ORDER BY codigo");
+
+                busca.setString(1, "" + ser.getStatus());
+
+                ResultSet rs = busca.executeQuery();
+
+                while (rs.next()) {
+
+                    CadastroDeServico ser1 = new CadastroDeServico();
+
+                    ser1.setOs(Integer.parseInt(rs.getString("codigo")));
+                    ser1.setCliente(rs.getString("cliente"));
+                    ser1.setDataAgendamento(rs.getString("data_agendamento"));
+                    ser1.setData(rs.getString("data_os"));
+                    ser1.setStatus((rs.getString("status_os")));
+                    ser1.setHorarioAgendamento((rs.getString("horario_agendamento")));
+
+                    lista.add(ser1);
+
+                }
+
+            }// Fim da Busca por Cancelados
 
             if (ser.getClicked() == "TODOS") { // Busca por TODOS
 

@@ -13,6 +13,7 @@ import Controller.GeradorDePdf;
 import Classes.BuscaCEP;
 import Model.ClientesDAO;
 import Model.Database;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.sql.Connection;
@@ -42,6 +43,7 @@ public class FormClientes extends javax.swing.JFrame {
         initComponents();
         setResizable(false);//Não permite editar o tamanho
         this.setLocationRelativeTo(null);//Centralizar Jframe
+        setIconImage(Toolkit.getDefaultToolkit().getImage("c:/SISOS/Imagem/sistema.png"));
         Iniciar();
         BuscarEstado();          // Buscando os Estados no BD
         BuscarCodigoDeCliente(); // Buscando o proximo código a ser cadastrado no banco
@@ -50,6 +52,7 @@ public class FormClientes extends javax.swing.JFrame {
         Lista.setModel(MODELO);
         Mascaras();
         jtableClientes.setModel(tabelaClientes);
+        
 
     }
 

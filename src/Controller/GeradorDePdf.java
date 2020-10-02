@@ -24,6 +24,7 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.text.DecimalFormat;
 
 public class GeradorDePdf {
 
@@ -234,7 +235,8 @@ public class GeradorDePdf {
     
     //GERAR PDF DA ORDEM DE SERVIÇO
     public void GeraPDFOrdemDeServico(CadastroDeServico ser, CadastroDeClientes cli) {
-
+    DecimalFormat df = new DecimalFormat("#####0.00");
+        
         CadastroDeFilial fil = new CadastroDeFilial();
 
         OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
@@ -287,11 +289,16 @@ public class GeradorDePdf {
             serDao.BuscarItensDoServico(ser);
             List<CadastroDeServico> lista = serDao.BuscarItensDoServico(ser);
 
-            PdfPTable table = new PdfPTable(new float[]{30f, 7f, 7F}); // crio a tabela para ser vista de fora ou dentro do IF
+            PdfPTable table = new PdfPTable(new float[]{30f, 8f ,8f, 8F}); // crio a tabela para ser vista de fora ou dentro do IF
             if (lista.size() > 1) {
                 PdfPCell Nome = new PdfPCell(new Phrase("DESCRIÇÃO", negritoPequena));
                 Nome.setBorder(Rectangle.NO_BORDER);// Tabela sem Bordas
                 Nome.setPaddingLeft(-50);
+                
+                PdfPCell ValorUnitario = new PdfPCell(new Phrase("VALOR", negritoPequena));
+                ValorUnitario.setHorizontalAlignment(Element.ALIGN_CENTER);
+                ValorUnitario.setBorder(Rectangle.NO_BORDER);// Tabela sem Bordas
+                ValorUnitario.setPaddingRight(-140); // Tabela sem margem
                 
                 PdfPCell Quantidade = new PdfPCell(new Phrase("QUANTIDADE", negritoPequena));
                 Quantidade.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -299,12 +306,13 @@ public class GeradorDePdf {
                 Quantidade.setPaddingRight(-140); // Tabela sem margem
                 
                 
-                PdfPCell Valor = new PdfPCell(new Phrase("VALOR", negritoPequena));
+                PdfPCell Valor = new PdfPCell(new Phrase("TOTAL", negritoPequena));
                 Valor.setHorizontalAlignment(Element.ALIGN_CENTER);
                 Valor.setBorder(Rectangle.NO_BORDER);// Tabela sem Bordas
                 Valor.setPaddingRight(-140); // Tabela sem margem
 
                 table.addCell(Nome);
+                table.addCell(ValorUnitario);
                 table.addCell(Quantidade);
                 table.addCell(Valor);
                 document.add(new Paragraph(" "));
@@ -313,25 +321,35 @@ public class GeradorDePdf {
             //Crio o tabela de produtos
             int Quantidade = 0;
             for (int x = 0; x < lista.size(); x++) {
+                
                 Quantidade = lista.get(x).getQuantidade();
 
                 PdfPCell celula1 = new PdfPCell(new Phrase((x+1)+" - "+lista.get(x).getDescricao(), negritoPequena));
                 celula1.setBorder(Rectangle.NO_BORDER); // Tabela sem Bordas
                 celula1.setPaddingLeft(-50); // Tabela sem margem
                 
-                PdfPCell celula2 = new PdfPCell(new Phrase(String.valueOf(lista.get(x).getQuantidade()), negritoPequena));
+                PdfPCell celula2 = new PdfPCell(new Phrase(String.valueOf(df.format(lista.get(x).getValorTotal())).replace(".",","), negritoPequena));
                 celula2.setHorizontalAlignment(Element.ALIGN_CENTER);
                 celula2.setBorder(Rectangle.NO_BORDER); // Tabela sem Bordas
                 celula2.setPaddingRight(-140); // Tabela sem margem
                 
-                PdfPCell celula3 = new PdfPCell(new Phrase(String.valueOf(lista.get(x).getValorTotal()).replace(".",","), negritoPequena));
+                PdfPCell celula3 = new PdfPCell(new Phrase(String.valueOf(lista.get(x).getQuantidade()), negritoPequena));
                 celula3.setHorizontalAlignment(Element.ALIGN_CENTER);
                 celula3.setBorder(Rectangle.NO_BORDER); // Tabela sem Bordas
                 celula3.setPaddingRight(-140); // Tabela sem margem
                 
+                double totalItens = (lista.get(x).getValorTotal() * lista.get(x).getQuantidade());
+                
+                
+                PdfPCell celula4 = new PdfPCell(new Phrase(String.valueOf(df.format(totalItens)).replace(".",","), negritoPequena));
+                celula4.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celula4.setBorder(Rectangle.NO_BORDER); // Tabela sem Bordas
+                celula4.setPaddingRight(-140); // Tabela sem margem
+                
                 table.addCell(celula1);
                 table.addCell(celula2);
                 table.addCell(celula3);
+                table.addCell(celula4);
 
             }
 
@@ -342,16 +360,26 @@ public class GeradorDePdf {
             if (lista.size() > 1) {
                 document.add(new Paragraph(" "));
                 // Valor Total
-                Paragraph valorTotal = new Paragraph("Valor Total: ", fontePadrao);
-                valorTotal.add(new Phrase("" + Double.toString(ser.getValorTotal()).replace(".",","), negrito));
+                String valorItens = df.format(ser.getValorTotal()).replace(".",",");
+                Paragraph valorTotal = new Paragraph("Valor Total Itens: ", fontePadrao);
+                valorTotal.add(new Phrase(valorItens, negrito));
                 valorTotal.setAlignment(2);
                 document.add(valorTotal);
 
                 // Valor de Desconto
+                String quantidade = df.format(ser.getDesconto()).replace(".",",");
                 Paragraph desconto = new Paragraph("Valor Desconto: ", fontePadrao);
-                desconto.add(new Phrase("" + Double.toString(ser.getDesconto()).replace(".",","), negrito));
+                desconto.add(new Phrase(quantidade, negrito));
                 desconto.setAlignment(2);
                 document.add(desconto);
+                
+                double valorTotalGeral = ser.getValorTotal() - ser.getDesconto();
+                 // Valor de TOTAL
+                String valorTotalNota = df.format(valorTotalGeral).replace(".",",");
+                Paragraph totalGeral = new Paragraph("Valor TOTAL: ", fontePadrao);
+                totalGeral.add(new Phrase(valorTotalNota, negrito));
+                totalGeral.setAlignment(2);
+                document.add(totalGeral);
             }
 
             document.add(new Paragraph(" "));

@@ -29,6 +29,7 @@ public class FormLogin extends javax.swing.JFrame {
         initComponents();
         setResizable(false);//Não permite editar o tamanho
         this.setLocationRelativeTo(null);//Centralizar Jframe
+        setIconImage(Toolkit.getDefaultToolkit().getImage("c:/SISOS/Imagem/sistema.png"));
         
     }
 

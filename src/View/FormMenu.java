@@ -6,6 +6,7 @@
 package View;
 
 import Controller.VerificaLogin;
+import java.awt.Toolkit;
 
 /**
  *
@@ -21,6 +22,7 @@ public class FormMenu extends javax.swing.JFrame {
         initComponents();
         txtVersao.setText("Version - 1.0.0");
         setExtendedState(MAXIMIZED_BOTH); //Maximizar a tela principal do sistema
+        setIconImage(Toolkit.getDefaultToolkit().getImage("c:/SISOS/Imagem/sistema.png"));
         Inicializar(log);
         
     }

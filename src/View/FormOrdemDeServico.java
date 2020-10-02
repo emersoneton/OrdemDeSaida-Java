@@ -14,6 +14,7 @@ import Controller.ProdutoTableModelConsultaOrdemDeServico;
 import Controller.ProdutoTableModelOrdemDeServico;
 import Model.OrdemDeServicoDAO;
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.Date;
 import java.text.DateFormat;
@@ -47,6 +48,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         initComponents();
         setResizable(false);//Não permite editar o tamanho
         this.setLocationRelativeTo(null);//Centralizar Jframe
+        setIconImage(Toolkit.getDefaultToolkit().getImage("c:/SISOS/Imagem/sistema.png"));
         BuscarProdutos();
         txtPesquisaCliente.requestFocus();
         txtOs.setDocument(new SoNumeros());
@@ -114,6 +116,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         cmdAberto = new javax.swing.JCheckBox();
         cmdFechado = new javax.swing.JCheckBox();
         cmdTodos = new javax.swing.JCheckBox();
+        cmdCancelado = new javax.swing.JCheckBox();
         jPanel11 = new javax.swing.JPanel();
         cmdOs = new javax.swing.JCheckBox();
         cmdCliente = new javax.swing.JCheckBox();
@@ -444,28 +447,44 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             }
         });
 
+        cmdCancelado.setText("Cancelado");
+        cmdCancelado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                cmdCanceladoMousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(cmdAberto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cmdFechado)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cmdTodos)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cmdAberto)
+                    .addComponent(cmdCancelado))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cmdTodos)
+                    .addComponent(cmdFechado))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmdAberto)
-                    .addComponent(cmdFechado)
-                    .addComponent(cmdTodos))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addComponent(cmdAberto)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(cmdFechado)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cmdCancelado)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                        .addComponent(cmdTodos)
+                        .addContainerGap())))
         );
 
         jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Tipo", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP));
@@ -500,11 +519,9 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmdOs)
-                    .addComponent(cmdCliente))
-                .addGap(0, 8, Short.MAX_VALUE))
+            .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(cmdOs)
+                .addComponent(cmdCliente))
         );
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -523,8 +540,8 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(117, 117, 117))
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(109, 109, 109))
         );
 
         btnBuscar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -1330,6 +1347,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         txtOsConsultaInformar.setEnabled(false);
         cmdCliente.setSelected(false);
         txtPesquisaClienteConsulta.setEnabled(false);
+        cmdCancelado.setSelected(false);
 
     }//GEN-LAST:event_cmdAbertoMousePressed
 
@@ -1341,6 +1359,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         txtOsConsultaInformar.setEnabled(false);
         cmdCliente.setSelected(false);
         txtPesquisaClienteConsulta.setEnabled(false);
+        cmdCancelado.setSelected(false);
 
     }//GEN-LAST:event_cmdFechadoMousePressed
 
@@ -1352,6 +1371,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         txtOsConsultaInformar.setEnabled(false);
         cmdCliente.setSelected(false);
         txtPesquisaClienteConsulta.setEnabled(false);
+        cmdCancelado.setSelected(false);
 
     }//GEN-LAST:event_cmdTodosMousePressed
 
@@ -1371,6 +1391,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         cmdCliente.setSelected(false);
         cmdTodos.setSelected(false);
         txtPesquisaClienteConsulta.setEnabled(false);
+        cmdCancelado.setSelected(false);
 
     }//GEN-LAST:event_cmdOsMousePressed
 
@@ -1391,6 +1412,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         cmdAberto.setSelected(false);
         cmdFechado.setSelected(false);
         cmdTodos.setSelected(false);
+        cmdCancelado.setSelected(false);
 
     }//GEN-LAST:event_cmdClienteMousePressed
 
@@ -1477,6 +1499,13 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         GerarPDF();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void cmdCanceladoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmdCanceladoMousePressed
+        cmdAberto.setSelected(false);
+        cmdFechado.setSelected(false);
+        cmdCliente.setSelected(false);
+        cmdTodos.setSelected(false);
+    }//GEN-LAST:event_cmdCanceladoMousePressed
+
     private void GerarPdfBuscaNotas() {
 
         CadastroDeServico ser = new CadastroDeServico();
@@ -1501,11 +1530,16 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             ser.setStatus("FECHADO");
             ser.setClicked("FECHADO");
 
+        }else if (cmdCancelado.isSelected()) {
+
+            ser.setStatus("CANCELADO");
+            ser.setClicked("CANCELADO");
+
         } else if (cmdTodos.isSelected()) {
 
             ser.setClicked("TODOS");
 
-        } else {
+        }else {
             JOptionPane.showMessageDialog(null, "SELECIONE UMA DAS OPÇÕES DE AÇÕES", "Mensagem",
                     JOptionPane.INFORMATION_MESSAGE);
         }
@@ -1566,6 +1600,11 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
             ser.setStatus("FECHADO");
             ser.setClicked("FECHADO");
+
+        } else if (cmdCancelado.isSelected()) {
+            
+            ser.setStatus("CANCELADO");
+            ser.setClicked("CANCELADO");
 
         } else if (cmdTodos.isSelected()) {
 
@@ -1649,6 +1688,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     private javax.swing.JButton btnSalvar1;
     private javax.swing.JLabel clien;
     private javax.swing.JCheckBox cmdAberto;
+    private javax.swing.JCheckBox cmdCancelado;
     private javax.swing.JCheckBox cmdCliente;
     private javax.swing.JCheckBox cmdFechado;
     private javax.swing.JCheckBox cmdOs;
