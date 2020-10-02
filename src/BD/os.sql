@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 29-Set-2020 às 22:31
+-- Tempo de geração: 02-Out-2020 às 18:13
 -- Versão do servidor: 10.4.14-MariaDB
 -- versão do PHP: 7.4.9
 
@@ -20,25 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `os`
 --
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `acesso`
---
-
-CREATE TABLE `acesso` (
-  `codigo` int(11) NOT NULL,
-  `login` varchar(100) DEFAULT NULL,
-  `senha` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Extraindo dados da tabela `acesso`
---
-
-INSERT INTO `acesso` (`codigo`, `login`, `senha`) VALUES
-(1, 'admin', 'admin');
 
 -- --------------------------------------------------------
 
@@ -5776,15 +5757,30 @@ CREATE TABLE `servicos` (
   `status_os` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `codigo` int(11) NOT NULL,
+  `nome` varchar(50) NOT NULL,
+  `login` varchar(100) DEFAULT NULL,
+  `senha` varchar(100) DEFAULT NULL,
+  `tipo` varchar(15) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `usuarios`
+--
+
+INSERT INTO `usuarios` (`codigo`, `nome`, `login`, `senha`, `tipo`) VALUES
+(1, 'Administrador', 'admin', 'admin', 'ADMINISTRADOR');
+
 --
 -- Índices para tabelas despejadas
 --
-
---
--- Índices para tabela `acesso`
---
-ALTER TABLE `acesso`
-  ADD PRIMARY KEY (`codigo`);
 
 --
 -- Índices para tabela `clientes`
@@ -5823,14 +5819,14 @@ ALTER TABLE `servicos`
   ADD PRIMARY KEY (`codigo`);
 
 --
--- AUTO_INCREMENT de tabelas despejadas
+-- Índices para tabela `usuarios`
 --
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`codigo`);
 
 --
--- AUTO_INCREMENT de tabela `acesso`
+-- AUTO_INCREMENT de tabelas despejadas
 --
-ALTER TABLE `acesso`
-  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `clientes`
@@ -5867,6 +5863,12 @@ ALTER TABLE `produtos`
 --
 ALTER TABLE `servicos`
   MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

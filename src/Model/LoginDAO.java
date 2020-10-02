@@ -36,6 +36,7 @@ public class LoginDAO {
               if(login.trim().equals(login_banco) && senha.trim().equals(senha_banco)){
                  log.setValidador(true);
                  log.setNome(rs.getString("nome"));
+                 log.setTipo(rs.getString("tipo"));
               }
               if(login.trim().equals(login_banco)){
                   log.setValidaLogin("LOGIN");

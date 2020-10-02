@@ -7,7 +7,8 @@ public class VerificaLogin {
             senha = null,
             validaLogin = null,
             validaSenha = null,
-            nome = null;
+            nome = null,
+            tipo = null;;
     boolean validador = false;
     
 
@@ -57,6 +58,14 @@ public class VerificaLogin {
 
     public void setValidaSenha(String validaSenha) {
         this.validaSenha = validaSenha;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
     
     
