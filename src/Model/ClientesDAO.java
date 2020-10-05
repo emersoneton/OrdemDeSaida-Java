@@ -278,8 +278,10 @@ public class ClientesDAO {
                 cli.setBairro(rs.getString("bairro"));
                 cli.setTelefone(rs.getString("telefone"));
                 cli.setTelefoneCelular(rs.getString("telefone_celular"));
+                cli.setTelefoneCelular(rs.getString("telefone_celular"));
                 cli.setCidade(rs.getString("cidade"));
                 cli.setEstado(rs.getString("estado"));
+                cli.setSituacao(rs.getString("situacao"));
 
                 lista.add(cli);
             }

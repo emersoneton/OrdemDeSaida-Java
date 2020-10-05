@@ -388,6 +388,7 @@ public class OrdemDeServicoDAO {
                     cli.setEndereco(rs.getString("endereco"));
                     cli.setNumero(rs.getString("numero"));
                     cli.setTelefone(rs.getString("telefone"));
+                    cli.setTelefoneCelular(rs.getString("telefone"));
                     cli.setCnpj(rs.getString("cnpj"));
                     cli.setCpf(rs.getString("cpf"));
                     cli.setCep(rs.getString("cep"));

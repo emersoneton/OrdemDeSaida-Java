@@ -61,7 +61,7 @@ public class GeradorDePdf {
             document.add(new Paragraph("  "
                     + ""
                     + ""));
-            document.add(new Paragraph("Os dados do relatório contém: Nome, Endereço, Número, Bairro, Telefone, Cidade e Estado."));
+            document.add(new Paragraph("Os dados do relatório contém: Nome, Endereço, Número, Bairro, Telefone, celular, Cidade, Estado e situação."));
             document.add(new Paragraph("****************************************************************************************************************"));
             document.add(new Paragraph("  "));
             document.add(new Paragraph("  "));
@@ -73,7 +73,7 @@ public class GeradorDePdf {
             for (int x = 0; x < lista.size(); x++) {
                 document.add(new Paragraph((x + 1) + " - " + lista.get(x).getNome() + " - " + lista.get(x).getEndereco()
                         + " ,nº" + lista.get(x).getNumero() + " - " + lista.get(x).getBairro() + " - " + lista.get(x).getTelefone()
-                        + " - " + lista.get(x).getCidade() + " - " + lista.get(x).getEstado()));
+                        + " - " +lista.get(x).getTelefoneCelular()+ " - " + lista.get(x).getCidade() + " - " + lista.get(x).getEstado() + " - " +lista.get(x).getSituacao()));
                 document.add(new Paragraph(" "));
             }
 
@@ -276,7 +276,7 @@ public class GeradorDePdf {
             document.add(new Paragraph("CPF/CNPJ: " + cli.getCpf() + " / " + cli.getCnpj(), fontePadrao));
             document.add(new Paragraph("Endereço: " + cli.getEndereco() + ", nº " + cli.getNumero(), fontePadrao));
             document.add(new Paragraph("Cidade: " + cli.getCidade() + " / " + cli.getEstado(), fontePadrao));
-            document.add(new Paragraph("Telefone: " + cli.getTelefone(), fontePadrao));
+            document.add(new Paragraph("Telefone: " + cli.getTelefone() + " / Celular: " + cli.getTelefoneCelular(), fontePadrao));
 
             document.add(new Paragraph(" "));
 
