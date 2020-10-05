@@ -100,6 +100,10 @@ public class FormClientes extends javax.swing.JFrame {
         comboboxEstado = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
         txtPais = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        jTelefoneCelular = new javax.swing.JFormattedTextField();
+        cmdSituacao = new javax.swing.JComboBox<>();
+        jLabel18 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
@@ -217,20 +221,20 @@ public class FormClientes extends javax.swing.JFrame {
 
         jLabel8.setText("E-Mail:");
         jLayeredPane1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, -1));
-        jLayeredPane1.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(72, 297, 260, -1));
+        jLayeredPane1.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, 220, -1));
 
         jLabel9.setText("E-Mail 2:");
-        jLayeredPane1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 300, -1, -1));
-        jLayeredPane1.add(txtEmail2, new org.netbeans.lib.awtextra.AbsoluteConstraints(418, 297, 340, -1));
+        jLayeredPane1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 300, -1, -1));
+        jLayeredPane1.add(txtEmail2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 300, 200, -1));
 
         jLabel14.setText("Telefone:");
-        jLayeredPane1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
+        jLayeredPane1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 223, -1, -1));
 
         jLabel15.setText("CNPJ:");
-        jLayeredPane1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, -1, -1));
+        jLayeredPane1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(427, 223, -1, -1));
 
         jLabel16.setText("CPF:");
-        jLayeredPane1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 220, -1, -1));
+        jLayeredPane1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(615, 223, -1, -1));
 
         jLabel13.setText("Bairro:");
         jLayeredPane1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 80, -1, -1));
@@ -243,9 +247,9 @@ public class FormClientes extends javax.swing.JFrame {
         jLayeredPane1.add(txtBairro, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 80, 152, -1));
 
         jTelefone.setToolTipText("");
-        jLayeredPane1.add(jTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, 207, -1));
-        jLayeredPane1.add(jCnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 220, 207, -1));
-        jLayeredPane1.add(jCpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 220, 152, -1));
+        jLayeredPane1.add(jTelefone, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, 130, -1));
+        jLayeredPane1.add(jCnpj, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 220, 140, -1));
+        jLayeredPane1.add(jCpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(642, 220, 120, -1));
 
         jCep.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -288,7 +292,19 @@ public class FormClientes extends javax.swing.JFrame {
         });
         jLayeredPane1.add(txtPais, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 150, 149, -1));
 
-        jPanel1.add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 770, -1));
+        jLabel17.setText("Celular:");
+        jLayeredPane1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(229, 223, -1, -1));
+
+        jTelefoneCelular.setToolTipText("");
+        jLayeredPane1.add(jTelefoneCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, 130, -1));
+
+        cmdSituacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ATIVADO", "DESATIVADO" }));
+        jLayeredPane1.add(cmdSituacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 300, 110, -1));
+
+        jLabel18.setText("Situação:");
+        jLayeredPane1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 300, -1, -1));
+
+        jPanel1.add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 780, 380));
 
         jTabbedPane1.addTab("Cadastro", jPanel1);
 
@@ -327,14 +343,14 @@ public class FormClientes extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 739, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 759, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -440,15 +456,15 @@ public class FormClientes extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -471,8 +487,8 @@ public class FormClientes extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTabbedPane1)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 806, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -481,7 +497,7 @@ public class FormClientes extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -646,12 +662,15 @@ public class FormClientes extends javax.swing.JFrame {
 
     private void Mascaras() {
 
-        MaskFormatter maskTelefone, maskCnpj, maskCpf, maskCep;
+        MaskFormatter maskTelefone, maskTelefoneCelular, maskCnpj, maskCpf, maskCep;
 
         try {
             maskTelefone = new MaskFormatter("(##) ####-####");
             maskTelefone.install(jTelefone);
 
+            maskTelefoneCelular = new MaskFormatter("(##) #.####-####");
+            maskTelefoneCelular.install(jTelefoneCelular);
+            
             maskCnpj = new MaskFormatter("##.###.###/####-##");
             maskCnpj.install(jCnpj);
 
@@ -721,6 +740,7 @@ public class FormClientes extends javax.swing.JFrame {
         cli.setEndereco(txtEndereco.getText());
         cli.setNumero(txtNumero.getText());
         cli.setTelefone(jTelefone.getText());
+        cli.setTelefoneCelular(jTelefoneCelular.getText());
         cli.setCep(jCep.getText());
         cli.setCidade(txtCidade.getText());
         cli.setEstado((String) comboboxEstado.getSelectedItem());
@@ -730,6 +750,7 @@ public class FormClientes extends javax.swing.JFrame {
         cli.setCnpj(jCnpj.getText());
         cli.setCpf(jCpf.getText());
         cli.setBairro(txtBairro.getText());
+        cli.setSituacao((String) cmdSituacao.getSelectedItem());
 
         cliDao.Salvar(cli);
         Limpar();
@@ -750,6 +771,7 @@ public class FormClientes extends javax.swing.JFrame {
         txtEndereco.setText(cli.getEndereco());
         txtNumero.setText(cli.getNumero());
         jTelefone.setText(cli.getTelefone());
+        jTelefoneCelular.setText(cli.getTelefoneCelular());
         jCnpj.setText(cli.getCnpj());
         jCpf.setText(cli.getCpf());
         jCep.setText(cli.getCep());
@@ -759,6 +781,7 @@ public class FormClientes extends javax.swing.JFrame {
         txtEmail.setText(cli.getEmail());
         txtEmail2.setText(cli.getEmail2());
         txtBairro.setText(cli.getBairro());
+        cmdSituacao.setSelectedItem(cli.getSituacao());
 
     }
 
@@ -784,6 +807,7 @@ public class FormClientes extends javax.swing.JFrame {
         cli.setEndereco(txtEndereco.getText());
         cli.setNumero(txtNumero.getText());
         cli.setTelefone(jTelefone.getText());
+        cli.setTelefoneCelular(jTelefoneCelular.getText());
         cli.setCep(jCep.getText());
         cli.setCidade(txtCidade.getText());
         cli.setEstado((String) comboboxEstado.getSelectedItem());
@@ -793,6 +817,7 @@ public class FormClientes extends javax.swing.JFrame {
         cli.setCnpj(jCnpj.getText());
         cli.setCpf(jCpf.getText());
         cli.setBairro(txtBairro.getText());
+        cli.setSituacao((String) cmdSituacao.getSelectedItem());
 
         cliDao.atualizar(cli);
         Limpar();
@@ -812,7 +837,10 @@ public class FormClientes extends javax.swing.JFrame {
         txtPais.setText("");
         jCpf.setText("");
         jTelefone.setText("");
+        jTelefoneCelular.setText("");
         txtBairro.setText("");
+        comboboxEstado.setSelectedItem("AC");
+        cmdSituacao.setSelectedItem("ATIVADO");
         BuscarCodigoDeCliente();
         
         int contadorTabela = tabelaClientes.getRowCount();
@@ -870,6 +898,7 @@ public class FormClientes extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscar1;
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JComboBox<String> cmdSituacao;
     private javax.swing.JComboBox<String> comboboxEstado;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -884,6 +913,8 @@ public class FormClientes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -901,6 +932,7 @@ public class FormClientes extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JFormattedTextField jTelefone;
+    private javax.swing.JFormattedTextField jTelefoneCelular;
     private javax.swing.JTable jtableClientes;
     private javax.swing.JTextField txtBairro;
     private javax.swing.JTextField txtCidade;

@@ -71,6 +71,7 @@ public class OrdemDeServicoDAO {
 
             }
 
+            con.close();
         } catch (SQLException ex) {
             Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -264,7 +265,7 @@ public class OrdemDeServicoDAO {
         Conexao();
 
         try {
-            PreparedStatement buscar = con.prepareStatement("SELECT * FROM clientes where nome like '%" + ser.getCliente() + "%' ORDER BY nome");
+            PreparedStatement buscar = con.prepareStatement("SELECT * FROM clientes WHERE situacao = 'ATIVADO' AND nome LIKE '%" + ser.getCliente() + "%' ORDER BY nome");
 
             ResultSet rs = buscar.executeQuery();
 
@@ -350,8 +351,10 @@ public class OrdemDeServicoDAO {
 
             while (rs.next()) {
                 fil.setRazaoSocial(rs.getString("razao_social"));
+                fil.setRazaoFantasia(rs.getString("razao_fantasia"));
                 fil.setCnpj(rs.getString("cnpj"));
                 fil.setInscricaoEstadual(rs.getString("inscricao_estadual"));
+                fil.setInscricaoMunicipal(rs.getString("inscricao_municipal"));
                 fil.setCep(rs.getString("cep"));
                 fil.setEndereco(rs.getString("endereco"));
                 fil.setNumero(rs.getString("numero"));
@@ -482,6 +485,7 @@ public class OrdemDeServicoDAO {
                 lista.add(ser1);
             }
 
+            con.close();
         } catch (SQLException ex) {
             Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

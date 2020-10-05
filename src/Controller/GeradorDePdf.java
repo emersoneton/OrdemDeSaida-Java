@@ -252,13 +252,12 @@ public class GeradorDePdf {
             figura.scaleToFit(400, 200);
             figura.setAlignment(1);
 
-            PdfPTable table1 = new PdfPTable(new float[]{70, 120f});
+            PdfPTable table1 = new PdfPTable(new float[]{90, 100f});
 
             // Dados do Emissor
-            PdfPCell dados = new PdfPCell(new Phrase(" Razão Social: " + fil.getRazaoSocial() + "\n CNPJ: " + fil.getCnpj() + " - I.E: "+ fil.getInscricaoEstadual() +"\n Cep: " + fil.getCep()
+            PdfPCell dados = new PdfPCell(new Phrase(" Nome Fantasia: " + fil.getRazaoFantasia() + "\n CNPJ: " + fil.getCnpj() + " - I.M: "+ fil.getInscricaoMunicipal()+"\n Cep: " + fil.getCep()
                     + "\n Endereço: " + fil.getEndereco() + ", nº " + fil.getNumero() + "\n Bairro: " + fil.getBairro()
-                    + "\n Cidade: " + fil.getCidade() + " / " + fil.getEstado() + "\n Tel Cel: " + fil.getTelefoneCelular() + 
-                    " / Tel Com: "+ fil.getTelefoneComercial(), fontePadrao));
+                    + "\n Cidade: " + fil.getCidade() + " / " + fil.getEstado() + "\n Tel Cel: " + fil.getTelefoneCelular(), fontePadrao));
             
             table1.addCell(figura);
             table1.addCell(dados);

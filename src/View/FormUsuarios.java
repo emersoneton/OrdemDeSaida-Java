@@ -63,7 +63,7 @@ public class FormUsuarios extends javax.swing.JFrame {
         btnSair = new javax.swing.JButton();
         btnBuscar2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Usuários");
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));

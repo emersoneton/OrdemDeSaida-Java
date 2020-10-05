@@ -32,8 +32,8 @@ public class ClientesDAO {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String dataFormatada = dateFormat.format(data);
 
-        String sql = "INSERT INTO clientes (nome,endereco,numero,telefone,cnpj,cep,cidade,estado,pais,email,email2,cpf,bairro,data) "
-                + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO clientes (nome,endereco,numero,telefone, telefone_celular ,cnpj,cep,cidade,estado,pais,email,email2,cpf,bairro,data, situacao) "
+                + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         con = Database.getConnection();
 
@@ -63,16 +63,18 @@ public class ClientesDAO {
                 stmt.setString(2, cli.getEndereco());
                 stmt.setString(3, cli.getNumero());
                 stmt.setString(4, cli.getTelefone());
-                stmt.setString(5, cli.getCnpj());
-                stmt.setString(6, cli.getCep());
-                stmt.setString(7, cli.getCidade());
-                stmt.setString(8, cli.getEstado());
-                stmt.setString(9, cli.getPais());
-                stmt.setString(10, cli.getEmail());
-                stmt.setString(11, cli.getEmail2());
-                stmt.setString(12, cli.getCpf());
-                stmt.setString(13, cli.getBairro());
-                stmt.setString(14, dataFormatada);
+                stmt.setString(5, cli.getTelefoneCelular());
+                stmt.setString(6, cli.getCnpj());
+                stmt.setString(7, cli.getCep());
+                stmt.setString(8, cli.getCidade());
+                stmt.setString(9, cli.getEstado());
+                stmt.setString(10, cli.getPais());
+                stmt.setString(11, cli.getEmail());
+                stmt.setString(12, cli.getEmail2());
+                stmt.setString(13, cli.getCpf());
+                stmt.setString(14, cli.getBairro());
+                stmt.setString(15, dataFormatada);
+                stmt.setString(16, cli.getSituacao());
 
                 stmt.executeUpdate();
 
@@ -109,6 +111,7 @@ public class ClientesDAO {
                     cli.setEndereco(rs.getString("endereco"));
                     cli.setNumero(rs.getString("numero"));
                     cli.setTelefone(rs.getString("telefone"));
+                    cli.setTelefoneCelular(rs.getString("telefone_celular"));
                     cli.setCnpj(rs.getString("cnpj"));
                     cli.setCpf(rs.getString("cpf"));
                     cli.setCep(rs.getString("cep"));
@@ -118,6 +121,7 @@ public class ClientesDAO {
                     cli.setEmail(rs.getString("email"));
                     cli.setEmail2(rs.getString("email2"));
                     cli.setBairro(rs.getString("bairro"));
+                    cli.setSituacao(rs.getString("situacao"));
 
                     validador = true;
                     break;
@@ -221,25 +225,27 @@ public class ClientesDAO {
 
         Conexao(); // chama a classe de conexão com o Banco de Dados
 
-        try (PreparedStatement edit = con.prepareStatement("update clientes set nome = ?, endereco = ?, numero = ?, telefone = ?,"
-                + "cidade = ?, estado = ?, pais = ?, email = ?, email2 = ?, cnpj = ?, cpf = ?, cep = ?, bairro = ?"
+        try (PreparedStatement edit = con.prepareStatement("update clientes set nome = ?, endereco = ?, numero = ?, telefone = ?, telefone_celular = ?,"
+                + "cidade = ?, estado = ?, pais = ?, email = ?, email2 = ?, cnpj = ?, cpf = ?, cep = ?, bairro = ?, situacao = ?"
                 + "where codigo = ?")) {
 
             edit.setString(1, cli.getNome());
             edit.setString(2, cli.getEndereco());
             edit.setString(3, cli.getNumero());
             edit.setString(4, cli.getTelefone());
-            edit.setString(5, cli.getCidade());
-            edit.setString(6, cli.getEstado());
-            edit.setString(7, cli.getPais());
-            edit.setString(8, cli.getEmail());
-            edit.setString(9, cli.getEmail2());
-            edit.setString(10, cli.getCnpj());
-            edit.setString(11, cli.getCpf());
-            edit.setString(12, cli.getCep());
-            edit.setString(13, cli.getBairro());
+            edit.setString(5, cli.getTelefoneCelular());
+            edit.setString(6, cli.getCidade());
+            edit.setString(7, cli.getEstado());
+            edit.setString(8, cli.getPais());
+            edit.setString(9, cli.getEmail());
+            edit.setString(10, cli.getEmail2());
+            edit.setString(11, cli.getCnpj());
+            edit.setString(12, cli.getCpf());
+            edit.setString(13, cli.getCep());
+            edit.setString(14, cli.getBairro());
+            edit.setString(15, cli.getSituacao());
 
-            edit.setString(14, cli.getCodigo());
+            edit.setString(16, cli.getCodigo());
 
             edit.executeUpdate();
 
@@ -271,6 +277,7 @@ public class ClientesDAO {
                 cli.setNumero(rs.getString("numero"));
                 cli.setBairro(rs.getString("bairro"));
                 cli.setTelefone(rs.getString("telefone"));
+                cli.setTelefoneCelular(rs.getString("telefone_celular"));
                 cli.setCidade(rs.getString("cidade"));
                 cli.setEstado(rs.getString("estado"));
 

@@ -11,6 +11,7 @@ public class CadastroDeClientes {
     public String endereco = null;
     public String numero = null;
     public String telefone = null;
+    public String telefoneCelular = null;
     public String cep = null;
     public String cidade = null;
     public String estado = null;
@@ -22,6 +23,7 @@ public class CadastroDeClientes {
     public String cnpj = null;
     public String bairro = null;
     public String data = null;
+    public String situacao = null;
     
     public String lista;
 
@@ -155,8 +157,22 @@ public class CadastroDeClientes {
     public void setLista(String lista) {
         this.lista = lista;
     }
-    
-    
+
+    public String getTelefoneCelular() {
+        return telefoneCelular;
+    }
+
+    public void setTelefoneCelular(String telefoneCelular) {
+        this.telefoneCelular = telefoneCelular;
+    }
+
+    public String getSituacao() {
+        return situacao;
+    }
+
+    public void setSituacao(String situacao) {
+        this.situacao = situacao;
+    }
     
     
 
@@ -175,6 +191,7 @@ public class CadastroDeClientes {
     void getData(String string) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
    
 
 }

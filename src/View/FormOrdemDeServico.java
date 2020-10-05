@@ -632,9 +632,6 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(9, 9, 9)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel5Layout.createSequentialGroup()
@@ -647,6 +644,9 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(60, 60, 60)
                         .addComponent(listaConsultaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel4.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 800, 160));
@@ -684,7 +684,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         jLabel11.setText("Status:");
 
         comboBoxStatusConsulta.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        comboBoxStatusConsulta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ABERTO", "FECHADO" }));
+        comboBoxStatusConsulta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ABERTO", "FECHADO", "CANCELADO" }));
 
         jButton1.setBackground(new java.awt.Color(153, 153, 153));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
