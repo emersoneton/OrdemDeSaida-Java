@@ -1,8 +1,10 @@
 package Model;
 
+import Classes.EnviarEmail;
 import Controller.CadastroDeClientes;
 import Controller.CadastroDeFilial;
 import Controller.CadastroDeServico;
+import Controller.EnviarEmailNotas;
 import View.FormOrdemDeServico;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -674,5 +676,32 @@ public class OrdemDeServicoDAO {
             Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    
+     public void BuscarEmailCLiente(CadastroDeClientes cli, CadastroDeServico ser) {
+        Conexao();
+
+        try (PreparedStatement busca = con.prepareStatement("SELECT * FROM clientes WHERE nome = '"+ cli.getNome() +"'")) {
+
+            ResultSet rs = busca.executeQuery();
+
+            while (rs.next()) {
+            
+                    cli.setEmail(rs.getString("email"));
+                    cli.setEmail2(rs.getString("email2"));
+
+                    EnviarEmail email = new EnviarEmail();
+                    email.EnviarEmailsDeNotas(cli, ser);
+            }
+            
+            con.close();
+        } catch (SQLException ex) {
+            System.err.println("Erro" + ex);
+
+        }
+
+    }
+    
+    
 
 }

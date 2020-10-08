@@ -1103,10 +1103,22 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
         if (ser.isValidadorItens()) { // se o codigo da nota existir no banco NA TABELA DE ITENS
             GerarPDF(); //Gero PDF 
+
+            //Enviar Email
+            int resposta = JOptionPane.showConfirmDialog(null, "DESEJA ENVIAR O EMAIL COM A ORDEM DE SERVIÇO PARA O CLIENTE?", "escolha dois", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) {
+                EnviarEmail();
+            }
         } else {
             if (ser.isValidadorNota()) {   //UPDATE
                 SalvarItens(); //Salvo o Itens da Nota
                 GerarPDF(); //Gero PDF 
+
+                //Enviar Email
+                int resposta = JOptionPane.showConfirmDialog(null, "DESEJA ENVIAR O EMAIL COM A ORDEM DE SERVIÇO PARA O CLIENTE?", "escolha dois", JOptionPane.YES_NO_OPTION);
+                if (resposta == JOptionPane.YES_OPTION) {
+                    EnviarEmail();
+                }
 
                 ser.setCliente(txtPesquisaCliente.getText());
                 ser.setOs(Integer.parseInt(txtOs.getText()));
@@ -1122,10 +1134,31 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             } else {                   //INSERT
                 Salvar(); //Salvo os complementos da nota
                 GerarPDF(); //Gero PDF 
+
+                //Enviar Email
+                int resposta = JOptionPane.showConfirmDialog(null, "DESEJA ENVIAR O EMAIL COM A ORDEM DE SERVIÇO PARA O CLIENTE?", "escolha dois", JOptionPane.YES_NO_OPTION);
+                if (resposta == JOptionPane.YES_OPTION) {
+                    EnviarEmail();
+                }
+
             }
         }
 
         Limpar();
+
+    }
+
+    private void EnviarEmail() {
+
+        CadastroDeServico ser = new CadastroDeServico();
+        ser.setCliente(txtPesquisaCliente.getText());
+        ser.setOs(Integer.parseInt(txtOs.getText()));
+
+        CadastroDeClientes cli = new CadastroDeClientes();
+        cli.setNome(txtPesquisaCliente.getText());
+
+        OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
+        serDao.BuscarEmailCLiente(cli, ser);
 
     }
 
@@ -1497,6 +1530,12 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         GerarPDF();
+
+        //Enviar Email
+        int resposta = JOptionPane.showConfirmDialog(null, "DESEJA ENVIAR O EMAIL COM A ORDEM DE SERVIÇO PARA O CLIENTE?", "escolha dois", JOptionPane.YES_NO_OPTION);
+        if (resposta == JOptionPane.YES_OPTION) {
+            EnviarEmail();
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void cmdCanceladoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmdCanceladoMousePressed
@@ -1530,7 +1569,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             ser.setStatus("FECHADO");
             ser.setClicked("FECHADO");
 
-        }else if (cmdCancelado.isSelected()) {
+        } else if (cmdCancelado.isSelected()) {
 
             ser.setStatus("CANCELADO");
             ser.setClicked("CANCELADO");
@@ -1539,7 +1578,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
             ser.setClicked("TODOS");
 
-        }else {
+        } else {
             JOptionPane.showMessageDialog(null, "SELECIONE UMA DAS OPÇÕES DE AÇÕES", "Mensagem",
                     JOptionPane.INFORMATION_MESSAGE);
         }
@@ -1602,7 +1641,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             ser.setClicked("FECHADO");
 
         } else if (cmdCancelado.isSelected()) {
-            
+
             ser.setStatus("CANCELADO");
             ser.setClicked("CANCELADO");
 
