@@ -679,7 +679,7 @@ public class OrdemDeServicoDAO {
     public void BuscarEmailCLiente(CadastroDeClientes cli, CadastroDeServico ser) {
         Conexao();
 
-        try (PreparedStatement busca = con.prepareStatement("SELECT * FROM clientes WHERE nome = '" + cli.getNome() + "'")) {
+        try (PreparedStatement busca = con.prepareStatement("SELECT * FROM clientes as c, servicos as s WHERE c.nome = '" + cli.getNome() + "' and c.nome = s.cliente AND s.codigo = "+ser.getOs()+"")) {
 
             ResultSet rs = busca.executeQuery();
 
@@ -687,6 +687,9 @@ public class OrdemDeServicoDAO {
 
                 cli.setEmail(rs.getString("email"));
                 cli.setEmail2(rs.getString("email2"));
+                ser.setData(rs.getString("data_os"));
+                ser.setDataAgendamento(rs.getString("data_agendamento"));
+                ser.setHorarioAgendamento(rs.getString("horario_agendamento"));
 
                 if (cli.getEmail().length() <= 0) { // Valido se o e-mail está vazio
 

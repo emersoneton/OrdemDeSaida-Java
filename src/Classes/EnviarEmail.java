@@ -9,10 +9,10 @@ public class EnviarEmail {
 
     public void EnviarEmailsDeNotas(CadastroDeClientes cli, CadastroDeServico ser) {
 
-        String meuEmail = "climatizacao.nelsonrodrigues@gmail.com";
-        String minhaSenha = "997865036";
-      //  String meuEmail = "treinosweb@gmail.com";
-      //  String minhaSenha = "treinos123456";
+       // String meuEmail = "climatizacao.nelsonrodrigues@gmail.com";
+       // String minhaSenha = "997865036";
+        String meuEmail = "treinosweb@gmail.com";
+        String minhaSenha = "treinos123456";
         int porta = 465;
 
         MultiPartEmail email = new MultiPartEmail();
@@ -21,14 +21,16 @@ public class EnviarEmail {
         email.setAuthenticator(new DefaultAuthenticator(meuEmail, minhaSenha));
         email.setSSLOnConnect(true);
         email.setTLS(true);
-
+        
         try {
 
             email.setFrom(meuEmail);
-            email.setSubject("Ordem de Serviço");          
-            
-            email.setMsg("Prezado Sr(a) "+ ser.getCliente() +", \n\n"
-                    + "Em anexo, o PDF de sua Ordem de Serviço \n\n"
+            email.setSubject("Ordem de Serviço ("+ser.getOs()+")");
+
+            email.setMsg("Prezado Sr(a) " + ser.getCliente() + ", \n\n"
+                    + "Em anexo, o PDF de sua Ordem de Serviço Nº: " + ser.getOs() + "\n\n"
+                    + "Data da OS: " + ser.getData() + "\n\n"
+                    + "Data e Hora do Agendamento: "+ser.getDataAgendamento()+" - "+ser.getHorarioAgendamento()+"\n\n"
                     + "Att: NR Climatização \n\n"
                     + "AGRADECEMOS PELA SUA PREFERÊNCIA!");
             email.addTo(cli.getEmail());

@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -140,5 +142,33 @@ public class UsuariosDAO {
         }
     }
     
+    
+    public List<CadastroDeUsuario> BuscarUsuarios(){
+        
+        List<CadastroDeUsuario> lista = new ArrayList<>();
+        Conexao();
+        
+        try {
+            PreparedStatement busca = con.prepareStatement("SELECT * FROM usuarios");
+            
+            ResultSet rs = busca.executeQuery();
+            
+            while(rs.next()){
+                CadastroDeUsuario usu = new CadastroDeUsuario();
+                
+                usu.setNome(rs.getString("nome"));
+                usu.setLogin(rs.getString("login"));
+                usu.setTipo(rs.getString("tipo"));
+                
+                lista.add(usu);
+                
+            }
+            
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuariosDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
+    }
     
 }
