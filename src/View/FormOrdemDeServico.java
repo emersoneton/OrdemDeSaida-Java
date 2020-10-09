@@ -1536,6 +1536,8 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         if (resposta == JOptionPane.YES_OPTION) {
             EnviarEmail();
         }
+        
+        Limpar();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void cmdCanceladoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmdCanceladoMousePressed

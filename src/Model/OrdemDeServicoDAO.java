@@ -183,7 +183,6 @@ public class OrdemDeServicoDAO {
 
     }
 
-    
     public void BuscarOS(CadastroDeServico ser) {
 
         Conexao();
@@ -601,10 +600,10 @@ public class OrdemDeServicoDAO {
                 }
 
             } // Fim da Busca por CLIENTE em Fechado
-            
+
             if (ser.getClicked() == "CANCELADO") { // Busca por Cancelados
 
-               PreparedStatement busca = con.prepareStatement("SELECT * FROM servicos WHERE status_os = ? ORDER BY codigo");
+                PreparedStatement busca = con.prepareStatement("SELECT * FROM servicos WHERE status_os = ? ORDER BY codigo");
 
                 busca.setString(1, "" + ser.getStatus());
 
@@ -670,30 +669,38 @@ public class OrdemDeServicoDAO {
 
             alterar.executeUpdate();
 
-
             con.close();
         } catch (SQLException ex) {
             Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
-     public void BuscarEmailCLiente(CadastroDeClientes cli, CadastroDeServico ser) {
+
+    public void BuscarEmailCLiente(CadastroDeClientes cli, CadastroDeServico ser) {
         Conexao();
 
-        try (PreparedStatement busca = con.prepareStatement("SELECT * FROM clientes WHERE nome = '"+ cli.getNome() +"'")) {
+        try (PreparedStatement busca = con.prepareStatement("SELECT * FROM clientes WHERE nome = '" + cli.getNome() + "'")) {
 
             ResultSet rs = busca.executeQuery();
 
             while (rs.next()) {
-            
-                    cli.setEmail(rs.getString("email"));
-                    cli.setEmail2(rs.getString("email2"));
 
-                    EnviarEmail email = new EnviarEmail();
-                    email.EnviarEmailsDeNotas(cli, ser);
+                cli.setEmail(rs.getString("email"));
+                cli.setEmail2(rs.getString("email2"));
+
+                if (cli.getEmail().length() <= 0) { // Valido se o e-mail está vazio
+
+                    int resposta = JOptionPane.showConfirmDialog(null, "CLIENTE SEM EMAIL CADASTRADO \n"
+                            + "Se quiser enviar a OS para o e-mail do cliente, entre no seu cadastro e informe o seu e-mail \n"
+                            + "Depois clique em SIM", "escolha dois", JOptionPane.YES_NO_OPTION);
+                    if (resposta == JOptionPane.YES_OPTION) {
+                        EnviarEmail email = new EnviarEmail();
+                        email.EnviarEmailsDeNotas(cli, ser);
+                    }
+
+                }
+
             }
-            
+
             con.close();
         } catch (SQLException ex) {
             System.err.println("Erro" + ex);
@@ -701,7 +708,5 @@ public class OrdemDeServicoDAO {
         }
 
     }
-    
-    
 
 }
