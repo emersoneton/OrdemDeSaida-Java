@@ -5,6 +5,7 @@ import Controller.CadastroDeClientes;
 import Controller.CadastroDeFilial;
 import Controller.CadastroDeServico;
 import Controller.EnviarEmailNotas;
+import View.FormClientes;
 import View.FormOrdemDeServico;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -690,13 +691,16 @@ public class OrdemDeServicoDAO {
                 if (cli.getEmail().length() <= 0) { // Valido se o e-mail está vazio
 
                     int resposta = JOptionPane.showConfirmDialog(null, "CLIENTE SEM EMAIL CADASTRADO \n"
-                            + "Se quiser enviar a OS para o e-mail do cliente, entre no seu cadastro e informe o seu e-mail \n"
-                            + "Depois clique em SIM", "escolha dois", JOptionPane.YES_NO_OPTION);
+                            + "Você deseja cadastrar o email do cliente?", "ALERTA DE CADASTRO", JOptionPane.YES_NO_OPTION);
                     if (resposta == JOptionPane.YES_OPTION) {
-                        EnviarEmail email = new EnviarEmail();
-                        email.EnviarEmailsDeNotas(cli, ser);
+
+                        new FormClientes().setVisible(true);
+
                     }
 
+                } else {
+                    EnviarEmail email = new EnviarEmail();
+                    email.EnviarEmailsDeNotas(cli, ser);
                 }
 
             }
