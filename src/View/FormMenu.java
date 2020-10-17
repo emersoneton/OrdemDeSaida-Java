@@ -128,7 +128,7 @@ public class FormMenu extends javax.swing.JFrame {
         });
         MenuCadastros.add(itemMenuProdutos);
 
-        itemMenuFilial.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        itemMenuFilial.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         itemMenuFilial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/menu_filial.png"))); // NOI18N
         itemMenuFilial.setText("Filial");
         itemMenuFilial.addActionListener(new java.awt.event.ActionListener() {
@@ -176,7 +176,7 @@ public class FormMenu extends javax.swing.JFrame {
 
         itemMenuSair.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         itemMenuSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/menu_sair.png"))); // NOI18N
-        itemMenuSair.setText("Sair");
+        itemMenuSair.setText("SAIR");
         itemMenuSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 itemMenuSairActionPerformed(evt);
