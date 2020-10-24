@@ -42,6 +42,7 @@ public class FormFilial extends javax.swing.JFrame {
         Iniciar();
         BuscarCodigoDaFilial();
         Mascaras();
+        txtRazaoSocial.requestFocus();
 
     }
 

@@ -27,16 +27,19 @@ public class UsuariosDAO {
 
         String login = "";
         try {
-
+            boolean validaNomeUsuario = false;
             PreparedStatement busca = con.prepareStatement("select * from usuarios where login = '" + usu.getLogin() + "'");
 
             ResultSet rs = busca.executeQuery();
 
             while (rs.next()) {
                 login = rs.getString("login");
+                if (login.trim().equals(usu.getLogin())){
+                    validaNomeUsuario = true;
+                }
             }
 
-            if (login.trim().equals(usu.getLogin())) {
+            if (validaNomeUsuario) {
                 JOptionPane.showMessageDialog(null, "O login "+ usu.getLogin() +" já existe cadastrado na base de dados!");
             } else {
                 PreparedStatement salvar = con.prepareStatement("INSERT INTO usuarios(nome, login, senha, tipo) VALUES(?,?,?,?)");

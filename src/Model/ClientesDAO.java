@@ -40,7 +40,8 @@ public class ClientesDAO {
         PreparedStatement stmt = null;
 
         try {
-
+            
+            boolean validaNomeCliente = false;
             PreparedStatement busca = con.prepareStatement("select nome from clientes");
 
             ResultSet rs = busca.executeQuery();
@@ -48,9 +49,13 @@ public class ClientesDAO {
             String nome = "";
             while (rs.next()) {
                 nome = rs.getString("nome");
+                
+                if (nome.trim().equals(cli.getNome())){
+                    validaNomeCliente = true;
+                }
             }
 
-            if (nome.trim().equals(cli.getNome())) {
+            if (validaNomeCliente) {
                 
                JOptionPane.showMessageDialog(null, "O CLIENTE *" + cli.getNome() + "* JÁ EXISTE CADASTRADO NO SISTEMA! \n\n"
                         + "                             FAVOR ALTERAR O NOME DO NOVO CLIENTE", "Mensagem",

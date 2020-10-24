@@ -36,15 +36,19 @@ public class ProdutosDAO {
         String descricao = "";
         try {
 
+            boolean validaDescricaoProduto = false;
             PreparedStatement buscar = con.prepareStatement("SELECT descricao FROM produtos WHERE descricao = '" + pro.getDescricao() + "'");
 
             ResultSet rs = buscar.executeQuery();
 
             while(rs.next()){
                 descricao = rs.getString("descricao");
+                if (descricao.equals(pro.getDescricao())){
+                    validaDescricaoProduto = true;
+                }
             }
 
-            if (descricao.equals(pro.getDescricao())) {
+            if (validaDescricaoProduto) {
 
                 JOptionPane.showMessageDialog(null, "O PRODUTO *" + pro.getDescricao() + "* JÁ EXISTE CADASTRADO NO SISTEMA! \n\n"
                         + "                             FAVOR ALTERAR O NOME DO NOVO PRODUTO", "Mensagem",

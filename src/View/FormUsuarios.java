@@ -30,6 +30,7 @@ public class FormUsuarios extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);//Centralizar Jframe
         setIconImage(Toolkit.getDefaultToolkit().getImage("c:/SISOS/Imagem/sistema.png"));
         Tabela.setModel(tabelaUsuarios);
+        txtNome.requestFocus();
         Iniciar();
 
     }

@@ -52,6 +52,7 @@ public class FormClientes extends javax.swing.JFrame {
         Lista.setModel(MODELO);
         Mascaras();
         jtableClientes.setModel(tabelaClientes);
+        txtNome.requestFocus();
         
 
     }

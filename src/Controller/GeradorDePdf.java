@@ -356,7 +356,7 @@ public class GeradorDePdf {
 
             document.add(new Paragraph(Quantidade));
 
-            if (lista.size() > 1) {
+            if (lista.size() > 0) {
                 document.add(new Paragraph(" "));
                 // Valor Total
                 String valorItens = df.format(ser.getValorTotal()).replace(".",",");

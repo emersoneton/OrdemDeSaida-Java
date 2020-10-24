@@ -63,6 +63,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         MODELO = new DefaultListModel();
         Lista.setModel(MODELO);
         listaConsultaCliente.setModel(MODELO);
+        txtPesquisaCliente.requestFocus();
         Data();
         BuscarOS();
     }
@@ -1112,6 +1113,10 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         } else {
             if (ser.isValidadorNota()) {   //UPDATE
                 SalvarItens(); //Salvo o Itens da Nota
+                
+                    JOptionPane.showMessageDialog(null, "Itens da Nota SALVO com sucesso!", "Mensagem",
+                    JOptionPane.INFORMATION_MESSAGE);
+                
                 GerarPDF(); //Gero PDF 
 
                 //Enviar Email
@@ -1133,7 +1138,9 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
             } else {                   //INSERT
                 Salvar(); //Salvo os complementos da nota
+                SalvarItens(); //Salvo o Itens da Nota
                 GerarPDF(); //Gero PDF 
+                
 
                 //Enviar Email
                 int resposta = JOptionPane.showConfirmDialog(null, "DESEJA ENVIAR O EMAIL COM A ORDEM DE SERVIÇO PARA O CLIENTE?", "escolha dois", JOptionPane.YES_NO_OPTION);
@@ -1198,10 +1205,9 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
             serDao.SalvarItens(ser1);
             serDao.AlterarEstoque(ser1);
+            
         }
 
-        JOptionPane.showMessageDialog(null, "Itens da Nota SALVO com sucesso!", "Mensagem",
-                JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void GerarPDF() {

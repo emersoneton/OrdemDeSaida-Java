@@ -47,6 +47,7 @@ public class FormProdutos extends javax.swing.JFrame {
         txtQuantidade.setForeground(Color.black);
         txtValor.setText("0,00");
         txtQuantidade.setText("0");
+        txtCodigoBarras.requestFocus();
     }
 
     /**
