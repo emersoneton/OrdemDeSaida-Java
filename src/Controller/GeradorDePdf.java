@@ -1,8 +1,10 @@
 package Controller;
 
+import Classes.CurrencyWriter;
 import Model.ClientesDAO;
 import Model.OrdemDeServicoDAO;
 import Model.ProdutosDAO;
+import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Image;
 import java.awt.Desktop;
 import java.io.File;
@@ -24,6 +26,8 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import static com.sun.xml.internal.fastinfoset.alphabet.BuiltInRestrictedAlphabets.table;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 public class GeradorDePdf {
@@ -48,7 +52,7 @@ public class GeradorDePdf {
 
             document.open();
             document.open();
-            Paragraph p = new Paragraph("RELATÓRIO DE CLIENTES",fonteCabecalho);
+            Paragraph p = new Paragraph("RELATÓRIO DE CLIENTES", fonteCabecalho);
             p.setAlignment(1);
             document.add(p);
 
@@ -73,7 +77,7 @@ public class GeradorDePdf {
             for (int x = 0; x < lista.size(); x++) {
                 document.add(new Paragraph((x + 1) + " - " + lista.get(x).getNome() + " - " + lista.get(x).getEndereco()
                         + " ,nº" + lista.get(x).getNumero() + " - " + lista.get(x).getBairro() + " - " + lista.get(x).getTelefone()
-                        + " - " +lista.get(x).getTelefoneCelular()+ " - " + lista.get(x).getCidade() + " - " + lista.get(x).getEstado() + " - " +lista.get(x).getSituacao()));
+                        + " - " + lista.get(x).getTelefoneCelular() + " - " + lista.get(x).getCidade() + " - " + lista.get(x).getEstado() + " - " + lista.get(x).getSituacao()));
                 document.add(new Paragraph(" "));
             }
 
@@ -128,28 +132,27 @@ public class GeradorDePdf {
 
             List<CadastroDeProdutos> lista = proDao.GerarPDF();
 
-            PdfPTable table = new PdfPTable(new float[]{50f,7f,25f,7f,7f}); // crio a tabela para ser vista de fora ou dentro do IF
+            PdfPTable table = new PdfPTable(new float[]{50f, 7f, 25f, 7f, 7f}); // crio a tabela para ser vista de fora ou dentro do IF
             if (lista.size() > 1) {
                 PdfPCell Nome = new PdfPCell(new Phrase("DESCRIÇÃO", negritoPequena));
                 Nome.setBorder(Rectangle.NO_BORDER);// Tabela sem Bordas
                 Nome.setPaddingLeft(-70);
-                
+
                 PdfPCell codigo = new PdfPCell(new Phrase("Código", negritoPequena));
                 codigo.setHorizontalAlignment(Element.ALIGN_CENTER);
                 codigo.setBorder(Rectangle.NO_BORDER);// Tabela sem Bordas
                 codigo.setPaddingRight(-80); // Tabela sem margem
-                
-                
+
                 PdfPCell codigoBarras = new PdfPCell(new Phrase("Codigo de Barras", negritoPequena));
                 codigoBarras.setHorizontalAlignment(Element.ALIGN_CENTER);
                 codigoBarras.setBorder(Rectangle.NO_BORDER);// Tabela sem Bordas
                 codigoBarras.setPaddingRight(-100); // Tabela sem margem
-                
+
                 PdfPCell Valor = new PdfPCell(new Phrase("valor", negritoPequena));
                 Valor.setHorizontalAlignment(Element.ALIGN_CENTER);
                 Valor.setBorder(Rectangle.NO_BORDER);// Tabela sem Bordas
                 Valor.setPaddingRight(-120); // Tabela sem margem
-                
+
                 PdfPCell Quantidade = new PdfPCell(new Phrase("qtd", negritoPequena));
                 Quantidade.setHorizontalAlignment(Element.ALIGN_CENTER);
                 Quantidade.setBorder(Rectangle.NO_BORDER);// Tabela sem Bordas
@@ -162,49 +165,48 @@ public class GeradorDePdf {
                 table.addCell(Quantidade);
                 document.add(new Paragraph(" "));
             }
-            
+
             //Crio o tabela de produtos
             int Quantidade = 0;
             for (int x = 0; x < lista.size(); x++) {
                 Quantidade = lista.get(x).getQuantidade();
 
-                PdfPCell celula1 = new PdfPCell(new Phrase((x+1)+" - "+lista.get(x).getDescricao(), negritoPequena));
+                PdfPCell celula1 = new PdfPCell(new Phrase((x + 1) + " - " + lista.get(x).getDescricao(), negritoPequena));
                 celula1.setBorder(Rectangle.NO_BORDER); // Tabela sem Bordas
                 celula1.setPaddingLeft(-70); // Tabela sem margem
-                
+
                 PdfPCell celula2 = new PdfPCell(new Phrase(String.valueOf(lista.get(x).getCodigo()), negritoPequena));
                 celula2.setHorizontalAlignment(Element.ALIGN_CENTER);
                 celula2.setBorder(Rectangle.NO_BORDER); // Tabela sem Bordas
                 celula2.setPaddingRight(-80); // Tabela sem margem
-                
+
                 PdfPCell celula3 = new PdfPCell(new Phrase(String.valueOf(lista.get(x).getCodigoBarras()), negritoPequena));
                 celula3.setHorizontalAlignment(Element.ALIGN_CENTER);
                 celula3.setBorder(Rectangle.NO_BORDER); // Tabela sem Bordas
                 celula3.setPaddingRight(-100); // Tabela sem margem
-                
-                PdfPCell celula4 = new PdfPCell(new Phrase(Double.toString(lista.get(x).getValor()).replace(".",","), negritoPequena));
+
+                PdfPCell celula4 = new PdfPCell(new Phrase(Double.toString(lista.get(x).getValor()).replace(".", ","), negritoPequena));
                 celula4.setHorizontalAlignment(Element.ALIGN_CENTER);
                 celula4.setBorder(Rectangle.NO_BORDER); // Tabela sem Bordas
                 celula4.setPaddingRight(-120); // Tabela sem margem
-                
+
                 PdfPCell celula5 = new PdfPCell(new Phrase(String.valueOf(lista.get(x).getQuantidade()), negritoPequena));
                 celula5.setHorizontalAlignment(Element.ALIGN_CENTER);
                 celula5.setBorder(Rectangle.NO_BORDER); // Tabela sem Bordas
                 celula5.setPaddingRight(-150); // Tabela sem margem 
-                
+
                 table.addCell(celula1);
                 table.addCell(celula2);
                 table.addCell(celula3);
                 table.addCell(celula4);
-                table.addCell(celula5); 
+                table.addCell(celula5);
 
             }
 
             document.add(table); // Adiciono dados na tabela  
 
             document.add(new Paragraph(Quantidade));
-            
-            
+
             document.add(new Paragraph(" "));
             document.add(new Paragraph(" "));
             document.add(new Paragraph("  "
@@ -227,16 +229,100 @@ public class GeradorDePdf {
         }
     }
 
-    
-    
-    
-    
-    
-    
+    public void GerarRecibo(CadastroDeServico ser) {
+
+        DecimalFormat df = new DecimalFormat("#####0.00");
+
+        CadastroDeFilial fil = new CadastroDeFilial();
+
+        OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
+        serDao.BuscaDadosFilialPDF(fil);
+
+        Document document = new Document();
+
+        try {
+            PdfWriter.getInstance(document, new FileOutputStream("c:/SISOS/PDF/Recibos/cliente_" + ser.getCliente() + "_OS_" + ser.getOs() + ".pdf"));
+            document.open();
+            
+            Paragraph p = new Paragraph("Recibo de Pagamento da OS (" + ser.getOs() + ")", fonteCabecalho);
+            p.setAlignment(1);
+            document.add(p);
+            document.add(new Paragraph(" "));
+
+            Image figura = Image.getInstance("c:/SISOS/Imagem/imagem.jpg");
+            figura.scaleToFit(50, 30);
+            figura.setAlignment(0);
+
+            PdfPTable table1 = new PdfPTable(new float[]{10, 40});
+
+            String valorTotal = df.format(ser.getValorTotal()).replace(".", ",");
+            PdfPCell celula2 = new PdfPCell(new Phrase(String.valueOf("R$ " + valorTotal), fonteCabecalho));
+            celula2.setHorizontalAlignment(Element.ALIGN_CENTER);
+            celula2.setBorder(Rectangle.NO_BORDER); // Tabela sem Bordas
+            celula2.setPaddingRight(-250); // Tabela sem margem
+
+            table1.addCell(figura);
+            table1.addCell(celula2);
+
+            document.add(table1);
+            document.add(new Paragraph(" "));
+
+            //Transformo numero decimal em numero por extenso
+            CurrencyWriter cw = new CurrencyWriter();
+            String extenso = cw.write(new BigDecimal(ser.getValorTotal()));
+
+            document.add(new Paragraph("Recebi(emos) de " + ser.getCliente() + ", a importancia de " + extenso
+                    + " referente á OS " + ser.getOs() + ", cujo problema " + ser.getComplemento() + "."));
+            document.add(new Paragraph("Para maior clareza firmo(amos) o presente recibo para que produza os seus efeitos,"
+                    + "dando plena, rasa e irrevogável quitação, pelo valor recebido."));
+            document.add(new Paragraph(" "));
+
+            Paragraph data = new Paragraph("CANOAS " + ser.getData());
+            data.setAlignment(2);
+            document.add(data);
+
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph(" "));
+            Paragraph assinatura = new Paragraph("____________________________________");
+            assinatura.setAlignment(1);
+            document.add(assinatura);
+
+            // Razão Social
+            Paragraph emitente = new Paragraph(fil.getRazaoFantasia());
+            emitente.setAlignment(1);
+            document.add(emitente);
+
+            //cnpj
+            Paragraph cnpj = new Paragraph(fil.getCnpj());
+            cnpj.setAlignment(1);
+            document.add(cnpj);
+
+            //telefone
+            Paragraph telefone = new Paragraph(fil.getTelefoneCelular());
+            telefone.setAlignment(1);
+            document.add(telefone);
+
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(GeradorDePdf.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(GeradorDePdf.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(GeradorDePdf.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        document.close();
+
+        try {
+            Desktop.getDesktop().open(new File("c:/SISOS/PDF/Recibos/cliente_" + ser.getCliente() + "_OS_" + ser.getOs() + ".pdf"));
+        } catch (IOException ex) {
+            Logger.getLogger(GeradorDePdf.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     //GERAR PDF DA ORDEM DE SERVIÇO
     public void GeraPDFOrdemDeServico(CadastroDeServico ser, CadastroDeClientes cli) {
-    DecimalFormat df = new DecimalFormat("#####0.00");
-        
+        DecimalFormat df = new DecimalFormat("#####0.00");
+
         CadastroDeFilial fil = new CadastroDeFilial();
 
         OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
@@ -245,7 +331,7 @@ public class GeradorDePdf {
         Document document = new Document();
         try {
 
-            PdfWriter.getInstance(document, new FileOutputStream("c:/SISOS/PDF/OS/OS_"+ser.getOs()+"_"+ser.getCliente()+".pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream("c:/SISOS/PDF/OS/OS_" + ser.getOs() + "_" + ser.getCliente() + ".pdf"));
             document.open();
 
             Image figura = Image.getInstance("c:/SISOS/Imagem/imagem.jpg");
@@ -255,15 +341,14 @@ public class GeradorDePdf {
             PdfPTable table1 = new PdfPTable(new float[]{90, 100f});
 
             // Dados do Emissor
-            PdfPCell dados = new PdfPCell(new Phrase(" Nome Fantasia: " + fil.getRazaoFantasia() + "\n CNPJ: " + fil.getCnpj() + " - I.M: "+ fil.getInscricaoMunicipal()+"\n Cep: " + fil.getCep()
+            PdfPCell dados = new PdfPCell(new Phrase(" Nome Fantasia: " + fil.getRazaoFantasia() + "\n CNPJ: " + fil.getCnpj() + " - I.M: " + fil.getInscricaoMunicipal() + "\n Cep: " + fil.getCep()
                     + "\n Endereço: " + fil.getEndereco() + ", nº " + fil.getNumero() + "\n Bairro: " + fil.getBairro()
                     + "\n Cidade: " + fil.getCidade() + " / " + fil.getEstado() + "\n Tel Cel: " + fil.getTelefoneCelular(), fontePadrao));
-            
+
             table1.addCell(figura);
             table1.addCell(dados);
-            
+
             document.add(table1);
-            
 
             // Numero da Ordem de Serviço
             Paragraph p = new Paragraph("ORDEM DE SERVIÇO (" + ser.getOs() + ")", fonteCabecalho);
@@ -288,23 +373,22 @@ public class GeradorDePdf {
             serDao.BuscarItensDoServico(ser);
             List<CadastroDeServico> lista = serDao.BuscarItensDoServico(ser);
 
-            PdfPTable table = new PdfPTable(new float[]{30f, 8f ,8f, 8F}); // crio a tabela para ser vista de fora ou dentro do IF
+            PdfPTable table = new PdfPTable(new float[]{30f, 8f, 8f, 8F}); // crio a tabela para ser vista de fora ou dentro do IF
             if (lista.size() > 1) {
                 PdfPCell Nome = new PdfPCell(new Phrase("DESCRIÇÃO", negritoPequena));
                 Nome.setBorder(Rectangle.NO_BORDER);// Tabela sem Bordas
                 Nome.setPaddingLeft(-50);
-                
+
                 PdfPCell ValorUnitario = new PdfPCell(new Phrase("VALOR", negritoPequena));
                 ValorUnitario.setHorizontalAlignment(Element.ALIGN_CENTER);
                 ValorUnitario.setBorder(Rectangle.NO_BORDER);// Tabela sem Bordas
                 ValorUnitario.setPaddingRight(-140); // Tabela sem margem
-                
+
                 PdfPCell Quantidade = new PdfPCell(new Phrase("QUANTIDADE", negritoPequena));
                 Quantidade.setHorizontalAlignment(Element.ALIGN_CENTER);
                 Quantidade.setBorder(Rectangle.NO_BORDER);// Tabela sem Bordas
                 Quantidade.setPaddingRight(-140); // Tabela sem margem
-                
-                
+
                 PdfPCell Valor = new PdfPCell(new Phrase("TOTAL", negritoPequena));
                 Valor.setHorizontalAlignment(Element.ALIGN_CENTER);
                 Valor.setBorder(Rectangle.NO_BORDER);// Tabela sem Bordas
@@ -316,35 +400,34 @@ public class GeradorDePdf {
                 table.addCell(Valor);
                 document.add(new Paragraph(" "));
             }
-            
+
             //Crio o tabela de produtos
             int Quantidade = 0;
             for (int x = 0; x < lista.size(); x++) {
-                
+
                 Quantidade = lista.get(x).getQuantidade();
 
-                PdfPCell celula1 = new PdfPCell(new Phrase((x+1)+" - "+lista.get(x).getDescricao(), negritoPequena));
+                PdfPCell celula1 = new PdfPCell(new Phrase((x + 1) + " - " + lista.get(x).getDescricao(), negritoPequena));
                 celula1.setBorder(Rectangle.NO_BORDER); // Tabela sem Bordas
                 celula1.setPaddingLeft(-50); // Tabela sem margem
-                
-                PdfPCell celula2 = new PdfPCell(new Phrase(String.valueOf(df.format(lista.get(x).getValorTotal())).replace(".",","), negritoPequena));
+
+                PdfPCell celula2 = new PdfPCell(new Phrase(String.valueOf(df.format(lista.get(x).getValorTotal())).replace(".", ","), negritoPequena));
                 celula2.setHorizontalAlignment(Element.ALIGN_CENTER);
                 celula2.setBorder(Rectangle.NO_BORDER); // Tabela sem Bordas
                 celula2.setPaddingRight(-140); // Tabela sem margem
-                
+
                 PdfPCell celula3 = new PdfPCell(new Phrase(String.valueOf(lista.get(x).getQuantidade()), negritoPequena));
                 celula3.setHorizontalAlignment(Element.ALIGN_CENTER);
                 celula3.setBorder(Rectangle.NO_BORDER); // Tabela sem Bordas
                 celula3.setPaddingRight(-140); // Tabela sem margem
-                
+
                 double totalItens = (lista.get(x).getValorTotal() * lista.get(x).getQuantidade());
-                
-                
-                PdfPCell celula4 = new PdfPCell(new Phrase(String.valueOf(df.format(totalItens)).replace(".",","), negritoPequena));
+
+                PdfPCell celula4 = new PdfPCell(new Phrase(String.valueOf(df.format(totalItens)).replace(".", ","), negritoPequena));
                 celula4.setHorizontalAlignment(Element.ALIGN_CENTER);
                 celula4.setBorder(Rectangle.NO_BORDER); // Tabela sem Bordas
                 celula4.setPaddingRight(-140); // Tabela sem margem
-                
+
                 table.addCell(celula1);
                 table.addCell(celula2);
                 table.addCell(celula3);
@@ -359,22 +442,22 @@ public class GeradorDePdf {
             if (lista.size() > 0) {
                 document.add(new Paragraph(" "));
                 // Valor Total
-                String valorItens = df.format(ser.getValorTotal()).replace(".",",");
+                String valorItens = df.format(ser.getValorTotal()).replace(".", ",");
                 Paragraph valorTotal = new Paragraph("Valor Total Itens: ", fontePadrao);
                 valorTotal.add(new Phrase(valorItens, negrito));
                 valorTotal.setAlignment(2);
                 document.add(valorTotal);
 
                 // Valor de Desconto
-                String quantidade = df.format(ser.getDesconto()).replace(".",",");
+                String quantidade = df.format(ser.getDesconto()).replace(".", ",");
                 Paragraph desconto = new Paragraph("Valor Desconto: ", fontePadrao);
                 desconto.add(new Phrase(quantidade, negrito));
                 desconto.setAlignment(2);
                 document.add(desconto);
-                
+
                 double valorTotalGeral = ser.getValorTotal() - ser.getDesconto();
-                 // Valor de TOTAL
-                String valorTotalNota = df.format(valorTotalGeral).replace(".",",");
+                // Valor de TOTAL
+                String valorTotalNota = df.format(valorTotalGeral).replace(".", ",");
                 Paragraph totalGeral = new Paragraph("Valor TOTAL: ", fontePadrao);
                 totalGeral.add(new Phrase(valorTotalNota, negrito));
                 totalGeral.setAlignment(2);
@@ -417,20 +500,18 @@ public class GeradorDePdf {
         document.close();
 
         try {
-            Desktop.getDesktop().open(new File("c:/SISOS/PDF/OS/OS_"+ser.getOs()+"_"+ser.getCliente()+".pdf"));
+            Desktop.getDesktop().open(new File("c:/SISOS/PDF/OS/OS_" + ser.getOs() + "_" + ser.getCliente() + ".pdf"));
         } catch (IOException ex) {
             Logger.getLogger(GeradorDePdf.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    
-    
     // Consulta NOTAS
     public void GerarPDFBuscaDeNotas(CadastroDeServico ser) {
 
         OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
         List<CadastroDeServico> lista = serDao.BuscarNotasDeServico(ser);
-        
+
         Document document = new Document();
 
         try {
@@ -441,13 +522,12 @@ public class GeradorDePdf {
             Paragraph p = new Paragraph("NOTAS DE SERVIÇOS", fonteCabecalho);
             p.setAlignment(1);
             document.add(p);
-            
+
             document.add(new Paragraph(" "));
             document.add(new Paragraph(" "));
 
-           
             document.add(new Paragraph(" "));
-            PdfPTable table = new PdfPTable(new float[]{10f, 40f, 30f,30f,30f}); // crio a tabela para ser vista de fora ou dentro do IF
+            PdfPTable table = new PdfPTable(new float[]{10f, 40f, 30f, 30f, 30f}); // crio a tabela para ser vista de fora ou dentro do IF
 
             PdfPCell os = new PdfPCell(new Phrase("OS", fontePadrao));
             os.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -465,30 +545,28 @@ public class GeradorDePdf {
             table.addCell(dataAgendamento);
             table.addCell(dataNota);
             table.addCell(statusNota);
-            
-           
+
             for (int x = 0; x < lista.size(); x++) {
-                
+
                 PdfPCell celula1 = new PdfPCell(new Phrase(String.valueOf(lista.get(x).getOs()), fontePadrao));
                 celula1.setHorizontalAlignment(Element.ALIGN_CENTER);
                 PdfPCell celula2 = new PdfPCell(new Phrase(lista.get(x).getCliente(), fontePadrao));
-                PdfPCell celula3 = new PdfPCell(new Phrase(lista.get(x).getDataAgendamento()+" - "+lista.get(x).getHorarioAgendamento(), fontePadrao));
+                PdfPCell celula3 = new PdfPCell(new Phrase(lista.get(x).getDataAgendamento() + " - " + lista.get(x).getHorarioAgendamento(), fontePadrao));
                 celula3.setHorizontalAlignment(Element.ALIGN_CENTER);
                 PdfPCell celula4 = new PdfPCell(new Phrase(lista.get(x).getData(), fontePadrao));
                 celula4.setHorizontalAlignment(Element.ALIGN_CENTER);
                 PdfPCell celula5 = new PdfPCell(new Phrase(lista.get(x).getStatus(), fontePadrao));
                 celula5.setHorizontalAlignment(Element.ALIGN_CENTER);
-                
-                
+
                 table.addCell(celula1);
                 table.addCell(celula2);
                 table.addCell(celula3);
                 table.addCell(celula4);
                 table.addCell(celula5);
             }
-            
+
             document.add(table); // Adiciono dados na tabela 
-            
+
             document.add(new Paragraph(" "));
             document.add(new Paragraph(" "));
             Paragraph fim = new Paragraph("FIM DA LISTA", fonteVermelha);
@@ -501,7 +579,7 @@ public class GeradorDePdf {
             Logger.getLogger(GeradorDePdf.class.getName()).log(Level.SEVERE, null, ex);
         }
         document.close();
-        
+
         try {
             Desktop.getDesktop().open(new File("c:/SISOS/PDF/Relatório_OS/Notas de Serviços.pdf"));
         } catch (IOException ex) {

@@ -716,4 +716,43 @@ public class OrdemDeServicoDAO {
 
     }
 
+        public void BuscarEmailCLienteRecibo(CadastroDeClientes cli, CadastroDeServico ser) {
+        Conexao();
+
+        try (PreparedStatement busca = con.prepareStatement("SELECT * FROM clientes as c, servicos as s WHERE c.nome = '" + cli.getNome() + "' and c.nome = s.cliente AND s.codigo = "+ser.getOs()+"")) {
+
+            ResultSet rs = busca.executeQuery();
+
+            while (rs.next()) {
+
+                cli.setEmail(rs.getString("email"));
+                cli.setEmail2(rs.getString("email2"));
+                ser.setData(rs.getString("data_os"));
+                ser.setDataAgendamento(rs.getString("data_agendamento"));
+                ser.setHorarioAgendamento(rs.getString("horario_agendamento"));
+
+                if (cli.getEmail().length() <= 0) { // Valido se o e-mail está vazio
+
+                    int resposta = JOptionPane.showConfirmDialog(null, "CLIENTE SEM EMAIL CADASTRADO \n"
+                            + "Você deseja cadastrar o email do cliente?", "ALERTA DE CADASTRO", JOptionPane.YES_NO_OPTION);
+                    if (resposta == JOptionPane.YES_OPTION) {
+
+                        new FormClientes().setVisible(true);
+
+                    }
+
+                } else {
+                    EnviarEmail email = new EnviarEmail();
+                    email.EnviarEmailRecibos(cli, ser);
+                }
+
+            }
+
+            con.close();
+        } catch (SQLException ex) {
+            System.err.println("Erro" + ex);
+
+        }
+
+    }
 }
