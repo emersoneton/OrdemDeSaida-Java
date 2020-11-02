@@ -329,9 +329,9 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
                                 .addComponent(jLabel5)
                                 .addGap(9, 9, 9)
                                 .addComponent(textoQuantidadeDeItens, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -340,7 +340,6 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                                 .addGap(5, 5, 5)
                                 .addComponent(textoValor, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
                                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(13, 13, 13)
                                 .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -392,11 +391,11 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                         .addComponent(Lista, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnAdicionar)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel2)))
+                                .addComponent(jLabel2))
+                            .addComponent(btnAdicionar))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(9, 9, 9)
@@ -1551,15 +1550,21 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     }//GEN-LAST:event_ListaMousePressed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        GerarPDF();
+        if (txtPesquisaCliente.getText().length() > 0) {
+            GerarPDF();
 
-        //Enviar Email
-        int resposta = JOptionPane.showConfirmDialog(null, "DESEJA ENVIAR O EMAIL COM A ORDEM DE SERVIÇO PARA O CLIENTE?", "escolha dois", JOptionPane.YES_NO_OPTION);
-        if (resposta == JOptionPane.YES_OPTION) {
-            EnviarEmail();
+            //Enviar Email
+            int resposta = JOptionPane.showConfirmDialog(null, "DESEJA ENVIAR O EMAIL COM A ORDEM DE SERVIÇO PARA O CLIENTE?", "escolha dois", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) {
+                EnviarEmail();
+            }
+
+            Limpar();
+        } else {
+            JOptionPane.showMessageDialog(null, "NÃO FOI BUSCADO DADOS DE NENHUMA NOTA");
         }
 
-        Limpar();
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void cmdCanceladoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmdCanceladoMousePressed
@@ -1570,8 +1575,12 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     }//GEN-LAST:event_cmdCanceladoMousePressed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        GerarRecibo();
-        Limpar();
+        if (txtPesquisaCliente.getText().length() > 0) {
+            GerarRecibo();
+            Limpar();
+        } else {
+            JOptionPane.showMessageDialog(null, "NÃO FOI BUSCADO DADOS DE NENHUMA NOTA");
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     public void GerarRecibo() {
