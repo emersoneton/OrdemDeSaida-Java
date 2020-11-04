@@ -19,6 +19,7 @@ import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.Date;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -227,7 +228,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
         jLabel6.setText("Desconto:");
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Comlemento"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Observação", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP));
 
         jScrollPane2.setViewportView(textoComplemento);
 
@@ -1066,6 +1067,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     }
 
     private void ContadorDaTabela() {
+
         // Soma a quantidade de linhas na Tabela
         int somaLinhas = tableModel.getRowCount();
         textoQuantidadeDeItens.setText(Integer.toString(somaLinhas));
@@ -1226,6 +1228,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     }
 
     private void GerarPDF() {
+
         CadastroDeServico ser = new CadastroDeServico();
 
         ser.setOs(Integer.parseInt(txtOs.getText()));
@@ -1234,7 +1237,8 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         ser.setData(txtDataEHora.getText());
         ser.setDataAgendamento(jDataDoAgendamento.getText());
         ser.setHorarioAgendamento(jHorarioAgendamento.getText());
-        ser.setValorTotal(Double.parseDouble(textoValor.getText()));
+      
+        ser.setValorTotal(Double.parseDouble(textoValor.getText().replace(",", ".")));
         ser.setDesconto(Double.parseDouble(txtDesconto.getText().replace(",", ".")));
 
         CadastroDeClientes cli = new CadastroDeClientes();
@@ -1273,9 +1277,9 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         serDao.BuscarItensDoServico(ser);
 
         txtPesquisaCliente.setText(ser.getCliente());
-        txtDesconto.setText(Double.toString(ser.getDesconto()));
+        txtDesconto.setText(String.valueOf(ser.getDesconto()).replace(".", ","));
         jDataDoAgendamento.setText(ser.getDataAgendamento());
-        textoValor.setText(Double.toString(ser.getValorTotal()));
+        textoValor.setText(String.valueOf(ser.getValorTotal()).replace(".", ","));
         textoComplemento.setText(ser.getComplemento());
         jHorarioAgendamento.setText(ser.getHorarioAgendamento());
 
@@ -1587,8 +1591,11 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         CadastroDeServico ser = new CadastroDeServico();
         CadastroDeClientes cli = new CadastroDeClientes();
 
+        ser.setObservaçãoRecibo(JOptionPane.showInputDialog(null, "Informe a observação do recibo!"));
+
         ser.setCliente(txtPesquisaCliente.getText());
         ser.setValorTotal(Double.parseDouble(textoValor.getText()));
+        ser.setDesconto(Double.parseDouble(txtDesconto.getText().replace(",", ".")));
         ser.setData(txtDataEHora.getText());
         ser.setOs(Integer.parseInt(txtOs.getText()));
         ser.setComplemento(textoComplemento.getText());

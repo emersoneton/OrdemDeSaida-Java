@@ -20,7 +20,7 @@ public class FormMenu extends javax.swing.JFrame {
      */
     public FormMenu(VerificaLogin log) {
         initComponents();
-        txtVersao.setText("Version - 1.0.0");
+        txtVersao.setText("Version - 1.1.0");
         setExtendedState(MAXIMIZED_BOTH); //Maximizar a tela principal do sistema
         setIconImage(Toolkit.getDefaultToolkit().getImage("c:/SISOS/Imagem/sistema.png"));
         Inicializar(log);
