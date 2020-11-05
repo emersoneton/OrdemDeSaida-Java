@@ -56,12 +56,13 @@ public class ProdutosDAO {
 
             } else {
 
-                PreparedStatement salvar = con.prepareStatement("INSERT INTO produtos (codigo_barras,descricao,valor,quantidade) VALUES (?,?,?,?)");
+                PreparedStatement salvar = con.prepareStatement("INSERT INTO produtos (codigo_barras,descricao,valor,quantidade,situacao) VALUES (?,?,?,?,?)");
 
                 salvar.setString(1, pro.getCodigoBarras());
                 salvar.setString(2, pro.getDescricao());
                 salvar.setString(3, "" + pro.getValor());
                 salvar.setString(4, "" + pro.getQuantidade());
+                salvar.setString(5, "" + pro.getSituacao());
 
                 salvar.executeUpdate();
 
@@ -96,6 +97,7 @@ public class ProdutosDAO {
                     pro.setDescricao(rs.getString("descricao"));
                     pro.setValor(Double.parseDouble(rs.getString("valor")));
                     pro.setQuantidade(Integer.parseInt(rs.getString("quantidade")));
+                    pro.setSituacao(rs.getString("situacao"));
                     validador = true;
                     break;
                 }
@@ -120,15 +122,16 @@ public class ProdutosDAO {
         Conexao();
 
         try {
-            PreparedStatement alterar = con.prepareStatement("UPDATE produtos SET codigo_barras = ?, descricao = ?, valor = ?, quantidade = ?"
+            PreparedStatement alterar = con.prepareStatement("UPDATE produtos SET codigo_barras = ?, descricao = ?, valor = ?, quantidade = ?, situacao = ?"
                     + "WHERE codigo = ?");
 
             alterar.setString(1, pro.getCodigoBarras());
             alterar.setString(2, pro.getDescricao());
             alterar.setString(3, "" + pro.getValor());
             alterar.setString(4, "" + pro.getQuantidade());
+            alterar.setString(5, "" + pro.getSituacao());
 
-            alterar.setString(5, pro.getCodigo());
+            alterar.setString(6, pro.getCodigo());
 
             alterar.executeUpdate();
 
@@ -239,6 +242,7 @@ public class ProdutosDAO {
                 pro.setCodigoBarras(rs.getString("codigo_barras"));
                 pro.setValor(Double.parseDouble(rs.getString("valor")));
                 pro.setQuantidade(Integer.parseInt(rs.getString("quantidade")));
+                pro.setSituacao(rs.getString("situacao"));
 
                 lista.add(pro);
             }

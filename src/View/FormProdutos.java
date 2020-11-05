@@ -80,6 +80,8 @@ public class FormProdutos extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         txtValor = new javax.swing.JTextField();
         txtQuantidade = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        cmbSituacao = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -226,7 +228,7 @@ public class FormProdutos extends javax.swing.JFrame {
                 txtDescricaoKeyReleased(evt);
             }
         });
-        jPanel4.add(txtDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 510, -1));
+        jPanel4.add(txtDescricao, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 500, -1));
 
         jLabel2.setText("Codigo:");
         jPanel4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 32, -1, -1));
@@ -240,10 +242,10 @@ public class FormProdutos extends javax.swing.JFrame {
                 txtCodigoBarrasMouseClicked(evt);
             }
         });
-        jPanel4.add(txtCodigoBarras, new org.netbeans.lib.awtextra.AbsoluteConstraints(326, 29, 250, -1));
+        jPanel4.add(txtCodigoBarras, new org.netbeans.lib.awtextra.AbsoluteConstraints(326, 29, 240, -1));
 
         jLabel6.setText("Quantidade:");
-        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 160, -1, -1));
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, -1, -1));
 
         jLabel3.setText("Descricão:");
         jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 95, -1, -1));
@@ -256,8 +258,14 @@ public class FormProdutos extends javax.swing.JFrame {
                 txtValorActionPerformed(evt);
             }
         });
-        jPanel4.add(txtValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(75, 157, 70, -1));
-        jPanel4.add(txtQuantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(319, 157, 90, -1));
+        jPanel4.add(txtValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 70, -1));
+        jPanel4.add(txtQuantidade, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 160, 90, -1));
+
+        jLabel7.setText("Situação:");
+        jPanel4.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 160, -1, -1));
+
+        cmbSituacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ativado", "Desativado" }));
+        jPanel4.add(cmbSituacao, new org.netbeans.lib.awtextra.AbsoluteConstraints(423, 157, 140, -1));
 
         jTabbedPane1.addTab("Cadastro", jPanel4);
 
@@ -356,7 +364,7 @@ public class FormProdutos extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -407,6 +415,7 @@ public class FormProdutos extends javax.swing.JFrame {
         pro.setDescricao(txtDescricao.getText());
         pro.setValor(Double.parseDouble(txtValor.getText().replace(',', '.')));
         pro.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
+        pro.setSituacao((String) cmbSituacao.getSelectedItem());
         proDao.Salvar(pro);
         Limpar();
         BuscarCodigoDoProduto();
@@ -432,7 +441,8 @@ public class FormProdutos extends javax.swing.JFrame {
         txtCodigo.setText(pro.getCodigo());
         txtCodigoBarras.setText(pro.getCodigoBarras());
         txtDescricao.setText(pro.getDescricao());
-        txtValor.setText(Double.toString(pro.getValor()));
+        txtValor.setText(Double.toString(pro.getValor()).replace('.', ','));
+        cmbSituacao.setSelectedItem(pro.getSituacao());
 
         if(pro.getQuantidade() < 0){
            txtQuantidade.setForeground(Color.red);
@@ -453,6 +463,7 @@ public class FormProdutos extends javax.swing.JFrame {
         pro.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
         pro.setValor(Double.parseDouble(txtValor.getText().replace(',', '.')));
         pro.setCodigo(txtCodigo.getText());
+        pro.setSituacao((String) cmbSituacao.getSelectedItem());
         
         proDao.Alterar(pro);
         Limpar();
@@ -594,6 +605,7 @@ public class FormProdutos extends javax.swing.JFrame {
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnSalvar1;
+    private javax.swing.JComboBox<String> cmbSituacao;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -602,6 +614,7 @@ public class FormProdutos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

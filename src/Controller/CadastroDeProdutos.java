@@ -4,7 +4,8 @@ package Controller;
 public class CadastroDeProdutos {
    public String codigoBarras = null
            , descricao = null
-           , codigo = null;
+           , codigo = null
+           ,situacao = "Ativado";
    
    double valor = 0;
    int quantidade = 0;
@@ -48,5 +49,14 @@ public class CadastroDeProdutos {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
+
+    public String getSituacao() {
+        return situacao;
+    }
+
+    public void setSituacao(String situacao) {
+        this.situacao = situacao;
+    }
         
+    
 }

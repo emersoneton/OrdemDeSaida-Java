@@ -243,14 +243,18 @@ public class OrdemDeServicoDAO {
         Conexao();
 
         try {
-            PreparedStatement buscar = con.prepareStatement("SELECT descricao,valor FROM produtos ORDER BY descricao");
+            PreparedStatement buscar = con.prepareStatement("SELECT * FROM produtos ORDER BY descricao");
 
             ResultSet rs = buscar.executeQuery();
-
+           
             while (rs.next()) {
-
-                lista.add(rs.getString("descricao"));
-
+                
+                if(rs.getString("situacao").equals("Ativado")){
+                    
+                    lista.add(rs.getString("descricao")); 
+                    
+                }
+                
             }
 
             con.close();
