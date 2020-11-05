@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 03-Out-2020 às 00:20
+-- Tempo de geração: 05-Nov-2020 às 02:51
 -- Versão do servidor: 10.4.14-MariaDB
 -- versão do PHP: 7.4.9
 
@@ -39,10 +39,12 @@ CREATE TABLE `clientes` (
   `email` varchar(150) DEFAULT NULL,
   `email2` varchar(150) DEFAULT NULL,
   `telefone` varchar(15) DEFAULT NULL,
+  `telefone_celular` varchar(20) NOT NULL,
   `cnpj` varchar(25) DEFAULT NULL,
   `cpf` varchar(25) DEFAULT NULL,
   `bairro` varchar(50) DEFAULT NULL,
-  `data` varchar(40) NOT NULL
+  `data` varchar(40) NOT NULL,
+  `situacao` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -5736,7 +5738,8 @@ CREATE TABLE `produtos` (
   `descricao` varchar(200) DEFAULT NULL,
   `codigo_barras` varchar(50) DEFAULT NULL,
   `valor` double DEFAULT NULL,
-  `quantidade` int(10) DEFAULT NULL
+  `quantidade` int(10) DEFAULT NULL,
+  `situacao` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -5770,13 +5773,6 @@ CREATE TABLE `usuarios` (
   `senha` varchar(100) DEFAULT NULL,
   `tipo` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Extraindo dados da tabela `usuarios`
---
-
-INSERT INTO `usuarios` (`codigo`, `nome`, `login`, `senha`, `tipo`) VALUES
-(1, 'Administrador', 'admin', 'admin', 'ADMINISTRADOR');
 
 --
 -- Índices para tabelas despejadas
@@ -5868,7 +5864,7 @@ ALTER TABLE `servicos`
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
