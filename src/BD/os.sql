@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 05-Nov-2020 às 02:51
+-- Tempo de geração: 29-Nov-2020 às 00:03
 -- Versão do servidor: 10.4.14-MariaDB
 -- versão do PHP: 7.4.9
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `os`
+-- Banco de dados: `OS`
 --
 
 -- --------------------------------------------------------
@@ -5756,6 +5756,7 @@ CREATE TABLE `servicos` (
   `data_agendamento` varchar(10) DEFAULT NULL,
   `horario_agendamento` varchar(5) NOT NULL,
   `complemento` text NOT NULL,
+  `solucao_problema` text DEFAULT NULL,
   `data_os` varchar(20) NOT NULL,
   `status_os` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -5773,6 +5774,13 @@ CREATE TABLE `usuarios` (
   `senha` varchar(100) DEFAULT NULL,
   `tipo` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `usuarios`
+--
+
+INSERT INTO `usuarios` (`codigo`, `nome`, `login`, `senha`, `tipo`) VALUES
+(1, 'Administrador', 'admin', 'admin', 'ADMINISTRADOR');
 
 --
 -- Índices para tabelas despejadas
@@ -5864,7 +5872,7 @@ ALTER TABLE `servicos`
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
