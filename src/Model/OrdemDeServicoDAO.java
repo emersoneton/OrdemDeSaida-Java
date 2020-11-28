@@ -57,7 +57,8 @@ public class OrdemDeServicoDAO {
 
     public void Buscar(CadastroDeServico ser) {
         Conexao();
-
+        
+        boolean valida = false;
         try {
             PreparedStatement busca = con.prepareStatement("SELECT * FROM servicos WHERE codigo = '" + ser.getOs() + "'");
 
@@ -71,9 +72,15 @@ public class OrdemDeServicoDAO {
                 ser.setDataAgendamento(rs.getString("data_agendamento"));
                 ser.setHorarioAgendamento(rs.getString("horario_agendamento"));
                 ser.setComplemento(rs.getString("complemento"));
+                ser.setSolucaoProblema(rs.getString("solucao_problema"));
 
+                valida = true;
             }
 
+            if(valida == false){
+                JOptionPane.showMessageDialog(null, "NÃO FOI ENCONTRADO A NOTA DO CÓDIGO INFORMADO", "Mensagem",
+                    JOptionPane.INFORMATION_MESSAGE);
+            }
             con.close();
         } catch (SQLException ex) {
             Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -143,7 +150,7 @@ public class OrdemDeServicoDAO {
         Conexao();
 
         try {
-            PreparedStatement alterar = con.prepareStatement("UPDATE servicos SET cliente = ?, complemento = ?, data_agendamento = ?, horario_agendamento = ?, valor = ?, desconto = ?"
+            PreparedStatement alterar = con.prepareStatement("UPDATE servicos SET cliente = ?, complemento = ?, data_agendamento = ?, horario_agendamento = ?, valor = ?, desconto = ?, solucao_problema = ?"
                     + "WHERE codigo = ?");
 
             alterar.setString(1, ser.getCliente());
@@ -152,8 +159,9 @@ public class OrdemDeServicoDAO {
             alterar.setString(4, ser.getHorarioAgendamento());
             alterar.setString(5, "" + ser.getValorTotal());
             alterar.setString(6, "" + ser.getDesconto());
+            alterar.setString(7, "" + ser.getSolucaoProblema());
 
-            alterar.setString(7, "" + ser.getOs());
+            alterar.setString(8, "" + ser.getOs());
 
             alterar.executeUpdate();
 
@@ -759,4 +767,26 @@ public class OrdemDeServicoDAO {
         }
 
     }
+        
+
+        
+        public void SalvarSolucaoProblema(CadastroDeServico ser){
+            
+            Conexao();
+
+        try {
+            PreparedStatement update = con.prepareStatement("UPDATE servicos SET solucao_problema = '"+ser.getSolucaoProblema()+"' where codigo = '"+ser.getOs()+"'");
+            
+            update.executeUpdate();
+            
+            con.close();
+                    
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "ERRO AO SALVAR A SOLUÇÃO DE PROBLEMAS!");
+        }
+            
+        }
+        
+        
+        
 }

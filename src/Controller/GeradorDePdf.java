@@ -298,7 +298,7 @@ public class GeradorDePdf {
             String extenso = cw.write(new BigDecimal(calculo));
 
             document.add(new Paragraph("  Recebi(emos) de " + ser.getCliente() + ", a importância de " + extenso
-                    + " referente á " + ser.getObservaçãoRecibo() + "."));
+                    + " referente á " + ser.getObservaçãoRecibo() + ", cuja solução foi " +ser.getSolucaoProblema()+" ."));
             document.add(new Paragraph(" "));
             document.add(new Paragraph("  Para maior clareza firmo(amos) o presente recibo para que produza os seus efeitos, dando plena,"
                     + " rasa e irrevogável quitação, pelo valor recebido."));
@@ -397,8 +397,7 @@ public class GeradorDePdf {
             document.add(new Paragraph(" "));
 
             document.add(new Paragraph("Descrição de Serviço: " + ser.getComplemento(), fontePadrao));
-
-            document.add(new Paragraph(" "));
+            if (ser.getSolucaoProblema().length() > 0) document.add(new Paragraph("Solução do Serviço: " + ser.getSolucaoProblema(), fontePadrao));
 
             // Buscar Itens do Banco
             serDao.BuscarItensDoServico(ser);
@@ -496,7 +495,6 @@ public class GeradorDePdf {
             }
 
             document.add(new Paragraph(" "));
-            document.add(new Paragraph(" "));
             document.add(new Paragraph("Ordem de Serviço Gerada em: " + ser.getData(), fontePadrao));
             document.add(new Paragraph("Agendamento Marcado para: " + ser.getDataAgendamento() + " - " + ser.getHorarioAgendamento(), fontePadrao));
             document.add(new Paragraph(" "));
@@ -506,8 +504,7 @@ public class GeradorDePdf {
             document.add(new Paragraph("* todos os serviços realizados tem garantia de 90 dias ao contar da data de entrega.", negrito));
             document.add(new Paragraph("* o serviço só será realizado após aprovação do cliente.", negrito));
             document.add(new Paragraph("* o ponto de luz é por conta do cliente, caso executado será cobrado a parte.", negrito));
-
-            document.add(new Paragraph(" "));
+            
             document.add(new Paragraph(" "));
             document.add(new Paragraph(" "));
             Paragraph tec = new Paragraph("______________________________                   ______________________________");
@@ -516,7 +513,6 @@ public class GeradorDePdf {
 
             document.add(new Paragraph("                                TÉCNICO                                                                      CLIENTE ", negrito));
 
-            document.add(new Paragraph(" "));
             document.add(new Paragraph(" "));
             document.add(new Paragraph(" "));
             Paragraph fim = new Paragraph("AGRADECEMOS PELA SUA PREFERÊNCIA", fonteVermelha);

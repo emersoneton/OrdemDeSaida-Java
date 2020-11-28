@@ -6,7 +6,7 @@ public class CadastroDeServico {
     String cliente = null, complemento = null, descricao = null, data = null, 
             dataAgendamento = null, horarioAgendamento = null, status = "ABERTO", 
             clicked = null, // serve para ver os itens clicado na busca por notas
-            observaçãoRecibo = null;
+            observaçãoRecibo = null, solucaoProblema;
     int quantidade = 0, os = 0, contador = 0;
     double valorTotal = 0, desconto = 0;
     boolean validadorNota = false, validadorItens = false;
@@ -144,5 +144,14 @@ public class CadastroDeServico {
         this.observaçãoRecibo = observaçãoRecibo;
     }
 
+    public String getSolucaoProblema() {
+        return solucaoProblema;
+    }
+
+    public void setSolucaoProblema(String solucaoProblema) {
+        this.solucaoProblema = solucaoProblema;
+    }
+
+    
     
 }
