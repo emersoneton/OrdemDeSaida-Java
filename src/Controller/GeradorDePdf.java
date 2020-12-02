@@ -298,7 +298,7 @@ public class GeradorDePdf {
             String extenso = cw.write(new BigDecimal(calculo));
 
             document.add(new Paragraph("  Recebi(emos) de " + ser.getCliente() + ", a importância de " + extenso
-                    + " referente á " + ser.getObservaçãoRecibo() + ", cuja solução foi " +ser.getSolucaoProblema()+" ."));
+                    + " referente á " + ser.getObservaçãoRecibo() + "."));
             document.add(new Paragraph(" "));
             document.add(new Paragraph("  Para maior clareza firmo(amos) o presente recibo para que produza os seus efeitos, dando plena,"
                     + " rasa e irrevogável quitação, pelo valor recebido."));
@@ -398,6 +398,8 @@ public class GeradorDePdf {
 
             document.add(new Paragraph("Descrição de Serviço: " + ser.getComplemento(), fontePadrao));
             if (ser.getSolucaoProblema().length() > 0) document.add(new Paragraph("Solução do Serviço: " + ser.getSolucaoProblema(), fontePadrao));
+            
+            document.add(new Paragraph(" "));
 
             // Buscar Itens do Banco
             serDao.BuscarItensDoServico(ser);
@@ -479,7 +481,13 @@ public class GeradorDePdf {
                 document.add(valorTotal);
 
                 // Valor de Desconto
-                String quantidade = df.format(ser.getDesconto());
+                String quantidade;
+                if(ser.getDesconto() <= 0){
+                   quantidade = "0,00"; 
+                }else{
+                   quantidade = df.format(ser.getDesconto());  
+                }
+                
                 Paragraph desconto = new Paragraph("Valor Desconto: ", fontePadrao);
                 desconto.add(new Phrase(quantidade, negrito));
                 desconto.setAlignment(2);
@@ -493,10 +501,10 @@ public class GeradorDePdf {
                 totalGeral.setAlignment(2);
                 document.add(totalGeral);
             }
-
+            
             document.add(new Paragraph(" "));
-            document.add(new Paragraph("Ordem de Serviço Gerada em: " + ser.getData(), fontePadrao));
-            document.add(new Paragraph("Agendamento Marcado para: " + ser.getDataAgendamento() + " - " + ser.getHorarioAgendamento(), fontePadrao));
+            document.add(new Paragraph("Ordem de Serviço Gerada em: " + ser.getData(), negrito));
+            document.add(new Paragraph("Agendamento Marcado para: " + ser.getDataAgendamento() + " - " + ser.getHorarioAgendamento(), negrito));
             document.add(new Paragraph(" "));
             document.add(new Paragraph("* o serviço será realizado em até 20 dias úteis, salvo imprevisto.", negrito));
             document.add(new Paragraph("* qualquer serviço adicional será cobrado valores de acordo com a tabela.", negrito));
