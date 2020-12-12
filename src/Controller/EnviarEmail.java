@@ -1,35 +1,53 @@
-package Classes;
+package Controller;
 
-import Controller.CadastroDeClientes;
-import Controller.CadastroDeServico;
+import Model.EmailDAO;
 import javax.swing.JOptionPane;
 import org.apache.commons.mail.*;
 
 public class EnviarEmail {
-    String meuEmail = "climatizacao.nelsonrodrigues@gmail.com";
-    //String meuEmail = "treinosweb@gmail.com";
+   // String meuEmail = "climatizacao.nelsonrodrigues@gmail.com";
+  //  String minhaSenha = "997865036";  
+    
+   
     
     MultiPartEmail email = new MultiPartEmail();
     
-    private void ConfiguraçãoDeEmail(){
-        int porta = 465;
-        String minhaSenha = "997865036"; 
-       // String minhaSenha = "treinos123456";
+    private String ConfiguraçãoDeEmail(){
+        
+        CadastroEmail cad = new CadastroEmail();
+        EmailDAO emailDao = new EmailDAO();
+        
+        emailDao.BuscarEmailParaEnviarEmail(cad);
 
-        email.setHostName("smtp.gmail.com");
+        int porta = cad.getPorta();
+        String meuEmail = cad.getEmail();
+        String minhaSenha = cad.getSenha();
+        String HostName = cad.getEmailSaida();
+        boolean ssl;
+        boolean tls;
+        
+        if(cad.getAceitaSsl() == 1) ssl = true;
+        else ssl = false;
+        
+        if(cad.getAceitaTls() == 1) tls = true;
+        else tls = false;
+        
+
+        email.setHostName(HostName);
         email.setSmtpPort(porta);
         email.setAuthenticator(new DefaultAuthenticator(meuEmail, minhaSenha));
-        email.setSSLOnConnect(true);
-        email.setTLS(true);
+        email.setSSLOnConnect(ssl);
+        email.setTLS(tls);
+        
+        return meuEmail;
         
     }
     public void EnviarEmailsDeNotas(CadastroDeClientes cli, CadastroDeServico ser) {
 
-       ConfiguraçãoDeEmail();
         
         try {
 
-            email.setFrom(meuEmail);
+            email.setFrom(ConfiguraçãoDeEmail());
             email.setSubject("Ordem de Serviço ("+ser.getOs()+")");
 
             email.setMsg("Prezado Sr(a) " + ser.getCliente() + ", \n\n"
@@ -56,11 +74,11 @@ public class EnviarEmail {
     }
     
     public void EnviarEmailRecibos(CadastroDeClientes cli, CadastroDeServico ser){
-         ConfiguraçãoDeEmail();
+
         
         try {
 
-            email.setFrom(meuEmail);
+            email.setFrom(ConfiguraçãoDeEmail());
             email.setSubject("Recibo da OS ("+ser.getOs()+")");
 
             email.setMsg("Prezado Sr(a) " + ser.getCliente() + ", \n\n"

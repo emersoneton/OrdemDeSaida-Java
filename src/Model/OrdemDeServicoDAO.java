@@ -1,6 +1,6 @@
 package Model;
 
-import Classes.EnviarEmail;
+import Controller.EnviarEmail;
 import Controller.CadastroDeClientes;
 import Controller.CadastroDeFilial;
 import Controller.CadastroDeServico;

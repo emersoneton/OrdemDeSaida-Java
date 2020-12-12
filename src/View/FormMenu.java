@@ -49,6 +49,7 @@ public class FormMenu extends javax.swing.JFrame {
         itemMenuCliente = new javax.swing.JMenuItem();
         itemMenuProdutos = new javax.swing.JMenuItem();
         itemMenuFilial = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         MenuMovimento = new javax.swing.JMenu();
         itemMenuServicos = new javax.swing.JMenuItem();
@@ -137,6 +138,16 @@ public class FormMenu extends javax.swing.JFrame {
             }
         });
         MenuCadastros.add(itemMenuFilial);
+
+        jMenuItem1.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/email.png"))); // NOI18N
+        jMenuItem1.setText("Email");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        MenuCadastros.add(jMenuItem1);
 
         jMenuBar1.add(MenuCadastros);
 
@@ -236,6 +247,10 @@ public class FormMenu extends javax.swing.JFrame {
         new FormUsuarios().setVisible(true);
     }//GEN-LAST:event_itemMenuUsuarioActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        new FormConfiguracaoEmail().setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -292,6 +307,7 @@ public class FormMenu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JLabel labelNomeDeUsuarioLogado;
     private javax.swing.JLabel txtVersao;
     // End of variables declaration//GEN-END:variables

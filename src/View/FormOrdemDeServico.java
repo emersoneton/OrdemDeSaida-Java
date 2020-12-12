@@ -5,7 +5,7 @@
  */
 package View;
 
-import Classes.EnviarEmail;
+import Controller.EnviarEmail;
 import Classes.SoNumeros;
 import Controller.CadastroDeClientes;
 import Model.Database;
