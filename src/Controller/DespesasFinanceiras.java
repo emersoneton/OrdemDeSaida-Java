@@ -11,7 +11,7 @@ package Controller;
  */
 public class DespesasFinanceiras {
     
-    private String referente = null, data = null;
+    private String referente = null, data = null, dataInicial = null, dataFinal = null;
     private double valor = 0;
 
     public String getReferente() {
@@ -36,6 +36,22 @@ public class DespesasFinanceiras {
 
     public void setValor(double valor) {
         this.valor = valor;
+    }
+
+    public String getDataInicial() {
+        return dataInicial;
+    }
+
+    public void setDataInicial(String dataInicial) {
+        this.dataInicial = dataInicial;
+    }
+
+    public String getDataFinal() {
+        return dataFinal;
+    }
+
+    public void setDataFinal(String dataFinal) {
+        this.dataFinal = dataFinal;
     }
     
     

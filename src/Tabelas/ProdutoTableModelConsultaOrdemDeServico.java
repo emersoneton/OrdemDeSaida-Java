@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package Tabelas;
 
+import Controller.CadastroDeServico;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -13,10 +14,10 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Emerson
  */
-public class ProdutoTableModelOrdemDeServico extends AbstractTableModel{
+public class ProdutoTableModelConsultaOrdemDeServico extends AbstractTableModel{
     
     private List<CadastroDeServico> dados = new ArrayList<>();      // Arrai do dados da classe de Cadastro de Serviços que vão ser informados na tabela
-    private String[] colunas = {"Descriçao","Valor","Quantidade"}; // Criação das Colunas no Jtable
+    private String[] colunas = {"OS","Cliente","Data do Agendamento","Data da OS","Status"}; // Criação das Colunas no Jtable
 
     @Override
     public String getColumnName(int culumn) {
@@ -38,11 +39,15 @@ public class ProdutoTableModelOrdemDeServico extends AbstractTableModel{
     public Object getValueAt(int linha, int coluna) {
        switch(coluna){
            case 0:
-               return dados.get(linha).getDescricao();  // Insere os dados na Tabela
+               return dados.get(linha).getOs();  // Insere os dados na Tabela
            case 1:
-               return dados.get(linha).getValorTotal();      // Insere os dados na Tabela
+               return dados.get(linha).getCliente();  // Insere os dados na Tabela
            case 2:
-               return dados.get(linha).getQuantidade(); // Insere os dados na Tabela
+               return dados.get(linha).getDataAgendamento();      // Insere os dados na Tabela
+           case 3:
+               return dados.get(linha).getData(); // Insere os dados na Tabela
+           case 4:
+               return dados.get(linha).getStatus(); // Insere os dados na Tabela
        }
        return null;
     }
@@ -50,15 +55,21 @@ public class ProdutoTableModelOrdemDeServico extends AbstractTableModel{
     @Override
     public void setValueAt(Object valor, int linha, int coluna) {
          switch(coluna){
-           case 0:
-                dados.get(linha).setDescricao((String) valor);  // Insere os dados na Tabela
-                break;
+            case 0:
+                dados.get(linha).setOs(Integer.parseInt((String) valor)); // Insere os dados na Tabela
+                break;  
            case 1:
-                dados.get(linha).setValorTotal(Double.parseDouble((String) valor));      // Insere os dados na Tabela
+                dados.get(linha).setCliente((String) valor);  // Insere os dados na Tabela
                 break;
            case 2:
-                dados.get(linha).setQuantidade(Integer.parseInt((String) valor)); // Insere os dados na Tabela
+                dados.get(linha).setDataAgendamento((String) valor);      // Insere os dados na Tabela
                 break;
+           case 3:
+                dados.get(linha).setData((String) valor); // Insere os dados na Tabela
+                break;
+           case 4:
+                dados.get(linha).setStatus(((String) valor)); // Insere os dados na Tabela
+                break;     
        }
          this.fireTableRowsUpdated(linha, linha);
     }

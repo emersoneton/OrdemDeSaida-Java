@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package Tabelas;
 
+import Controller.CadastroDeUsuario;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -13,9 +14,10 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Emerson
  */
-public class ClienteTabelaModel extends AbstractTableModel{
-    private List<CadastroDeClientes> dados = new ArrayList<>();      // Arrai do dados da classe de Cadastro de Serviços que vão ser informados na tabela
-    private String[] colunas = {"Nome","Endereço","Telefone","Data de Inclusão"}; // Criação das Colunas no Jtable
+public class UsuariosTableModel extends AbstractTableModel{
+
+     private List<CadastroDeUsuario> dados = new ArrayList<>();      // Arrai do dados da classe de Cadastro de Serviços que vão ser informados na tabela
+    private String[] colunas = {"Nome","Login de Usuário","TIPO"}; // Criação das Colunas no Jtable
 
     @Override
     public String getColumnName(int culumn) {
@@ -39,11 +41,9 @@ public class ClienteTabelaModel extends AbstractTableModel{
            case 0:
                return dados.get(linha).getNome();  // Insere os dados na Tabela
            case 1:
-               return dados.get(linha).getEndereco();      // Insere os dados na Tabela
+               return dados.get(linha).getLogin();  // Insere os dados na Tabela
            case 2:
-               return dados.get(linha).getTelefone(); // Insere os dados na Tabela
-           case 3:
-               return dados.get(linha).getData(); // Insere os dados na Tabela    
+               return dados.get(linha).getTipo();      // Insere os dados na Tabela
        }
        return null;
     }
@@ -52,27 +52,24 @@ public class ClienteTabelaModel extends AbstractTableModel{
     public void setValueAt(Object valor, int linha, int coluna) {
          switch(coluna){
            case 0:
-                dados.get(linha).getNome((String) valor);  // Insere os dados na Tabela
-                break;
+                dados.get(linha).setNome((String) valor);  // Insere os dados na Tabela
+                break;  
            case 1:
-                dados.get(linha).getEndereco((String) valor);      // Insere os dados na Tabela
+                dados.get(linha).setLogin((String) valor);  // Insere os dados na Tabela
                 break;
            case 2:
-                dados.get(linha).getTelefone((String) valor); // Insere os dados na Tabela
+                dados.get(linha).setTipo((String) valor);      // Insere os dados na Tabela
                 break;
-           case 3:
-                dados.get(linha).getData((String) valor); // Insere os dados na Tabela
-                break;     
        }
          this.fireTableRowsUpdated(linha, linha);
     }
     
     
-    public void addRow(CadastroDeClientes c){
-        this.dados.add(c);            // Insere os dados na Jtable
+    
+    public void addRow(CadastroDeUsuario usu){
+        this.dados.add(usu);            // Insere os dados na Jtable
         this.fireTableDataChanged(); // Atualiza a Jtable
     }
-    
     
     public void removeRow(int linha){
         this.dados.remove(linha);                 // Remove os dados na Jtable

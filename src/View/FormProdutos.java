@@ -8,7 +8,7 @@ package View;
 import Classes.SoNumeros;
 import Controller.CadastroDeProdutos;
 import Controller.GeradorDePdf;
-import Controller.ProdutoTableModel;
+import Tabelas.ProdutoTableModel;
 import Model.Database;
 import Model.ProdutosDAO;
 import java.awt.Color;

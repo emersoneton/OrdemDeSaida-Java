@@ -1,7 +1,7 @@
 package Model;
 
 import Controller.CadastroDeProdutos;
-import Controller.ProdutoTableModelOrdemDeServico;
+import Tabelas.ProdutoTableModelOrdemDeServico;
 import View.FormClientes;
 import View.FormProdutos;
 import java.sql.Connection;

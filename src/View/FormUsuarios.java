@@ -6,7 +6,7 @@
 package View;
 
 import Controller.CadastroDeUsuario;
-import Controller.UsuariosTableModel;
+import Tabelas.UsuariosTableModel;
 import Model.UsuariosDAO;
 import java.awt.Color;
 import java.awt.Toolkit;

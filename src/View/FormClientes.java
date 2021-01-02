@@ -8,7 +8,7 @@ package View;
 import Controller.CadastroDeClientes;
 import Classes.SoNumeros;
 import Classes.SoLetrasMaiusculas;
-import Controller.ClienteTabelaModel;
+import Tabelas.ClienteTabelaModel;
 import Controller.GeradorDePdf;
 import Classes.BuscaCEP;
 import Model.ClientesDAO;

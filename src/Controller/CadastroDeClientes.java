@@ -7,25 +7,26 @@ package Controller;
 
 public class CadastroDeClientes {
 
-    public String nome = null;
-    public String endereco = null;
-    public String numero = null;
-    public String telefone = null;
-    public String telefoneCelular = null;
-    public String cep = null;
-    public String cidade = null;
-    public String estado = null;
-    public String pais = null;
-    public String email = null;
-    public String email2 = null;
-    public String codigo = null;
-    public String cpf = null;
-    public String cnpj = null;
-    public String bairro = null;
-    public String data = null;
-    public String situacao = null;
+    private String nome = null,
+     endereco = null,
+     numero = null,
+     telefone = null,
+     telefoneCelular = null,
+     cep = null,
+     cidade = null,
+     estado = null,
+     pais = null,
+     email = null,
+    email2 = null,
+     codigo = null,
+     cpf = null,
+     cnpj = null,
+     bairro = null,
+     data = null,
+     situacao = null,
+     lista = null;
     
-    public String lista;
+     
 
     public String getNome() {
         return nome;

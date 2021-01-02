@@ -1,7 +1,7 @@
 package Model;
 
 import Controller.CadastroDeClientes;
-import Controller.ClienteTabelaModel;
+import Tabelas.ClienteTabelaModel;
 import View.FormClientes;
 import java.sql.Connection;
 import java.sql.Date;
