@@ -5,11 +5,17 @@
  */
 package View;
 
+import Controller.CadastroDeServico;
 import Controller.DespesasFinanceiras;
+import Model.CustosXVendasDAO;
 import Model.DespesasDAO;
 import Tabelas.TabelaDespesasFinanceiras;
+import Tabelas.TabelaVendasDeCustosXVendas;
 import java.awt.Toolkit;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,15 +29,18 @@ import javax.swing.text.MaskFormatter;
 public class FormCustosXVendas extends javax.swing.JFrame {
 
     TabelaDespesasFinanceiras tabelaDespesas = new TabelaDespesasFinanceiras();
-    
+
+    TabelaVendasDeCustosXVendas tabelaVendas = new TabelaVendasDeCustosXVendas();
+
     DefaultListModel MODELO;
-    
+
     public FormCustosXVendas() {
         initComponents();
         setResizable(false);//Não permite editar o tamanho
         this.setLocationRelativeTo(null);//Centralizar Jframe
         setIconImage(Toolkit.getDefaultToolkit().getImage("c:/SISOS/Imagem/sistema.png"));
         TabelaDespesas.setModel(tabelaDespesas);
+        TabelaVendas.setModel(tabelaVendas);
         Mascaras();
     }
 
@@ -236,7 +245,7 @@ public class FormCustosXVendas extends javax.swing.JFrame {
 
             maskDataInicial = new MaskFormatter("##/##/####");
             maskDataInicial.install(txtDataInicial);
-            
+
             maskDataFinal = new MaskFormatter("##/##/####");
             maskDataFinal.install(txtDataFinal);
 
@@ -245,41 +254,68 @@ public class FormCustosXVendas extends javax.swing.JFrame {
         }
 
     }
-    
-    
+
+
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        
+
         BuscarDespesas();
-        
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void BuscarDespesas(){
-       
-        DespesasFinanceiras des = new DespesasFinanceiras();
-        
-        des.setDataInicial(txtDataInicial.getText());
-        des.setDataFinal(txtDataFinal.getText());
-        
-        DespesasDAO desDao = new DespesasDAO();
-        desDao.BuscarCustosXVendas(des);
-        
-        List<DespesasFinanceiras> lista = desDao.BuscarCustosXVendas(des);
-        
-        for(int x=0; x < lista.size(); x++){
+    private void BuscarDespesas() {
 
-            DespesasFinanceiras des1 = new DespesasFinanceiras();
+        if(txtDataInicial.getText().trim().length() <= 9) {
+            System.out.println("INFORME A DATA CORRETA");
+        }else if(txtDataFinal.getText().trim().length() <= 9){
+            System.out.println("INFORME A DATA CORRETA");
+        }else{
+
+            DespesasFinanceiras des = new DespesasFinanceiras();
+
+            des.setDataInicial(txtDataInicial.getText());
+            des.setDataFinal(txtDataFinal.getText());
+
+            CustosXVendasDAO desDao = new CustosXVendasDAO();
+            desDao.BuscarCustosDeCustosXVendas(des);
+
+            List<DespesasFinanceiras> lista = desDao.BuscarCustosDeCustosXVendas(des);
+
+            for (int x = 0; x < lista.size(); x++) {
+                DespesasFinanceiras des1 = new DespesasFinanceiras();
+
+                des1.setReferente(lista.get(x).getReferente());
+                des1.setData(lista.get(x).getData());
+                des1.setValor(lista.get(x).getValor());
+
+                tabelaDespesas.addRow(des1);
+
+            }
             
-            des1.setReferente(lista.get(x).getReferente());
-            des1.setData(lista.get(x).getData());
-            des1.setValor(lista.get(x).getValor());
             
-            tabelaDespesas.addRow(des1);
+            CadastroDeServico ser = new CadastroDeServico();
+            desDao.BuscarVendasDeCustosXVendas(ser, des);
+            
+            List<CadastroDeServico> listaSer = desDao.BuscarVendasDeCustosXVendas(ser, des);
+            
+            for (int x = 0; x < listaSer.size(); x++) {
+                CadastroDeServico ser1 = new CadastroDeServico();
+
+                ser1.setOs(listaSer.get(x).getOs());
+                ser1.setData(listaSer.get(x).getData());
+                ser1.setValorTotal(listaSer.get(x).getValorTotal());
+                ser1.setDesconto(listaSer.get(x).getDesconto());
+                
+                ser1.setValorTotalMenosDescontos(ser1.getValorTotal() - ser1.getDesconto());
+                
+
+                tabelaVendas.addRow(ser1);
+
+            }
             
         }
-        
-        
+
     }
-    
+
     /**
      * @param args the command line arguments
      */

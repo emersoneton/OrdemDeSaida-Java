@@ -9,6 +9,7 @@ public class CadastroDeServico {
             observaçãoRecibo = null, solucaoProblema;
     int quantidade = 0, os = 0, contador = 0;
     double valorTotal = 0, desconto = 0;
+    double valorTotalMenosDescontos = 0; //Utilizado para subtrair o valor total - os descontos na tebela de Custos X vendas 
     boolean validadorNota = false, validadorItens = false;
 
 
@@ -150,6 +151,14 @@ public class CadastroDeServico {
 
     public void setSolucaoProblema(String solucaoProblema) {
         this.solucaoProblema = solucaoProblema;
+    }
+
+    public double getValorTotalMenosDescontos() {
+        return valorTotalMenosDescontos;
+    }
+
+    public void setValorTotalMenosDescontos(double valorTotalMenosDescontos) {
+        this.valorTotalMenosDescontos = valorTotalMenosDescontos;
     }
 
     
