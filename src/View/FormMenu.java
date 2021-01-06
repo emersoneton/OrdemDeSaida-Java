@@ -53,6 +53,8 @@ public class FormMenu extends javax.swing.JFrame {
         jMenu6 = new javax.swing.JMenu();
         MenuMovimento = new javax.swing.JMenu();
         itemMenuServicos = new javax.swing.JMenuItem();
+        itemMenuDespesas = new javax.swing.JMenuItem();
+        itemMenuCustosXVendas = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         MenuSair = new javax.swing.JMenu();
         itemMenuLogof = new javax.swing.JMenuItem();
@@ -84,7 +86,7 @@ public class FormMenu extends javax.swing.JFrame {
         jDesktopPaynelCentralLayout.setVerticalGroup(
             jDesktopPaynelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPaynelCentralLayout.createSequentialGroup()
-                .addGap(0, 246, Short.MAX_VALUE)
+                .addGap(0, 248, Short.MAX_VALUE)
                 .addComponent(txtVersao, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -167,6 +169,26 @@ public class FormMenu extends javax.swing.JFrame {
         });
         MenuMovimento.add(itemMenuServicos);
 
+        itemMenuDespesas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        itemMenuDespesas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/despesas.png"))); // NOI18N
+        itemMenuDespesas.setText("Despesas");
+        itemMenuDespesas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemMenuDespesasActionPerformed(evt);
+            }
+        });
+        MenuMovimento.add(itemMenuDespesas);
+
+        itemMenuCustosXVendas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        itemMenuCustosXVendas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Custos e Vendas.png"))); // NOI18N
+        itemMenuCustosXVendas.setText("Custos X Vendas");
+        itemMenuCustosXVendas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemMenuCustosXVendasActionPerformed(evt);
+            }
+        });
+        MenuMovimento.add(itemMenuCustosXVendas);
+
         jMenuBar1.add(MenuMovimento);
 
         jMenu7.setText(" | ");
@@ -211,13 +233,11 @@ public class FormMenu extends javax.swing.JFrame {
             itemMenuProdutos.setVisible(false);
             itemMenuCliente.setVisible(false);
             itemMenuFilial.setVisible(false);
+            itemMenuDespesas.setVisible(false);
+            itemMenuCustosXVendas.setVisible(false);
         }
     }
     
-    private void itemMenuServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMenuServicosActionPerformed
-        new FormOrdemDeServico().setVisible(true);
-    }//GEN-LAST:event_itemMenuServicosActionPerformed
-
     private void itemMenuClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMenuClienteActionPerformed
         new FormClientes().setVisible(true);
     }//GEN-LAST:event_itemMenuClienteActionPerformed
@@ -250,6 +270,18 @@ public class FormMenu extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         new FormConfiguracaoEmail().setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void itemMenuServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMenuServicosActionPerformed
+        new FormOrdemDeServico().setVisible(true);
+    }//GEN-LAST:event_itemMenuServicosActionPerformed
+
+    private void itemMenuDespesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMenuDespesasActionPerformed
+        new FormDespesas().setVisible(true);
+    }//GEN-LAST:event_itemMenuDespesasActionPerformed
+
+    private void itemMenuCustosXVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMenuCustosXVendasActionPerformed
+        new FormCustosXVendas().setVisible(true);
+    }//GEN-LAST:event_itemMenuCustosXVendasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -293,6 +325,8 @@ public class FormMenu extends javax.swing.JFrame {
     private javax.swing.JMenu MenuMovimento;
     private javax.swing.JMenu MenuSair;
     private javax.swing.JMenuItem itemMenuCliente;
+    private javax.swing.JMenuItem itemMenuCustosXVendas;
+    private javax.swing.JMenuItem itemMenuDespesas;
     private javax.swing.JMenuItem itemMenuFilial;
     private javax.swing.JMenuItem itemMenuLogof;
     private javax.swing.JMenuItem itemMenuProdutos;

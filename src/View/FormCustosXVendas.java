@@ -11,7 +11,9 @@ import Model.CustosXVendasDAO;
 import Model.DespesasDAO;
 import Tabelas.TabelaDespesasFinanceiras;
 import Tabelas.TabelaVendasDeCustosXVendas;
+import java.awt.Color;
 import java.awt.Toolkit;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -68,6 +70,17 @@ public class FormCustosXVendas extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         TabelaVendas = new javax.swing.JTable();
         btnBuscar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txtValorVendas = new javax.swing.JLabel();
+        txtValorDespesa = new javax.swing.JLabel();
+        txtValorDesconto = new javax.swing.JLabel();
+        txtTotalDeVendas = new javax.swing.JLabel();
+        txtDiferencaCustoXVendas = new javax.swing.JLabel();
+        btnBuscar1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("CUSTOS X VENDAS");
@@ -160,6 +173,44 @@ public class FormCustosXVendas extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setText("Valor de Despesas:");
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setText("Valor de Vendas:");
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setText("Total de Descontos:");
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel7.setText("Total De Vendas:");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel8.setText("Diferença de Custos X Vendas");
+
+        txtValorVendas.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtValorVendas.setForeground(new java.awt.Color(0, 102, 51));
+
+        txtValorDespesa.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtValorDespesa.setForeground(new java.awt.Color(153, 0, 0));
+
+        txtValorDesconto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtValorDesconto.setForeground(new java.awt.Color(153, 0, 0));
+
+        txtTotalDeVendas.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtTotalDeVendas.setForeground(new java.awt.Color(0, 102, 51));
+
+        txtDiferencaCustoXVendas.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        txtDiferencaCustoXVendas.setForeground(new java.awt.Color(0, 102, 51));
+
+        btnBuscar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/cancelar.png"))); // NOI18N
+        btnBuscar1.setText("Cancelar");
+        btnBuscar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscar1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -167,10 +218,6 @@ public class FormCustosXVendas extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -180,7 +227,33 @@ public class FormCustosXVendas extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnBuscar)))
+                        .addComponent(btnBuscar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBuscar1))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel8)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtValorDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7))
+                                .addGap(37, 37, 37)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtTotalDeVendas, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtValorDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtValorVendas, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtDiferencaCustoXVendas, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -192,12 +265,32 @@ public class FormCustosXVendas extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(txtDataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar))
+                    .addComponent(btnBuscar)
+                    .addComponent(btnBuscar1))
                 .addGap(35, 35, 35)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtValorVendas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(jLabel5)
+                        .addComponent(txtValorDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtValorDesconto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtTotalDeVendas, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtDiferencaCustoXVendas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -229,9 +322,7 @@ public class FormCustosXVendas extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -262,13 +353,41 @@ public class FormCustosXVendas extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    private void btnBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscar1ActionPerformed
+
+        Limpar();
+
+    }//GEN-LAST:event_btnBuscar1ActionPerformed
+
+    private void Limpar() {
+        txtDataFinal.setText("");
+        txtDataInicial.setText("");
+        txtDiferencaCustoXVendas.setText("");
+        txtTotalDeVendas.setText("");
+        txtValorDesconto.setText("");
+        txtValorDespesa.setText("");
+        txtValorVendas.setText("");
+
+        int contTabelaDespesas = tabelaDespesas.getRowCount();
+        for (int x = 0; x < contTabelaDespesas; x++) {
+            tabelaDespesas.removeRow(0);
+        }
+
+        int contTabelaVendas = tabelaVendas.getRowCount();
+        for (int x = 0; x < contTabelaVendas; x++) {
+            tabelaVendas.removeRow(0);
+        }
+    }
+
     private void BuscarDespesas() {
 
-        if(txtDataInicial.getText().trim().length() <= 9) {
+        DecimalFormat df = new DecimalFormat("###,###,###,###,###.00");
+
+        if (txtDataInicial.getText().trim().length() <= 9) {
             System.out.println("INFORME A DATA CORRETA");
-        }else if(txtDataFinal.getText().trim().length() <= 9){
+        } else if (txtDataFinal.getText().trim().length() <= 9) {
             System.out.println("INFORME A DATA CORRETA");
-        }else{
+        } else {
 
             DespesasFinanceiras des = new DespesasFinanceiras();
 
@@ -290,13 +409,22 @@ public class FormCustosXVendas extends javax.swing.JFrame {
                 tabelaDespesas.addRow(des1);
 
             }
-            
-            
+
+            int contTabelaDespesas = tabelaDespesas.getRowCount();
+            double somaTotal = 0;
+            double Total = 0;
+            //Pegar Valor total da coluna de Valores das Despesas
+            for (int x = 0; x < contTabelaDespesas; x++) {
+                Total = Double.parseDouble(tabelaDespesas.getValueAt(x, 2).toString());
+                somaTotal += (Total);
+            }
+            txtValorDespesa.setText("" + df.format(somaTotal));
+
             CadastroDeServico ser = new CadastroDeServico();
             desDao.BuscarVendasDeCustosXVendas(ser, des);
-            
+
             List<CadastroDeServico> listaSer = desDao.BuscarVendasDeCustosXVendas(ser, des);
-            
+
             for (int x = 0; x < listaSer.size(); x++) {
                 CadastroDeServico ser1 = new CadastroDeServico();
 
@@ -304,14 +432,39 @@ public class FormCustosXVendas extends javax.swing.JFrame {
                 ser1.setData(listaSer.get(x).getData());
                 ser1.setValorTotal(listaSer.get(x).getValorTotal());
                 ser1.setDesconto(listaSer.get(x).getDesconto());
-                
+
                 ser1.setValorTotalMenosDescontos(ser1.getValorTotal() - ser1.getDesconto());
-                
 
                 tabelaVendas.addRow(ser1);
 
             }
-            
+
+            int contTabelaVendas = tabelaVendas.getRowCount();
+            double somaTotalVendas = 0;
+            double TotalVandas = 0;
+            double descontosVendas = 0;
+            double calcDescontos = 0;
+            double calcValor = 0;
+            //Pegar Valor total da coluna de Valores das Vendas
+            for (int x = 0; x < contTabelaVendas; x++) {
+                TotalVandas = Double.parseDouble(tabelaVendas.getValueAt(x, 2).toString());
+                descontosVendas = Double.parseDouble(tabelaVendas.getValueAt(x, 3).toString());
+                calcDescontos += (descontosVendas);
+                calcValor += (TotalVandas);
+                somaTotalVendas += (TotalVandas - descontosVendas);
+
+            }
+            txtValorVendas.setText("" + df.format(calcValor));
+            txtValorDesconto.setText("" + df.format(calcDescontos));
+            txtTotalDeVendas.setText("" + df.format(somaTotalVendas));
+
+            double valorDiferencaCustoXVendas = (somaTotalVendas - somaTotal);
+            if (valorDiferencaCustoXVendas < 0) {
+                txtDiferencaCustoXVendas.setForeground(Color.red);
+            }
+
+            txtDiferencaCustoXVendas.setText("" + df.format(valorDiferencaCustoXVendas));
+
         }
 
     }
@@ -355,9 +508,15 @@ public class FormCustosXVendas extends javax.swing.JFrame {
     private javax.swing.JTable TabelaDespesas;
     private javax.swing.JTable TabelaVendas;
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnBuscar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -367,5 +526,10 @@ public class FormCustosXVendas extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JFormattedTextField txtDataFinal;
     private javax.swing.JFormattedTextField txtDataInicial;
+    private javax.swing.JLabel txtDiferencaCustoXVendas;
+    private javax.swing.JLabel txtTotalDeVendas;
+    private javax.swing.JLabel txtValorDesconto;
+    private javax.swing.JLabel txtValorDespesa;
+    private javax.swing.JLabel txtValorVendas;
     // End of variables declaration//GEN-END:variables
 }
