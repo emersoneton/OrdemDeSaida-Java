@@ -5,7 +5,6 @@
  */
 package View;
 
-import Controller.EnviarEmail;
 import Classes.SoNumeros;
 import Controller.CadastroDeClientes;
 import Model.Database;
@@ -19,7 +18,6 @@ import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.Date;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -46,7 +44,8 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
     int Enter = 0;
     int Enter1 = 0;
-
+    String dataDeAgendamento = null;
+    
     public FormOrdemDeServico() {
         initComponents();
         setResizable(false);//Não permite editar o tamanho
@@ -265,6 +264,12 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         txtPesquisaCliente.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtPesquisaClienteKeyReleased(evt);
+            }
+        });
+
+        jDataDoAgendamento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jDataDoAgendamentoKeyPressed(evt);
             }
         });
 
@@ -969,7 +974,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
             maskDataAgendamento = new MaskFormatter("##/##/####");
             maskDataAgendamento.install(jDataDoAgendamento);
-
+            
             maskHorarioAgendamento = new MaskFormatter("##:##");
             maskHorarioAgendamento.install(jHorarioAgendamento);
 
@@ -1016,6 +1021,8 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         txtOsConsultaInformar.setEnabled(false);
         txtOsConsultaInformar.setEnabled(false);
 
+        dataDeAgendamento = null;
+        
         BuscarOS();
     }
 
@@ -1143,13 +1150,20 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             O cliente gera uma OS somente com o  problema relatado e os dados do cliente
             Depois de fazer a visita ao seu cliente ele busca a OS e adiciona os Itens na OS
          */
-        if (txtPesquisaCliente.getText().length() > 0){
-            VerificaCodigoNoBanco(); // verifico se ja tem algum código cadastrado no banco para fazer a alteração ou a inserção dos dados pelo botão Salvar
-        }else{ 
-                    JOptionPane.showMessageDialog(null, "NÃO FOI INFORMADO CLIENTE PARA A EMISSÃO DA ORDEM DE SAIDA", "Mensagem",
+        if (txtPesquisaCliente.getText().length() > 0) {
+
+            if (dataDeAgendamento == "inserido") {
+                VerificaCodigoNoBanco(); // verifico se ja tem algum código cadastrado no banco para fazer a alteração ou a inserção dos dados pelo botão Salvar
+            } else {
+                JOptionPane.showMessageDialog(null, "INFORME A DATA DE AGENDAMENTO ANTES DE SALVAR!", "Mensagem",
                         JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "NÃO FOI INFORMADO CLIENTE PARA A EMISSÃO DA ORDEM DE SAIDA", "Mensagem",
+                    JOptionPane.INFORMATION_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     public void VerificaCodigoNoBanco() {
@@ -1165,7 +1179,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
         if (ser.isValidadorItens()) { // se o codigo da nota existir no banco NA TABELA DE ITENS
             SalvarSolucaoProblema(); // Salva o campo solução do problema
-            
+
             GerarPDF(); //Gero PDF 
 
             //Enviar Email
@@ -1218,16 +1232,16 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
     }
 
-    private void SalvarSolucaoProblema(){
+    private void SalvarSolucaoProblema() {
         CadastroDeServico ser = new CadastroDeServico();
         ser.setSolucaoProblema(textoSolucao.getText());
         ser.setOs(Integer.parseInt(txtOs.getText()));
-        
+
         OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
         serDao.SalvarSolucaoProblema(ser);
-        
+
     }
-    
+
     private void EnviarEmail() {
 
         CadastroDeServico ser = new CadastroDeServico();
@@ -1294,7 +1308,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         ser.setData(txtDataEHora.getText());
         ser.setDataAgendamento(jDataDoAgendamento.getText());
         ser.setHorarioAgendamento(jHorarioAgendamento.getText());
-      
+
         ser.setValorTotal(Double.parseDouble(textoValor.getText().replace(",", ".")));
         ser.setDesconto(Double.parseDouble(txtDesconto.getText().replace(",", ".")));
 
@@ -1334,6 +1348,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         serDao.Buscar(ser);
         serDao.BuscarItensDoServico(ser);
 
+        
         txtPesquisaCliente.setText(ser.getCliente());
         txtDesconto.setText(String.valueOf(ser.getDesconto()).replace(".", ","));
         jDataDoAgendamento.setText(ser.getDataAgendamento());
@@ -1354,9 +1369,11 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             tableModel.addRow(ser1);
         }
         ContadorDaTabela(); //Chama o metodo de Somar o Valor total e a quantidade de linhas na tabela
-        
-        if (txtPesquisaCliente.getText().length() > 0) textoSolucao.setEnabled(true);
-      
+
+        if (txtPesquisaCliente.getText().length() > 0) {
+            textoSolucao.setEnabled(true);
+        }
+
     }
 
     private void btnSalvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvar1ActionPerformed
@@ -1649,6 +1666,12 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "NÃO FOI BUSCADO DADOS DE NENHUMA NOTA");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jDataDoAgendamentoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jDataDoAgendamentoKeyPressed
+        
+        dataDeAgendamento = "inserido";
+        
+    }//GEN-LAST:event_jDataDoAgendamentoKeyPressed
 
     public void GerarRecibo() {
         CadastroDeServico ser = new CadastroDeServico();

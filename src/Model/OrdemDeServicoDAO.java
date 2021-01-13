@@ -11,7 +11,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,15 +33,20 @@ public class OrdemDeServicoDAO {
 
         Conexao();
 
+        // transformar a data de formato brasileiro para Americano
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate data = LocalDate.parse(ser.getDataAgendamento(), formato);
+        
         try {
             PreparedStatement busca = con.prepareStatement("INSERT INTO servicos(cliente,valor,desconto,data_agendamento,"
                     + "complemento,horario_agendamento,data_os,status_os) "
                     + "VALUES (?,?,?,?,?,?,?,?)");
 
+            
             busca.setString(1, ser.getCliente());
             busca.setString(2, "" + ser.getValorTotal());
             busca.setString(3, "" + ser.getDesconto());
-            busca.setString(4, ser.getDataAgendamento());
+            busca.setString(4, ""+data);
             busca.setString(5, ser.getComplemento());
             busca.setString(6, ser.getHorarioAgendamento());
             busca.setString(7, ser.getData());
@@ -65,11 +74,16 @@ public class OrdemDeServicoDAO {
             ResultSet rs = busca.executeQuery();
 
             while (rs.next()) {
-
+                
+                // Transforma data de padrão Americano para o Brasileiro
+                Date d = rs.getDate("data_agendamento"); // a data 
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // formato de data desejado 
+                String data = sdf.format(d); // data formatada
+                
                 ser.setCliente(rs.getString("cliente"));
                 ser.setValorTotal(Double.parseDouble(rs.getString("valor")));
                 ser.setDesconto(Double.parseDouble(rs.getString("desconto")));
-                ser.setDataAgendamento(rs.getString("data_agendamento"));
+                ser.setDataAgendamento(data);
                 ser.setHorarioAgendamento(rs.getString("horario_agendamento"));
                 ser.setComplemento(rs.getString("complemento"));
                 ser.setSolucaoProblema(rs.getString("solucao_problema"));
