@@ -5,10 +5,7 @@ import javax.swing.JOptionPane;
 import org.apache.commons.mail.*;
 
 public class EnviarEmail {
-   // String meuEmail = "climatizacao.nelsonrodrigues@gmail.com";
-  //  String minhaSenha = "997865036";  
-    
-   
+
     
     MultiPartEmail email = new MultiPartEmail();
     
@@ -69,6 +66,8 @@ public class EnviarEmail {
 
         } catch (Exception e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Email NÃO foi enviado!!!\n\n"
+                    + "VERIFIQUE SE ESTÁ HABILITADO A CONFIGURAÇÃO DE SEGURANÇA DO E-MAIL");
         }
 
     }
@@ -98,6 +97,8 @@ public class EnviarEmail {
 
         } catch (Exception e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Email NÃO foi enviado!!!\n\n"
+                    + "VERIFIQUE SE ESTÁ HABILITADO A CONFIGURAÇÃO DE SEGURANÇA DO E-MAIL");
         }
 
     }

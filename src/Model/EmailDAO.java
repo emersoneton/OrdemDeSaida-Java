@@ -92,9 +92,6 @@ public class EmailDAO {
                     
                     byte[] digest = md.digest(bytesDaSenha);
                     
-                    System.out.println("digest: "+digest);
-                    System.out.println("byteda senha: "+bytesDaSenha);
-                    System.out.println("senha: "+cad.getSenha());
                 } catch (NoSuchAlgorithmException ex) {
                     Logger.getLogger(EmailDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
