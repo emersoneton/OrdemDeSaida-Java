@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.text.MaskFormatter;
+import org.jdesktop.swingx.util.OS;
 
 /**
  *
@@ -73,6 +74,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         textoSolucao.setLineWrap(true);
         textoSolucao.setWrapStyleWord(true);
         textoSolucao.setEnabled(false);
+        txtInformacaoDoTipo.setText("ORDEM DE SAÍDA");
     }
 
     /**
@@ -120,6 +122,9 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         jPanel12 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         textoSolucao = new javax.swing.JTextArea();
+        comboBoxSelecionaTipo = new javax.swing.JComboBox<>();
+        jButton4 = new javax.swing.JButton();
+        txtInformacaoDoTipo = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         listaConsultaCliente = new javax.swing.JList<>();
@@ -286,7 +291,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         });
 
         jButton2.setBackground(new java.awt.Color(153, 153, 153));
-        jButton2.setForeground(new java.awt.Color(153, 153, 153));
+        jButton2.setForeground(new java.awt.Color(102, 102, 102));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/pdf.png"))); // NOI18N
         jButton2.setText("OS");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -296,7 +301,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         });
 
         jButton3.setBackground(new java.awt.Color(153, 153, 153));
-        jButton3.setForeground(new java.awt.Color(153, 153, 153));
+        jButton3.setForeground(new java.awt.Color(102, 102, 102));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/pdf.png"))); // NOI18N
         jButton3.setText("Recibo");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -322,6 +327,31 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             .addComponent(jScrollPane5)
         );
 
+        comboBoxSelecionaTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ordem de Saída", "Orçamento" }));
+        comboBoxSelecionaTipo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                comboBoxSelecionaTipoMouseClicked(evt);
+            }
+        });
+        comboBoxSelecionaTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxSelecionaTipoActionPerformed(evt);
+            }
+        });
+
+        jButton4.setBackground(new java.awt.Color(153, 153, 153));
+        jButton4.setForeground(new java.awt.Color(102, 102, 102));
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/pdf.png"))); // NOI18N
+        jButton4.setText("Orçamento");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        txtInformacaoDoTipo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        txtInformacaoDoTipo.setForeground(new java.awt.Color(255, 0, 0));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -342,18 +372,20 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                                 .addComponent(Lista, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(comboBoxProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 171, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtOs, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(183, 183, 183)))
+                        .addGap(18, 18, 18)
+                        .addComponent(comboBoxSelecionaTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtInformacaoDoTipo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnAdicionar)
@@ -383,6 +415,8 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jHorarioAgendamento, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButton4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jButton3))
@@ -415,7 +449,8 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                             .addComponent(txtPesquisaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8)
                             .addComponent(txtOs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7)))
+                            .addComponent(jLabel7)
+                            .addComponent(comboBoxSelecionaTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(txtDataEHora, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -433,7 +468,8 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel2))
-                            .addComponent(btnAdicionar))
+                            .addComponent(btnAdicionar)
+                            .addComponent(txtInformacaoDoTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(9, 9, 9)
@@ -463,7 +499,8 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(41, Short.MAX_VALUE))
         );
 
@@ -1634,6 +1671,10 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     }//GEN-LAST:event_ListaMousePressed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        OrdemDeSaida();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void OrdemDeSaida(){
         if (txtPesquisaCliente.getText().length() > 0) {
             GerarPDF();
 
@@ -1647,10 +1688,8 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "NÃO FOI BUSCADO DADOS DE NENHUMA NOTA");
         }
-
-
-    }//GEN-LAST:event_jButton2ActionPerformed
-
+    }
+    
     private void cmdCanceladoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmdCanceladoMousePressed
         cmdAberto.setSelected(false);
         cmdFechado.setSelected(false);
@@ -1672,6 +1711,22 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         dataDeAgendamento = "inserido";
         
     }//GEN-LAST:event_jDataDoAgendamentoKeyPressed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+      OrdemDeSaida();  
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void comboBoxSelecionaTipoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboBoxSelecionaTipoMouseClicked
+        
+    }//GEN-LAST:event_comboBoxSelecionaTipoMouseClicked
+
+    private void comboBoxSelecionaTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxSelecionaTipoActionPerformed
+        if(comboBoxSelecionaTipo.getSelectedItem() == "Ordem de Saída"){
+            txtInformacaoDoTipo.setText("ORDEM DE SAÍDA");
+        }else if(comboBoxSelecionaTipo.getSelectedItem() == "Orçamento"){
+            txtInformacaoDoTipo.setText("ORÇAMENTO");
+        }
+    }//GEN-LAST:event_comboBoxSelecionaTipoActionPerformed
 
     public void GerarRecibo() {
         CadastroDeServico ser = new CadastroDeServico();
@@ -1887,10 +1942,12 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     private javax.swing.JCheckBox cmdOs;
     private javax.swing.JCheckBox cmdTodos;
     private javax.swing.JComboBox<String> comboBoxProduto;
+    private javax.swing.JComboBox<String> comboBoxSelecionaTipo;
     private javax.swing.JComboBox<String> comboBoxStatusConsulta;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JFormattedTextField jDataDoAgendamento;
     private javax.swing.JFormattedTextField jHorarioAgendamento;
     private javax.swing.JLabel jLabel1;
@@ -1932,6 +1989,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     private javax.swing.JTextField txtClienteConsulta;
     private javax.swing.JLabel txtDataEHora;
     private javax.swing.JTextField txtDesconto;
+    private javax.swing.JLabel txtInformacaoDoTipo;
     private javax.swing.JTextField txtOs;
     private javax.swing.JTextField txtOsConsulta;
     private javax.swing.JTextField txtOsConsultaInformar;
