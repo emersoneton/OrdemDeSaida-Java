@@ -26,6 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 import javax.swing.text.MaskFormatter;
 import org.jdesktop.swingx.util.OS;
 
@@ -46,7 +47,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     int Enter = 0;
     int Enter1 = 0;
     String dataDeAgendamento = null;
-    
+
     public FormOrdemDeServico() {
         initComponents();
         setResizable(false);//Não permite editar o tamanho
@@ -1011,7 +1012,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
             maskDataAgendamento = new MaskFormatter("##/##/####");
             maskDataAgendamento.install(jDataDoAgendamento);
-            
+
             maskHorarioAgendamento = new MaskFormatter("##:##");
             maskHorarioAgendamento.install(jHorarioAgendamento);
 
@@ -1059,8 +1060,10 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         txtOsConsultaInformar.setEnabled(false);
 
         dataDeAgendamento = null;
-        
+
         BuscarOS();
+
+        comboBoxSelecionaTipo.setSelectedItem("Ordem de Saída");
     }
 
     private void ListaDePesquisa() {
@@ -1187,23 +1190,48 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             O cliente gera uma OS somente com o  problema relatado e os dados do cliente
             Depois de fazer a visita ao seu cliente ele busca a OS e adiciona os Itens na OS
          */
-        if (txtPesquisaCliente.getText().length() > 0) {
+        // ORDEM DE SAÍDA
+        if (comboBoxSelecionaTipo.getSelectedItem() == "Ordem de Saída") {
+            if (txtPesquisaCliente.getText().length() > 0) {
 
-            if (dataDeAgendamento == "inserido") {
-                VerificaCodigoNoBanco(); // verifico se ja tem algum código cadastrado no banco para fazer a alteração ou a inserção dos dados pelo botão Salvar
+                if (dataDeAgendamento == "inserido") {
+                    VerificaCodigoNotaNoBanco(); // verifico se ja tem algum código cadastrado no banco para fazer a alteração ou a inserção dos dados pelo botão Salvar
+                } else {
+                    JOptionPane.showMessageDialog(null, "INFORME A DATA DE AGENDAMENTO ANTES DE SALVAR!", "Mensagem",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+
             } else {
-                JOptionPane.showMessageDialog(null, "INFORME A DATA DE AGENDAMENTO ANTES DE SALVAR!", "Mensagem",
+                JOptionPane.showMessageDialog(null, "NÃO FOI INFORMADO CLIENTE PARA A EMISSÃO DA ORDEM DE SAIDA", "Mensagem",
                         JOptionPane.INFORMATION_MESSAGE);
             }
+        } 
 
-        } else {
-            JOptionPane.showMessageDialog(null, "NÃO FOI INFORMADO CLIENTE PARA A EMISSÃO DA ORDEM DE SAIDA", "Mensagem",
-                    JOptionPane.INFORMATION_MESSAGE);
+
+        // ORÇAMENTO
+        else if (comboBoxSelecionaTipo.getSelectedItem() == "Orçamento") {
+            System.out.println("orçamentos");
+            if (txtPesquisaCliente.getText().length() > 0) {
+
+                if (dataDeAgendamento == "inserido") {
+                    VerificaCodigoOrcamentoNoBanco(); // verifico se ja tem algum código cadastrado no banco para fazer a alteração ou a inserção dos dados pelo botão Salvar
+                } else {
+                    JOptionPane.showMessageDialog(null, "INFORME A DATA DE AGENDAMENTO ANTES DE SALVAR!", "Mensagem",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "NÃO FOI INFORMADO CLIENTE PARA A EMISSÃO DA ORDEM DE SAIDA", "Mensagem",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
         }
+
 
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    public void VerificaCodigoNoBanco() {
+    
+    
+    public void VerificaCodigoNotaNoBanco() {
 
         CadastroDeServico ser = new CadastroDeServico();
 
@@ -1268,6 +1296,71 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         Limpar();
 
     }
+    
+    
+    public void VerificaCodigoOrcamentoNoBanco() {
+
+        CadastroDeServico ser = new CadastroDeServico();
+
+        ser.setOs(Integer.parseInt(txtOs.getText()));
+
+        OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
+
+        serDao.VerificaCodigoOrcamentoNoBanco(ser);
+        serDao.VerificaCodigoOrcamentoDeItensNoBanco(ser);
+
+        if (ser.isValidadorItens()) { // se o codigo da nota existir no banco NA TABELA DE ITENS
+
+        //    GerarPDF(); //Gero PDF 
+
+            //Enviar Email
+            int resposta = JOptionPane.showConfirmDialog(null, "DESEJA ENVIAR O EMAIL COM A ORDEM DE SERVIÇO PARA O CLIENTE?", "escolha dois", JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) {
+                EnviarEmail();
+            }
+        } else {
+            if (ser.isValidadorNota()) {   //UPDATE
+                SalvarItens(); //Salvo o Itens da Nota
+
+                JOptionPane.showMessageDialog(null, "Itens da Nota SALVO com sucesso!", "Mensagem",
+                        JOptionPane.INFORMATION_MESSAGE);
+
+            //    GerarPDF(); //Gero PDF 
+
+                //Enviar Email
+                int resposta = JOptionPane.showConfirmDialog(null, "DESEJA ENVIAR O EMAIL COM A ORDEM DE SERVIÇO PARA O CLIENTE?", "escolha dois", JOptionPane.YES_NO_OPTION);
+                if (resposta == JOptionPane.YES_OPTION) {
+                    EnviarEmail();
+                }
+
+                ser.setCliente(txtPesquisaCliente.getText());
+                ser.setOs(Integer.parseInt(txtOs.getText()));
+                ser.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
+                ser.setComplemento(textoComplemento.getText());
+                ser.setDesconto(Double.parseDouble(txtDesconto.getText().replace(",", ".")));
+                ser.setValorTotal(Double.parseDouble(textoValor.getText().replace(",", ".")));
+                ser.setDataAgendamento(jDataDoAgendamento.getText());
+                ser.setHorarioAgendamento(jHorarioAgendamento.getText());
+
+                serDao.AlterarNota(ser);
+
+            } else {                   //INSERT
+                Salvar(); //Salvo os complementos da nota
+                SalvarItens(); //Salvo o Itens da Nota
+            //    GerarPDF(); //Gero PDF 
+
+                //Enviar Email
+                int resposta = JOptionPane.showConfirmDialog(null, "DESEJA ENVIAR O EMAIL COM A ORDEM DE SERVIÇO PARA O CLIENTE?", "escolha dois", JOptionPane.YES_NO_OPTION);
+                if (resposta == JOptionPane.YES_OPTION) {
+                    EnviarEmail();
+                }
+
+            }
+        }
+
+        Limpar();
+
+    }
 
     private void SalvarSolucaoProblema() {
         CadastroDeServico ser = new CadastroDeServico();
@@ -1307,7 +1400,15 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         ser.setComplemento(textoComplemento.getText());
         ser.setOs(Integer.parseInt(txtOs.getText()));
 
-        serDao.Salvar(ser);
+        
+        if(comboBoxSelecionaTipo.getSelectedItem() == "Ordem de Saída"){
+            serDao.Salvar(ser);
+            System.out.println("Ordem de Saída Salvar");
+        }else if(comboBoxSelecionaTipo.getSelectedItem() == "Orçamento"){
+            serDao.SalvarOrcamento(ser);
+            System.out.println("Orçamentos Salvar");
+        }
+        
 
     }
 
@@ -1327,8 +1428,15 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             ser1.setQuantidade(Integer.parseInt(tableModel.getValueAt(x, 2).toString()));
 
             OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
-            serDao.SalvarItens(ser1);
-            serDao.AlterarEstoque(ser1);
+            
+            if(comboBoxSelecionaTipo.getSelectedItem() == "Ordem de Saída"){
+                serDao.SalvarItens(ser1);
+                serDao.AlterarEstoque(ser1);
+            }else if(comboBoxSelecionaTipo.getSelectedItem() == "Orçamento"){
+                serDao.SalvarItensOrcamento(ser1);
+                System.out.println("Orçamentos Salvar Itens");
+            }
+
 
         }
 
@@ -1366,6 +1474,17 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         txtOs.setText(Integer.toString(ser.getOs()));
 
     }
+    
+    private void BuscarOrcamento() {
+        CadastroDeServico ser = new CadastroDeServico();
+
+        OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
+
+        serDao.BuscarOrcamento(ser);
+
+        txtOs.setText(Integer.toString(ser.getOs()));
+
+    }
 
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
@@ -1385,7 +1504,6 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         serDao.Buscar(ser);
         serDao.BuscarItensDoServico(ser);
 
-        
         txtPesquisaCliente.setText(ser.getCliente());
         txtDesconto.setText(String.valueOf(ser.getDesconto()).replace(".", ","));
         jDataDoAgendamento.setText(ser.getDataAgendamento());
@@ -1674,7 +1792,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         OrdemDeSaida();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void OrdemDeSaida(){
+    private void OrdemDeSaida() {
         if (txtPesquisaCliente.getText().length() > 0) {
             GerarPDF();
 
@@ -1689,7 +1807,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "NÃO FOI BUSCADO DADOS DE NENHUMA NOTA");
         }
     }
-    
+
     private void cmdCanceladoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmdCanceladoMousePressed
         cmdAberto.setSelected(false);
         cmdFechado.setSelected(false);
@@ -1707,24 +1825,26 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jDataDoAgendamentoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jDataDoAgendamentoKeyPressed
-        
+
         dataDeAgendamento = "inserido";
-        
+
     }//GEN-LAST:event_jDataDoAgendamentoKeyPressed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-      OrdemDeSaida();  
+        OrdemDeSaida();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void comboBoxSelecionaTipoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_comboBoxSelecionaTipoMouseClicked
-        
+
     }//GEN-LAST:event_comboBoxSelecionaTipoMouseClicked
 
     private void comboBoxSelecionaTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxSelecionaTipoActionPerformed
-        if(comboBoxSelecionaTipo.getSelectedItem() == "Ordem de Saída"){
+        if (comboBoxSelecionaTipo.getSelectedItem() == "Ordem de Saída") {
             txtInformacaoDoTipo.setText("ORDEM DE SAÍDA");
-        }else if(comboBoxSelecionaTipo.getSelectedItem() == "Orçamento"){
+            BuscarOS();
+        } else if (comboBoxSelecionaTipo.getSelectedItem() == "Orçamento") {
             txtInformacaoDoTipo.setText("ORÇAMENTO");
+            BuscarOrcamento();
         }
     }//GEN-LAST:event_comboBoxSelecionaTipoActionPerformed
 

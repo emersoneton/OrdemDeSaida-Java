@@ -63,6 +63,44 @@ public class OrdemDeServicoDAO {
             Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    
+    public void SalvarOrcamento(CadastroDeServico ser) {
+
+        Conexao();
+
+        // transformar a data de formato brasileiro para Americano
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate data = LocalDate.parse(ser.getDataAgendamento(), formato);
+        
+        try {
+            PreparedStatement busca = con.prepareStatement("INSERT INTO orcamentos(cliente,valor,desconto,data_agendamento,"
+                    + "complemento,horario_agendamento,data_orcamento,status_orcamento) "
+                    + "VALUES (?,?,?,?,?,?,?,?)");
+
+            
+            busca.setString(1, ser.getCliente());
+            busca.setString(2, "" + ser.getValorTotal());
+            busca.setString(3, "" + ser.getDesconto());
+            busca.setString(4, ""+data);
+            busca.setString(5, ser.getComplemento());
+            busca.setString(6, ser.getHorarioAgendamento());
+            busca.setString(7, ser.getData());
+            busca.setString(8, "" + ser.getStatus());
+
+            busca.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Nota SALVA com sucesso!", "Mensagem",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+            con.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
 
     public void Buscar(CadastroDeServico ser) {
         Conexao();
@@ -107,6 +145,33 @@ public class OrdemDeServicoDAO {
 
         try {
             PreparedStatement busca = con.prepareStatement("INSERT INTO itens_servico(cod_servico,descricao,valor,quantidade) "
+                    + "VALUES (?,?,?,?)");
+
+            for (int x = 0; x <= ser.getContador(); x++) {
+
+                busca.setString(1, "" + ser.getOs());
+                busca.setString(2, ser.getDescricao());
+                busca.setString(3, "" + ser.getValorTotal());
+                busca.setString(4, "" + ser.getQuantidade());
+
+                busca.executeUpdate();
+            }
+
+            con.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    
+    public void SalvarItensOrcamento(CadastroDeServico ser) {
+
+        Conexao();
+
+        try {
+            PreparedStatement busca = con.prepareStatement("INSERT INTO itens_orcamentos(cod_orcamento,descricao,valor,quantidade) "
                     + "VALUES (?,?,?,?)");
 
             for (int x = 0; x <= ser.getContador(); x++) {
@@ -213,6 +278,34 @@ public class OrdemDeServicoDAO {
         String codigo = null;
         try {
             PreparedStatement busca = con.prepareStatement("SELECT MAX(codigo+1) AS codigo FROM servicos");
+
+            ResultSet rs = busca.executeQuery();
+
+            while (rs.next()) {
+
+                codigo = rs.getString("codigo");
+
+            }
+
+            if (codigo != null) {
+                ser.setOs(Integer.parseInt(codigo));
+            } else {
+                ser.setOs(Integer.parseInt("1"));
+            }
+
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void BuscarOrcamento(CadastroDeServico ser) {
+
+        Conexao();
+
+        String codigo = null;
+        try {
+            PreparedStatement busca = con.prepareStatement("SELECT MAX(codigo+1) AS codigo FROM orcamentos");
 
             ResultSet rs = busca.executeQuery();
 
@@ -492,6 +585,66 @@ public class OrdemDeServicoDAO {
         }
 
     }
+    
+    
+    
+    public void VerificaCodigoOrcamentoNoBanco(CadastroDeServico ser) {
+
+        Conexao();
+        String Codigo = "" + ser.getOs();
+        try {
+            PreparedStatement busca = con.prepareStatement("SELECT codigo FROM orcamentos");
+
+            ResultSet rs = busca.executeQuery();
+
+            while (rs.next()) {
+                String codigo = rs.getString("codigo");
+
+                if (codigo.trim().equals(Codigo)) {
+
+                    ser.setValidadorNota(true);
+
+                }
+                // ser.setOs(Integer.parseInt(rs.getString("codigo")));
+            }
+
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void VerificaCodigoOrcamentoDeItensNoBanco(CadastroDeServico ser) {
+
+        Conexao();
+        String Codigo = "" + ser.getOs();
+        try {
+            PreparedStatement busca = con.prepareStatement("SELECT * FROM itens_orcamentos WHERE cod_orcamento = '" + ser.getOs() + "'");
+
+            ResultSet rs = busca.executeQuery();
+
+            while (rs.next()) {
+                String codigo = rs.getString("cod_orcamento");
+
+                if (codigo.trim().equals(Codigo)) {
+
+                    ser.setValidadorItens(true);
+
+                }
+                ser.setOs(Integer.parseInt(rs.getString("cod_orcamento")));
+            }
+
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    
+    
+    
 
     public List<CadastroDeServico> BuscarItensDoServico(CadastroDeServico ser) {
 
