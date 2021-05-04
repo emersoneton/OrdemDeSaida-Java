@@ -673,6 +673,38 @@ public class OrdemDeServicoDAO {
         }
         return lista;
     }
+    
+    
+    
+    public List<CadastroDeServico> BuscarItensDoOrcamento(CadastroDeServico ser) {
+
+        Conexao();
+
+        List<CadastroDeServico> lista = new ArrayList<>();
+
+        try {
+            PreparedStatement busca = con.prepareStatement("SELECT * FROM itens_orcamentos WHERE cod_orcamento = '" + ser.getOs() + "'");
+
+            ResultSet rs = busca.executeQuery();
+
+            while (rs.next()) {
+                CadastroDeServico ser1 = new CadastroDeServico();
+
+                ser1.setDescricao(rs.getString("descricao"));
+                ser1.setValorTotal(Double.parseDouble(rs.getString("valor")));
+                ser1.setQuantidade(Integer.parseInt(rs.getString("quantidade")));
+
+                lista.add(ser1);
+            }
+
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
+    }
+    
+    
 
     public List<CadastroDeServico> BuscarNotasDeServico(CadastroDeServico ser) { // Busca todas as notas de Serviços
         List<CadastroDeServico> lista = new ArrayList<>();

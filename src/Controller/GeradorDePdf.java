@@ -396,7 +396,7 @@ public class GeradorDePdf {
 
             document.add(new Paragraph(" "));
 
-            document.add(new Paragraph("Descrição de Serviço: " + ser.getComplemento(), fontePadrao));
+            document.add(new Paragraph("Descrição de Serviço: " + ser.getComplemento(), fontePadrao)); // PROBLEMA RELATADO
             if (ser.getSolucaoProblema().length() > 0) document.add(new Paragraph("Solução do Serviço: " + ser.getSolucaoProblema(), fontePadrao));
             
             document.add(new Paragraph(" "));
@@ -541,6 +541,219 @@ public class GeradorDePdf {
         }
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*
+    **************************
+    GERAR PDF DA ORÇAMENTO
+    **************************
+    */
+    public void GeraPDFOrcamento(CadastroDeServico ser, CadastroDeClientes cli) {
+        DecimalFormat df = new DecimalFormat("###,###,###,###,###.00");
+
+        CadastroDeFilial fil = new CadastroDeFilial();
+
+        OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
+        serDao.BuscaDadosFilialPDF(fil);
+
+        Document document = new Document();
+        try {
+
+            PdfWriter.getInstance(document, new FileOutputStream("c:/SISOS/PDF/ORÇAMENTO/ORÇAMENTO_" + ser.getOs() + "_" + ser.getCliente() + ".pdf"));
+            document.open();
+
+            Image figura = Image.getInstance("c:/SISOS/Imagem/imagem.jpg");
+            figura.scaleToFit(400, 200);
+            figura.setAlignment(1);
+
+            PdfPTable table1 = new PdfPTable(new float[]{90, 100f});
+
+            // Dados do Emissor
+            PdfPCell dados = new PdfPCell(new Phrase(" Nome Fantasia: " + fil.getRazaoFantasia() + "\n CNPJ: " + fil.getCnpj() + " - I.M: " + fil.getInscricaoMunicipal() + "\n Cep: " + fil.getCep()
+                    + "\n Endereço: " + fil.getEndereco() + ", nº " + fil.getNumero() + "\n Bairro: " + fil.getBairro()
+                    + "\n Cidade: " + fil.getCidade() + " / " + fil.getEstado() + "\n Tel Cel: " + fil.getTelefoneCelular(), fontePadrao));
+
+            table1.addCell(figura);
+            table1.addCell(dados);
+
+            document.add(table1);
+
+            // Numero da Ordem de Serviço
+            Paragraph p = new Paragraph("ORÇAMENTO (" + ser.getOs() + ")", fonteCabecalho);
+            p.setAlignment(1);
+            document.add(p);
+
+            document.add(new Paragraph(" "));
+            serDao.BuscarClienteParaGerarPDF(ser, cli);
+            document.add(new Paragraph("Cliente: " + cli.getNome(), fontePadrao));
+            document.add(new Paragraph("CPF/CNPJ: " + cli.getCpf() + " / " + cli.getCnpj(), fontePadrao));
+            document.add(new Paragraph("Endereço: " + cli.getEndereco() + ", nº " + cli.getNumero(), fontePadrao));
+            document.add(new Paragraph("Cidade: " + cli.getCidade() + " / " + cli.getEstado(), fontePadrao));
+            document.add(new Paragraph("Telefone: " + cli.getTelefone() + " / Celular: " + cli.getTelefoneCelular(), fontePadrao));
+
+            document.add(new Paragraph(" "));
+
+            document.add(new Paragraph("Descrição do Orçamento: " + ser.getComplemento(), fontePadrao)); // PROBLEMA RELATADO
+            if (ser.getSolucaoProblema().length() > 0) document.add(new Paragraph("Solução do Serviço: " + ser.getSolucaoProblema(), fontePadrao));
+            
+            document.add(new Paragraph(" "));
+
+            // Buscar Itens do Banco
+            serDao.BuscarItensDoServico(ser);
+            List<CadastroDeServico> lista = serDao.BuscarItensDoOrcamento(ser);
+
+            PdfPTable table = new PdfPTable(new float[]{30f, 8f, 8f, 8F}); // crio a tabela para ser vista de fora ou dentro do IF
+            if (lista.size() > 1) {
+                PdfPCell Nome = new PdfPCell(new Phrase("DESCRIÇÃO", negritoPequena));
+                Nome.setBorder(Rectangle.NO_BORDER);// Tabela sem Bordas
+                Nome.setPaddingLeft(-50);
+
+                PdfPCell ValorUnitario = new PdfPCell(new Phrase("VALOR", negritoPequena));
+                ValorUnitario.setHorizontalAlignment(Element.ALIGN_CENTER);
+                ValorUnitario.setBorder(Rectangle.NO_BORDER);// Tabela sem Bordas
+                ValorUnitario.setPaddingRight(-140); // Tabela sem margem
+
+                PdfPCell Quantidade = new PdfPCell(new Phrase("QUANTIDADE", negritoPequena));
+                Quantidade.setHorizontalAlignment(Element.ALIGN_CENTER);
+                Quantidade.setBorder(Rectangle.NO_BORDER);// Tabela sem Bordas
+                Quantidade.setPaddingRight(-140); // Tabela sem margem
+
+                PdfPCell Valor = new PdfPCell(new Phrase("TOTAL", negritoPequena));
+                Valor.setHorizontalAlignment(Element.ALIGN_CENTER);
+                Valor.setBorder(Rectangle.NO_BORDER);// Tabela sem Bordas
+                Valor.setPaddingRight(-140); // Tabela sem margem
+
+                table.addCell(Nome);
+                table.addCell(ValorUnitario);
+                table.addCell(Quantidade);
+                table.addCell(Valor);
+                document.add(new Paragraph(" "));
+            }
+
+            //Crio o tabela de produtos
+            int Quantidade = 0;
+            for (int x = 0; x < lista.size(); x++) {
+
+                Quantidade = lista.get(x).getQuantidade();
+
+                PdfPCell celula1 = new PdfPCell(new Phrase((x + 1) + " - " + lista.get(x).getDescricao(), negritoPequena));
+                celula1.setBorder(Rectangle.NO_BORDER); // Tabela sem Bordas
+                celula1.setPaddingLeft(-50); // Tabela sem margem
+
+                PdfPCell celula2 = new PdfPCell(new Phrase(String.valueOf(df.format(lista.get(x).getValorTotal())), negritoPequena));
+                celula2.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celula2.setBorder(Rectangle.NO_BORDER); // Tabela sem Bordas
+                celula2.setPaddingRight(-140); // Tabela sem margem
+
+                PdfPCell celula3 = new PdfPCell(new Phrase(String.valueOf(lista.get(x).getQuantidade()), negritoPequena));
+                celula3.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celula3.setBorder(Rectangle.NO_BORDER); // Tabela sem Bordas
+                celula3.setPaddingRight(-140); // Tabela sem margem
+
+                double totalItens = (lista.get(x).getValorTotal() * lista.get(x).getQuantidade());
+
+                PdfPCell celula4 = new PdfPCell(new Phrase(String.valueOf(df.format(totalItens)), negritoPequena));
+                celula4.setHorizontalAlignment(Element.ALIGN_CENTER);
+                celula4.setBorder(Rectangle.NO_BORDER); // Tabela sem Bordas
+                celula4.setPaddingRight(-140); // Tabela sem margem
+
+                table.addCell(celula1);
+                table.addCell(celula2);
+                table.addCell(celula3);
+                table.addCell(celula4);
+
+            }
+
+            document.add(table); // Adiciono dados na tabela  
+
+            document.add(new Paragraph(Quantidade));
+
+            if (lista.size() > 0) {
+                document.add(new Paragraph(" "));
+                // Valor Total
+                String valorItens = df.format(ser.getValorTotal());
+                Paragraph valorTotal = new Paragraph("Valor Total Itens: ", fontePadrao);
+                valorTotal.add(new Phrase(valorItens, negrito));
+                valorTotal.setAlignment(2);
+                document.add(valorTotal);
+
+                // Valor de Desconto
+                String quantidade;
+                if(ser.getDesconto() <= 0){
+                   quantidade = "0,00"; 
+                }else{
+                   quantidade = df.format(ser.getDesconto());  
+                }
+                
+                Paragraph desconto = new Paragraph("Valor Desconto: ", fontePadrao);
+                desconto.add(new Phrase(quantidade, negrito));
+                desconto.setAlignment(2);
+                document.add(desconto);
+
+                double valorTotalGeral = ser.getValorTotal() - ser.getDesconto();
+                // Valor de TOTAL
+                String valorTotalNota = df.format(valorTotalGeral);
+                Paragraph totalGeral = new Paragraph("Valor TOTAL: ", fontePadrao);
+                totalGeral.add(new Phrase(valorTotalNota, negrito));
+                totalGeral.setAlignment(2);
+                document.add(totalGeral);
+            }
+            
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph("Orçamento Gerada em: " + ser.getData(), negrito));
+          //  document.add(new Paragraph("Agendamento Marcado para: " + ser.getDataAgendamento() + " - " + ser.getHorarioAgendamento(), negrito));
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph("* O ORÇAMENTO É VALIDO POR 7 (SETE) DIAS, A PARTIR DA DATA DO MESMO!.", fonteVermelha));
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph("* o serviço será realizado em até 20 dias úteis, salvo imprevisto.", negrito));
+            document.add(new Paragraph("* qualquer serviço adicional será cobrado valores de acordo com a tabela.", negrito));
+            document.add(new Paragraph("* aparelhos não retirados no prazo de 90 dias, serão descartados.", negrito));
+            document.add(new Paragraph("* todos os serviços realizados tem garantia de 90 dias ao contar da data de entrega.", negrito));
+            document.add(new Paragraph("* o serviço só será realizado após aprovação do cliente.", negrito));
+            document.add(new Paragraph("* o ponto de luz é por conta do cliente, caso executado será cobrado a parte.", negrito));
+            
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph(" "));
+            Paragraph tec = new Paragraph("______________________________                   ______________________________");
+            tec.setAlignment(1);
+            document.add(tec);
+
+            document.add(new Paragraph("                                TÉCNICO                                                                      CLIENTE ", negrito));
+
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph(" "));
+            Paragraph fim = new Paragraph("AGRADECEMOS PELA SUA PREFERÊNCIA", fonteVermelha);
+            fim.setAlignment(1);
+            document.add(fim);
+
+        } catch (DocumentException de) {
+            System.err.println(de.getMessage());
+        } catch (IOException ioe) {
+            System.err.println(ioe.getMessage());
+        }
+        document.close();
+
+        try {
+            Desktop.getDesktop().open(new File("c:/SISOS/PDF/ORÇAMENTO/ORÇAMENTO_" + ser.getOs() + "_" + ser.getCliente() + ".pdf"));
+        } catch (IOException ex) {
+            Logger.getLogger(GeradorDePdf.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
     
     
     

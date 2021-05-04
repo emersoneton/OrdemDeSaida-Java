@@ -1205,12 +1205,8 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "NÃO FOI INFORMADO CLIENTE PARA A EMISSÃO DA ORDEM DE SAIDA", "Mensagem",
                         JOptionPane.INFORMATION_MESSAGE);
             }
-        } 
-
-
-        // ORÇAMENTO
+        } // ORÇAMENTO
         else if (comboBoxSelecionaTipo.getSelectedItem() == "Orçamento") {
-            System.out.println("orçamentos");
             if (txtPesquisaCliente.getText().length() > 0) {
 
                 if (dataDeAgendamento == "inserido") {
@@ -1229,8 +1225,6 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    
-    
     public void VerificaCodigoNotaNoBanco() {
 
         CadastroDeServico ser = new CadastroDeServico();
@@ -1296,8 +1290,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         Limpar();
 
     }
-    
-    
+
     public void VerificaCodigoOrcamentoNoBanco() {
 
         CadastroDeServico ser = new CadastroDeServico();
@@ -1309,53 +1302,14 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         serDao.VerificaCodigoOrcamentoNoBanco(ser);
         serDao.VerificaCodigoOrcamentoDeItensNoBanco(ser);
 
-        if (ser.isValidadorItens()) { // se o codigo da nota existir no banco NA TABELA DE ITENS
+        Salvar(); //Salvo os complementos da nota
+        SalvarItens(); //Salvo o Itens da Nota
+        GerarPDF(); //Gero PDF 
 
-        //    GerarPDF(); //Gero PDF 
-
-            //Enviar Email
-            int resposta = JOptionPane.showConfirmDialog(null, "DESEJA ENVIAR O EMAIL COM A ORDEM DE SERVIÇO PARA O CLIENTE?", "escolha dois", JOptionPane.YES_NO_OPTION);
-            if (resposta == JOptionPane.YES_OPTION) {
-                EnviarEmail();
-            }
-        } else {
-            if (ser.isValidadorNota()) {   //UPDATE
-                SalvarItens(); //Salvo o Itens da Nota
-
-                JOptionPane.showMessageDialog(null, "Itens da Nota SALVO com sucesso!", "Mensagem",
-                        JOptionPane.INFORMATION_MESSAGE);
-
-            //    GerarPDF(); //Gero PDF 
-
-                //Enviar Email
-                int resposta = JOptionPane.showConfirmDialog(null, "DESEJA ENVIAR O EMAIL COM A ORDEM DE SERVIÇO PARA O CLIENTE?", "escolha dois", JOptionPane.YES_NO_OPTION);
-                if (resposta == JOptionPane.YES_OPTION) {
-                    EnviarEmail();
-                }
-
-                ser.setCliente(txtPesquisaCliente.getText());
-                ser.setOs(Integer.parseInt(txtOs.getText()));
-                ser.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
-                ser.setComplemento(textoComplemento.getText());
-                ser.setDesconto(Double.parseDouble(txtDesconto.getText().replace(",", ".")));
-                ser.setValorTotal(Double.parseDouble(textoValor.getText().replace(",", ".")));
-                ser.setDataAgendamento(jDataDoAgendamento.getText());
-                ser.setHorarioAgendamento(jHorarioAgendamento.getText());
-
-                serDao.AlterarNota(ser);
-
-            } else {                   //INSERT
-                Salvar(); //Salvo os complementos da nota
-                SalvarItens(); //Salvo o Itens da Nota
-            //    GerarPDF(); //Gero PDF 
-
-                //Enviar Email
-                int resposta = JOptionPane.showConfirmDialog(null, "DESEJA ENVIAR O EMAIL COM A ORDEM DE SERVIÇO PARA O CLIENTE?", "escolha dois", JOptionPane.YES_NO_OPTION);
-                if (resposta == JOptionPane.YES_OPTION) {
-                    EnviarEmail();
-                }
-
-            }
+        //Enviar Email
+        int resposta = JOptionPane.showConfirmDialog(null, "DESEJA ENVIAR O EMAIL COM A ORDEM DE SERVIÇO PARA O CLIENTE?", "escolha dois", JOptionPane.YES_NO_OPTION);
+        if (resposta == JOptionPane.YES_OPTION) {
+            EnviarEmail();
         }
 
         Limpar();
@@ -1400,15 +1354,11 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         ser.setComplemento(textoComplemento.getText());
         ser.setOs(Integer.parseInt(txtOs.getText()));
 
-        
-        if(comboBoxSelecionaTipo.getSelectedItem() == "Ordem de Saída"){
+        if (comboBoxSelecionaTipo.getSelectedItem() == "Ordem de Saída") {
             serDao.Salvar(ser);
-            System.out.println("Ordem de Saída Salvar");
-        }else if(comboBoxSelecionaTipo.getSelectedItem() == "Orçamento"){
+        } else if (comboBoxSelecionaTipo.getSelectedItem() == "Orçamento") {
             serDao.SalvarOrcamento(ser);
-            System.out.println("Orçamentos Salvar");
         }
-        
 
     }
 
@@ -1428,15 +1378,13 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             ser1.setQuantidade(Integer.parseInt(tableModel.getValueAt(x, 2).toString()));
 
             OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
-            
-            if(comboBoxSelecionaTipo.getSelectedItem() == "Ordem de Saída"){
+
+            if (comboBoxSelecionaTipo.getSelectedItem() == "Ordem de Saída") {
                 serDao.SalvarItens(ser1);
                 serDao.AlterarEstoque(ser1);
-            }else if(comboBoxSelecionaTipo.getSelectedItem() == "Orçamento"){
+            } else if (comboBoxSelecionaTipo.getSelectedItem() == "Orçamento") {
                 serDao.SalvarItensOrcamento(ser1);
-                System.out.println("Orçamentos Salvar Itens");
             }
-
 
         }
 
@@ -1460,7 +1408,12 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         CadastroDeClientes cli = new CadastroDeClientes();
 
         GeradorDePdf geraPdf = new GeradorDePdf();
-        geraPdf.GeraPDFOrdemDeServico(ser, cli);
+
+        if (comboBoxSelecionaTipo.getSelectedItem() == "Ordem de Saída") {
+            geraPdf.GeraPDFOrdemDeServico(ser, cli);
+        } else if (comboBoxSelecionaTipo.getSelectedItem() == "Orçamento") {
+            geraPdf.GeraPDFOrcamento(ser, cli);
+        }
 
     }
 
@@ -1474,7 +1427,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         txtOs.setText(Integer.toString(ser.getOs()));
 
     }
-    
+
     private void BuscarOrcamento() {
         CadastroDeServico ser = new CadastroDeServico();
 
@@ -1571,7 +1524,6 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             int cont = tbOrdemDeServico.getRowCount();
 
             ser.setContador(cont); // Crio um Contador para receber o valor da Tabela para validar no DAO
-            System.out.println(ser.getContador());
 
             serDao.DeletaItens(ser); // DELETA TODOS OS ITENS DA TABELA 
             for (int x = 0; x < cont; x++) {
