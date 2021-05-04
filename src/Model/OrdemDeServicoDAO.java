@@ -36,17 +36,16 @@ public class OrdemDeServicoDAO {
         // transformar a data de formato brasileiro para Americano
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate data = LocalDate.parse(ser.getDataAgendamento(), formato);
-        
+
         try {
             PreparedStatement busca = con.prepareStatement("INSERT INTO servicos(cliente,valor,desconto,data_agendamento,"
                     + "complemento,horario_agendamento,data_os,status_os) "
                     + "VALUES (?,?,?,?,?,?,?,?)");
 
-            
             busca.setString(1, ser.getCliente());
             busca.setString(2, "" + ser.getValorTotal());
             busca.setString(3, "" + ser.getDesconto());
-            busca.setString(4, ""+data);
+            busca.setString(4, "" + data);
             busca.setString(5, ser.getComplemento());
             busca.setString(6, ser.getHorarioAgendamento());
             busca.setString(7, ser.getData());
@@ -63,8 +62,7 @@ public class OrdemDeServicoDAO {
             Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
+
     public void SalvarOrcamento(CadastroDeServico ser) {
 
         Conexao();
@@ -72,17 +70,16 @@ public class OrdemDeServicoDAO {
         // transformar a data de formato brasileiro para Americano
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate data = LocalDate.parse(ser.getDataAgendamento(), formato);
-        
+
         try {
             PreparedStatement busca = con.prepareStatement("INSERT INTO orcamentos(cliente,valor,desconto,data_agendamento,"
                     + "complemento,horario_agendamento,data_orcamento,status_orcamento) "
                     + "VALUES (?,?,?,?,?,?,?,?)");
 
-            
             busca.setString(1, ser.getCliente());
             busca.setString(2, "" + ser.getValorTotal());
             busca.setString(3, "" + ser.getDesconto());
-            busca.setString(4, ""+data);
+            busca.setString(4, "" + data);
             busca.setString(5, ser.getComplemento());
             busca.setString(6, ser.getHorarioAgendamento());
             busca.setString(7, ser.getData());
@@ -99,12 +96,10 @@ public class OrdemDeServicoDAO {
             Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
 
     public void Buscar(CadastroDeServico ser) {
         Conexao();
-        
+
         boolean valida = false;
         try {
             PreparedStatement busca = con.prepareStatement("SELECT * FROM servicos WHERE codigo = '" + ser.getOs() + "'");
@@ -112,12 +107,12 @@ public class OrdemDeServicoDAO {
             ResultSet rs = busca.executeQuery();
 
             while (rs.next()) {
-                
+
                 // Transforma data de padrão Americano para o Brasileiro
                 Date d = rs.getDate("data_agendamento"); // a data 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // formato de data desejado 
                 String data = sdf.format(d); // data formatada
-                
+
                 ser.setCliente(rs.getString("cliente"));
                 ser.setValorTotal(Double.parseDouble(rs.getString("valor")));
                 ser.setDesconto(Double.parseDouble(rs.getString("desconto")));
@@ -129,9 +124,9 @@ public class OrdemDeServicoDAO {
                 valida = true;
             }
 
-            if(valida == false){
+            if (valida == false) {
                 JOptionPane.showMessageDialog(null, "NÃO FOI ENCONTRADO A NOTA DO CÓDIGO INFORMADO", "Mensagem",
-                    JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.INFORMATION_MESSAGE);
             }
             con.close();
         } catch (SQLException ex) {
@@ -164,8 +159,7 @@ public class OrdemDeServicoDAO {
         }
 
     }
-    
-    
+
     public void SalvarItensOrcamento(CadastroDeServico ser) {
 
         Conexao();
@@ -298,7 +292,7 @@ public class OrdemDeServicoDAO {
             Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void BuscarOrcamento(CadastroDeServico ser) {
 
         Conexao();
@@ -361,15 +355,15 @@ public class OrdemDeServicoDAO {
             PreparedStatement buscar = con.prepareStatement("SELECT * FROM produtos ORDER BY descricao");
 
             ResultSet rs = buscar.executeQuery();
-           
+
             while (rs.next()) {
-                
-                if(rs.getString("situacao").equals("Ativado")){
-                    
-                    lista.add(rs.getString("descricao")); 
-                    
+
+                if (rs.getString("situacao").equals("Ativado")) {
+
+                    lista.add(rs.getString("descricao"));
+
                 }
-                
+
             }
 
             con.close();
@@ -585,9 +579,7 @@ public class OrdemDeServicoDAO {
         }
 
     }
-    
-    
-    
+
     public void VerificaCodigoOrcamentoNoBanco(CadastroDeServico ser) {
 
         Conexao();
@@ -641,10 +633,6 @@ public class OrdemDeServicoDAO {
         }
 
     }
-    
-    
-    
-    
 
     public List<CadastroDeServico> BuscarItensDoServico(CadastroDeServico ser) {
 
@@ -673,9 +661,7 @@ public class OrdemDeServicoDAO {
         }
         return lista;
     }
-    
-    
-    
+
     public List<CadastroDeServico> BuscarItensDoOrcamento(CadastroDeServico ser) {
 
         Conexao();
@@ -703,8 +689,6 @@ public class OrdemDeServicoDAO {
         }
         return lista;
     }
-    
-    
 
     public List<CadastroDeServico> BuscarNotasDeServico(CadastroDeServico ser) { // Busca todas as notas de Serviços
         List<CadastroDeServico> lista = new ArrayList<>();
@@ -869,6 +853,40 @@ public class OrdemDeServicoDAO {
         return lista;
     }
 
+    public List<CadastroDeServico> BuscarOrcamentos(CadastroDeServico ser) { // Busca todas as notas de Serviços
+        List<CadastroDeServico> lista = new ArrayList<>();
+
+        Conexao();
+
+        try {
+
+            PreparedStatement busca = con.prepareStatement("SELECT * FROM orcamentos ORDER BY codigo");
+
+            ResultSet rs = busca.executeQuery();
+
+            while (rs.next()) {
+
+                CadastroDeServico ser1 = new CadastroDeServico();
+
+                ser1.setOs(Integer.parseInt(rs.getString("codigo")));
+                ser1.setCliente(rs.getString("cliente"));
+                ser1.setDataAgendamento(rs.getString("data_agendamento"));
+                ser1.setData(rs.getString("data_orcamento"));
+                ser1.setStatus((rs.getString("status_orcamento")));
+                ser1.setHorarioAgendamento((rs.getString("horario_agendamento")));
+
+                lista.add(ser1);
+
+            }
+
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return lista;
+    }
+
     public void SalvarStatusDaNota(CadastroDeServico ser) { // salvar o status de aberto para fechado
         Conexao();
 
@@ -890,7 +908,7 @@ public class OrdemDeServicoDAO {
     public void BuscarEmailCLiente(CadastroDeClientes cli, CadastroDeServico ser) {
         Conexao();
 
-        try (PreparedStatement busca = con.prepareStatement("SELECT * FROM clientes as c, servicos as s WHERE c.nome = '" + cli.getNome() + "' and c.nome = s.cliente AND s.codigo = "+ser.getOs()+"")) {
+        try (PreparedStatement busca = con.prepareStatement("SELECT * FROM clientes as c, servicos as s WHERE c.nome = '" + cli.getNome() + "' and c.nome = s.cliente AND s.codigo = " + ser.getOs() + "")) {
 
             ResultSet rs = busca.executeQuery();
 
@@ -927,10 +945,10 @@ public class OrdemDeServicoDAO {
 
     }
 
-        public void BuscarEmailCLienteRecibo(CadastroDeClientes cli, CadastroDeServico ser) {
+    public void BuscarEmailCLienteRecibo(CadastroDeClientes cli, CadastroDeServico ser) {
         Conexao();
 
-        try (PreparedStatement busca = con.prepareStatement("SELECT * FROM clientes as c, servicos as s WHERE c.nome = '" + cli.getNome() + "' and c.nome = s.cliente AND s.codigo = "+ser.getOs()+"")) {
+        try (PreparedStatement busca = con.prepareStatement("SELECT * FROM clientes as c, servicos as s WHERE c.nome = '" + cli.getNome() + "' and c.nome = s.cliente AND s.codigo = " + ser.getOs() + "")) {
 
             ResultSet rs = busca.executeQuery();
 
@@ -966,26 +984,22 @@ public class OrdemDeServicoDAO {
         }
 
     }
-        
 
-        
-        public void SalvarSolucaoProblema(CadastroDeServico ser){
-            
-            Conexao();
+    public void SalvarSolucaoProblema(CadastroDeServico ser) {
+
+        Conexao();
 
         try {
-            PreparedStatement update = con.prepareStatement("UPDATE servicos SET solucao_problema = '"+ser.getSolucaoProblema()+"' where codigo = '"+ser.getOs()+"'");
-            
+            PreparedStatement update = con.prepareStatement("UPDATE servicos SET solucao_problema = '" + ser.getSolucaoProblema() + "' where codigo = '" + ser.getOs() + "'");
+
             update.executeUpdate();
-            
+
             con.close();
-                    
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "ERRO AO SALVAR A SOLUÇÃO DE PROBLEMAS!");
         }
-            
-        }
-        
-        
-        
+
+    }
+
 }

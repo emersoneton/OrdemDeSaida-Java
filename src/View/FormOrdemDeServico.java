@@ -143,6 +143,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         txtOsConsultaInformar = new javax.swing.JTextField();
         jPanel9 = new javax.swing.JPanel();
         txtPesquisaClienteConsulta = new javax.swing.JTextField();
+        comboBoxSelecionaTipoConsulta = new javax.swing.JComboBox<>();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tabelaConsulta = new javax.swing.JTable();
@@ -703,13 +704,17 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        comboBoxSelecionaTipoConsulta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ordem de Saída", "Orçamento" }));
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBoxSelecionaTipoConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -729,23 +734,26 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(9, 9, 9)
-                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(9, 9, 9)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(90, 90, 90)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(comboBoxSelecionaTipoConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(listaConsultaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))))
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(90, 90, 90)
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(60, 60, 60)
+                                .addComponent(listaConsultaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(21, 21, 21))))
         );
 
-        jPanel4.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 800, 160));
+        jPanel4.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 800, 200));
 
         jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -829,8 +837,8 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtOsConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtClienteConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -845,10 +853,10 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPdf, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        jPanel4.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 189, 800, 340));
+        jPanel4.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 219, 800, 310));
 
         jtConsultaOrdens.addTab("Consulta Ordens", jPanel4);
 
@@ -1559,6 +1567,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
         BuscarNotasDeServicos();
 
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void tabelaConsultaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaConsultaMousePressed
@@ -1902,55 +1911,79 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
         ser.setCliente(txtPesquisaClienteConsulta.getText());
 
-        if (cmdOs.isSelected()) {
+        if (comboBoxSelecionaTipoConsulta.getSelectedItem() == "Ordem de Saída") {
 
-            ser.setOs(Integer.parseInt(txtOsConsultaInformar.getText()));
-            ser.setClicked("OS");
+            if (cmdOs.isSelected()) {
 
-        } else if (cmdCliente.isSelected()) {
+                ser.setOs(Integer.parseInt(txtOsConsultaInformar.getText()));
+                ser.setClicked("OS");
 
-            ser.setClicked("CLIENTE");
+            } else if (cmdCliente.isSelected()) {
 
-        } else if (cmdAberto.isSelected()) {
+                ser.setClicked("CLIENTE");
 
-            ser.setStatus("ABERTO");
-            ser.setClicked("ABERTO");
+            } else if (cmdAberto.isSelected()) {
 
-        } else if (cmdFechado.isSelected()) {
+                ser.setStatus("ABERTO");
+                ser.setClicked("ABERTO");
 
-            ser.setStatus("FECHADO");
-            ser.setClicked("FECHADO");
+            } else if (cmdFechado.isSelected()) {
 
-        } else if (cmdCancelado.isSelected()) {
+                ser.setStatus("FECHADO");
+                ser.setClicked("FECHADO");
 
-            ser.setStatus("CANCELADO");
-            ser.setClicked("CANCELADO");
+            } else if (cmdCancelado.isSelected()) {
 
-        } else if (cmdTodos.isSelected()) {
+                ser.setStatus("CANCELADO");
+                ser.setClicked("CANCELADO");
 
-            ser.setClicked("TODOS");
+            } else if (cmdTodos.isSelected()) {
 
-        } else {
-            JOptionPane.showMessageDialog(null, "SELECIONE UMA DAS OPÇÕES DE AÇÕES", "Mensagem",
-                    JOptionPane.INFORMATION_MESSAGE);
-        }
+                ser.setClicked("TODOS");
 
-        List<CadastroDeServico> lista = serDao.BuscarNotasDeServico(ser);
+            } else {
+                JOptionPane.showMessageDialog(null, "SELECIONE UMA DAS OPÇÕES DE AÇÕES", "Mensagem",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
 
-        if (lista.size() == 0) {
-            JOptionPane.showMessageDialog(null, "NÃO FORAM ENCONTRADOS DADOS PARA PARÂMETROS INFORMADOS!", "Mensagem",
-                    JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            for (int x = 0; x < lista.size(); x++) {
-                CadastroDeServico ser1 = new CadastroDeServico();
+            List<CadastroDeServico> lista = serDao.BuscarNotasDeServico(ser);
 
-                ser1.setOs(lista.get(x).getOs());
-                ser1.setCliente(lista.get(x).getCliente());
-                ser1.setDataAgendamento(lista.get(x).getDataAgendamento());
-                ser1.setData(lista.get(x).getData());
-                ser1.setStatus(lista.get(x).getStatus());
+            if (lista.size() == 0) {
+                JOptionPane.showMessageDialog(null, "NÃO FORAM ENCONTRADOS DADOS PARA PARÂMETROS INFORMADOS!", "Mensagem",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                for (int x = 0; x < lista.size(); x++) {
+                    CadastroDeServico ser1 = new CadastroDeServico();
 
-                tabelaConsultaOrdem.addRow(ser1);
+                    ser1.setOs(lista.get(x).getOs());
+                    ser1.setCliente(lista.get(x).getCliente());
+                    ser1.setDataAgendamento(lista.get(x).getDataAgendamento());
+                    ser1.setData(lista.get(x).getData());
+                    ser1.setStatus(lista.get(x).getStatus());
+
+                    tabelaConsultaOrdem.addRow(ser1);
+                }
+            }
+
+        } else if (comboBoxSelecionaTipoConsulta.getSelectedItem() == "Orçamento") {
+            
+            List<CadastroDeServico> lista = serDao.BuscarOrcamentos(ser);
+
+            if (lista.size() == 0) {
+                JOptionPane.showMessageDialog(null, "NÃO FORAM ENCONTRADOS DADOS PARA PARÂMETROS INFORMADOS!", "Mensagem",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                for (int x = 0; x < lista.size(); x++) {
+                    CadastroDeServico ser1 = new CadastroDeServico();
+
+                    ser1.setOs(lista.get(x).getOs());
+                    ser1.setCliente(lista.get(x).getCliente());
+                    ser1.setDataAgendamento(lista.get(x).getDataAgendamento());
+                    ser1.setData(lista.get(x).getData());
+                    ser1.setStatus(lista.get(x).getStatus());
+
+                    tabelaConsultaOrdem.addRow(ser1);
+                }
             }
         }
 
@@ -2015,6 +2048,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     private javax.swing.JCheckBox cmdTodos;
     private javax.swing.JComboBox<String> comboBoxProduto;
     private javax.swing.JComboBox<String> comboBoxSelecionaTipo;
+    private javax.swing.JComboBox<String> comboBoxSelecionaTipoConsulta;
     private javax.swing.JComboBox<String> comboBoxStatusConsulta;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
