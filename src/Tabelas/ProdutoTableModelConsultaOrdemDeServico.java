@@ -17,7 +17,7 @@ import javax.swing.table.AbstractTableModel;
 public class ProdutoTableModelConsultaOrdemDeServico extends AbstractTableModel{
     
     private List<CadastroDeServico> dados = new ArrayList<>();      // Arrai do dados da classe de Cadastro de Serviços que vão ser informados na tabela
-    private String[] colunas = {"OS","Cliente","Data do Agendamento","Data da OS","Status"}; // Criação das Colunas no Jtable
+    private String[] colunas = {"OS / Orçamento","Cliente","Data do Agendamento","Data da OS","Status"}; // Criação das Colunas no Jtable
 
     @Override
     public String getColumnName(int culumn) {

@@ -842,4 +842,97 @@ public class GeradorDePdf {
         }
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*
+    **************************
+    GERAR PDF Consulta Orçamentos
+    **************************
+    */
+    public void GerarPDFBuscaDeOrcamentos(CadastroDeServico ser) {
+
+        OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
+        List<CadastroDeServico> lista = serDao.BuscarOrcamentos(ser);
+
+        Document document = new Document();
+
+        try {
+            PdfWriter.getInstance(document, new FileOutputStream("c:/SISOS/PDF/Relatório_Orçamento/Orçamento.pdf"));
+            document.open();
+
+            // Numero da Ordem de Serviço
+            Paragraph p = new Paragraph("ORÇAMENTO", fonteCabecalho);
+            p.setAlignment(1);
+            document.add(p);
+
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph(" "));
+
+            document.add(new Paragraph(" "));
+            PdfPTable table = new PdfPTable(new float[]{10f, 40f, 30f, 30f, 30f}); // crio a tabela para ser vista de fora ou dentro do IF
+
+            PdfPCell os = new PdfPCell(new Phrase("ORÇAMENTO", fontePadrao));
+            os.setHorizontalAlignment(Element.ALIGN_CENTER);
+            PdfPCell cliente = new PdfPCell(new Phrase("CLIENTE", fontePadrao));
+            cliente.setHorizontalAlignment(Element.ALIGN_CENTER);
+            PdfPCell dataAgendamento = new PdfPCell(new Phrase("DATA DO AGENDAMENTO", fontePadrao));
+            dataAgendamento.setHorizontalAlignment(Element.ALIGN_CENTER);
+            PdfPCell dataNota = new PdfPCell(new Phrase("DATA DO ORÇAMENTO", fontePadrao));
+            dataNota.setHorizontalAlignment(Element.ALIGN_CENTER);
+            PdfPCell statusNota = new PdfPCell(new Phrase("STATUS DO ORÇAMENTO", fontePadrao));
+            statusNota.setHorizontalAlignment(Element.ALIGN_CENTER);
+
+            table.addCell(os);
+            table.addCell(cliente);
+            table.addCell(dataAgendamento);
+            table.addCell(dataNota);
+            table.addCell(statusNota);
+
+            for (int x = 0; x < lista.size(); x++) {
+
+                PdfPCell celula1 = new PdfPCell(new Phrase(String.valueOf(lista.get(x).getOs()), fontePadrao));
+                celula1.setHorizontalAlignment(Element.ALIGN_CENTER);
+                PdfPCell celula2 = new PdfPCell(new Phrase(lista.get(x).getCliente(), fontePadrao));
+                PdfPCell celula3 = new PdfPCell(new Phrase(lista.get(x).getDataAgendamento() + " - " + lista.get(x).getHorarioAgendamento(), fontePadrao));
+                celula3.setHorizontalAlignment(Element.ALIGN_CENTER);
+                PdfPCell celula4 = new PdfPCell(new Phrase(lista.get(x).getData(), fontePadrao));
+                celula4.setHorizontalAlignment(Element.ALIGN_CENTER);
+                PdfPCell celula5 = new PdfPCell(new Phrase(lista.get(x).getStatus(), fontePadrao));
+                celula5.setHorizontalAlignment(Element.ALIGN_CENTER);
+
+                table.addCell(celula1);
+                table.addCell(celula2);
+                table.addCell(celula3);
+                table.addCell(celula4);
+                table.addCell(celula5);
+            }
+
+            document.add(table); // Adiciono dados na tabela 
+
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph(" "));
+            Paragraph fim = new Paragraph("FIM DA LISTA", fonteVermelha);
+            fim.setAlignment(1);
+            document.add(fim);
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(GeradorDePdf.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DocumentException ex) {
+            Logger.getLogger(GeradorDePdf.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        document.close();
+
+        try {
+            Desktop.getDesktop().open(new File("c:/SISOS/PDF/Relatório_Orçamento/Orçamento.pdf"));
+        } catch (IOException ex) {
+            Logger.getLogger(GeradorDePdf.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

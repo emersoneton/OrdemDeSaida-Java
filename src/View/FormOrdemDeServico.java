@@ -586,13 +586,18 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
         jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Tipo", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP));
 
-        cmdOs.setText("OS");
+        cmdOs.setText("Numero");
         cmdOs.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cmdOsMouseClicked(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 cmdOsMousePressed(evt);
+            }
+        });
+        cmdOs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdOsActionPerformed(evt);
             }
         });
 
@@ -655,7 +660,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             }
         });
 
-        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "OS", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
+        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Numero", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -712,9 +717,9 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboBoxSelecionaTipoConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(comboBoxSelecionaTipoConsulta, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(24, 24, 24)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1809,6 +1814,10 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_comboBoxSelecionaTipoActionPerformed
 
+    private void cmdOsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdOsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmdOsActionPerformed
+
     public void GerarRecibo() {
         CadastroDeServico ser = new CadastroDeServico();
         CadastroDeClientes cli = new CadastroDeClientes();
@@ -1875,7 +1884,13 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
         GeradorDePdf pdf = new GeradorDePdf();
 
-        pdf.GerarPDFBuscaDeNotas(ser);
+        
+        if(comboBoxSelecionaTipoConsulta.getSelectedItem() == "Ordem de Saída"){
+            pdf.GerarPDFBuscaDeNotas(ser);
+        }else if(comboBoxSelecionaTipoConsulta.getSelectedItem() == "Orçamento"){
+            pdf.GerarPDFBuscaDeOrcamentos(ser);
+        }
+        
 
     }
 
@@ -1890,7 +1905,13 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         //verfica se a resposta é verdadeira
         if (resposta == JOptionPane.YES_OPTION) {
             OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
-            serDao.SalvarStatusDaNota(ser);
+            
+            if(comboBoxSelecionaTipoConsulta.getSelectedItem() == "Ordem de Saída"){
+                serDao.SalvarStatusDaNota(ser);
+            }else if(comboBoxSelecionaTipoConsulta.getSelectedItem() == "Orçamento"){
+                serDao.SalvarStatusDoOrcamento(ser);
+            }
+            
 
             txtOsConsulta.setText("");
             txtClienteConsulta.setText("");
@@ -1911,40 +1932,40 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
         ser.setCliente(txtPesquisaClienteConsulta.getText());
 
+        if (cmdOs.isSelected()) {
+
+            ser.setOs(Integer.parseInt(txtOsConsultaInformar.getText()));
+            ser.setClicked("OS");
+
+        } else if (cmdCliente.isSelected()) {
+
+            ser.setClicked("CLIENTE");
+
+        } else if (cmdAberto.isSelected()) {
+
+            ser.setStatus("ABERTO");
+            ser.setClicked("ABERTO");
+
+        } else if (cmdFechado.isSelected()) {
+
+            ser.setStatus("FECHADO");
+            ser.setClicked("FECHADO");
+
+        } else if (cmdCancelado.isSelected()) {
+
+            ser.setStatus("CANCELADO");
+            ser.setClicked("CANCELADO");
+
+        } else if (cmdTodos.isSelected()) {
+
+            ser.setClicked("TODOS");
+
+        } else {
+            JOptionPane.showMessageDialog(null, "SELECIONE UMA DAS OPÇÕES DE AÇÕES", "Mensagem",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+
         if (comboBoxSelecionaTipoConsulta.getSelectedItem() == "Ordem de Saída") {
-
-            if (cmdOs.isSelected()) {
-
-                ser.setOs(Integer.parseInt(txtOsConsultaInformar.getText()));
-                ser.setClicked("OS");
-
-            } else if (cmdCliente.isSelected()) {
-
-                ser.setClicked("CLIENTE");
-
-            } else if (cmdAberto.isSelected()) {
-
-                ser.setStatus("ABERTO");
-                ser.setClicked("ABERTO");
-
-            } else if (cmdFechado.isSelected()) {
-
-                ser.setStatus("FECHADO");
-                ser.setClicked("FECHADO");
-
-            } else if (cmdCancelado.isSelected()) {
-
-                ser.setStatus("CANCELADO");
-                ser.setClicked("CANCELADO");
-
-            } else if (cmdTodos.isSelected()) {
-
-                ser.setClicked("TODOS");
-
-            } else {
-                JOptionPane.showMessageDialog(null, "SELECIONE UMA DAS OPÇÕES DE AÇÕES", "Mensagem",
-                        JOptionPane.INFORMATION_MESSAGE);
-            }
 
             List<CadastroDeServico> lista = serDao.BuscarNotasDeServico(ser);
 
@@ -1966,7 +1987,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             }
 
         } else if (comboBoxSelecionaTipoConsulta.getSelectedItem() == "Orçamento") {
-            
+
             List<CadastroDeServico> lista = serDao.BuscarOrcamentos(ser);
 
             if (lista.size() == 0) {

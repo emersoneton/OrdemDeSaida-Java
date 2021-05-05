@@ -674,9 +674,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
-                                  <Component id="comboBoxSelecionaTipoConsulta" min="-2" pref="235" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jPanel6" max="32767" attributes="0"/>
+                                  <Component id="comboBoxSelecionaTipoConsulta" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                               <Component id="jPanel8" min="-2" max="-2" attributes="0"/>
@@ -907,11 +907,12 @@
                           <SubComponents>
                             <Component class="javax.swing.JCheckBox" name="cmdOs">
                               <Properties>
-                                <Property name="text" type="java.lang.String" value="OS"/>
+                                <Property name="text" type="java.lang.String" value="Numero"/>
                               </Properties>
                               <Events>
                                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="cmdOsMouseClicked"/>
                                 <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="cmdOsMousePressed"/>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdOsActionPerformed"/>
                               </Events>
                             </Component>
                             <Component class="javax.swing.JCheckBox" name="cmdCliente">
@@ -945,7 +946,7 @@
                       <Properties>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                            <TitledBorder justification="2" position="2" title="OS"/>
+                            <TitledBorder justification="2" position="2" title="Numero"/>
                           </Border>
                         </Property>
                       </Properties>
