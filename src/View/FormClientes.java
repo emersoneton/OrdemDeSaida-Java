@@ -156,7 +156,7 @@ public class FormClientes extends javax.swing.JFrame {
         });
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0))));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jPanel1MousePressed(evt);
@@ -305,7 +305,7 @@ public class FormClientes extends javax.swing.JFrame {
         jLabel18.setText("Situação:");
         jLayeredPane1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 300, -1, -1));
 
-        jPanel1.add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 780, 380));
+        jPanel1.add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 780, 340));
 
         jTabbedPane1.addTab("Cadastro", jPanel1);
 

@@ -28,7 +28,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.text.MaskFormatter;
-import org.jdesktop.swingx.util.OS;
 
 /**
  *

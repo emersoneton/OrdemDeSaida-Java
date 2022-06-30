@@ -39,8 +39,8 @@ public class OrdemDeServicoDAO {
 
         try {
             PreparedStatement busca = con.prepareStatement("INSERT INTO servicos(cliente,valor,desconto,data_agendamento,"
-                    + "complemento,horario_agendamento,data_os,status_os) "
-                    + "VALUES (?,?,?,?,?,?,?,?)");
+                    + "complemento,horario_agendamento,data_os,status_os,solucao_problema) "
+                    + "VALUES (?,?,?,?,?,?,?,?,?)");
 
             busca.setString(1, ser.getCliente());
             busca.setString(2, "" + ser.getValorTotal());
@@ -50,6 +50,7 @@ public class OrdemDeServicoDAO {
             busca.setString(6, ser.getHorarioAgendamento());
             busca.setString(7, ser.getData());
             busca.setString(8, "" + ser.getStatus());
+            busca.setString(9, "" + ser.getSolucaoProblema());
 
             busca.executeUpdate();
 
@@ -59,6 +60,8 @@ public class OrdemDeServicoDAO {
             con.close();
 
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao salvar Serviço, causa do erro: " +ex, "Mensagem",
+                    JOptionPane.INFORMATION_MESSAGE);
             Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
