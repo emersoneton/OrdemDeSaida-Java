@@ -1248,9 +1248,12 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    public void VerificaCodigoNotaNoBanco(boolean AlteraOrcamento) {
+    public boolean VerificaCodigoNotaNoBanco(boolean AlteraOrcamento) {
 
-        CadastroDeServico ser = new CadastroDeServico();
+        boolean retorno = false;
+        
+        try{
+             CadastroDeServico ser = new CadastroDeServico();
 
         ser.setOs(Integer.parseInt(txtOs.getText()));
 
@@ -1308,16 +1311,17 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                 }
                 
                 if(AlteraOrcamento){
-                    String codigoOrcamento = txtOs.getText();
-                    
-                    
-                }
-
+                    retorno = true;
+                } 
             }
         }
 
         Limpar();
-
+        
+        }catch(Exception ex){
+            JOptionPane.showInputDialog(null, "Erro: " + ex, "Alerta");
+        }
+        return retorno;
     }
 
     public void VerificaCodigoOrcamentoNoBanco() {
@@ -1471,6 +1475,18 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
 
+        int contadorTabela = tableModel.getRowCount();
+
+        for (int x = 0; x < contadorTabela; x++) {
+            tableModel.removeRow(0);
+        }
+
+        int contadorTabelaConsulta = tabelaConsulta.getRowCount();
+
+        for (int x = 0; x < contadorTabelaConsulta; x++) {
+            tabelaConsultaOrdem.removeRow(0);
+        }
+        
         Buscar();
 
     }//GEN-LAST:event_btnEditarActionPerformed
@@ -1519,22 +1535,26 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             }
         
         }else if (comboBoxSelecionaTipo.getSelectedItem() == "Orçamento"){
-            List<CadastroDeServico> lista = serDao.BuscarItensDoOrcamento(ser);
-            for (int x = 0; x < lista.size(); x++) {
+            
+            if(!ser.getCliente().equals("")){
+                List<CadastroDeServico> lista = serDao.BuscarItensDoOrcamento(ser);
+                for (int x = 0; x < lista.size(); x++) {
 
-                CadastroDeServico ser1 = new CadastroDeServico();
+                    CadastroDeServico ser1 = new CadastroDeServico();
 
-                ser1.setDescricao(lista.get(x).getDescricao());
-                ser1.setQuantidade(lista.get(x).getQuantidade());
-                ser1.setValorTotal(lista.get(x).getValorTotal());
+                    ser1.setDescricao(lista.get(x).getDescricao());
+                    ser1.setQuantidade(lista.get(x).getQuantidade());
+                    ser1.setValorTotal(lista.get(x).getValorTotal());
 
-                tableModel.addRow(ser1);
+                    tableModel.addRow(ser1);
+                }
+                ContadorDaTabela(); //Chama o metodo de Somar o Valor total e a quantidade de linhas na tabela
+
+                if (txtPesquisaCliente.getText().length() > 0) {
+                    textoSolucao.setEnabled(true);
+                }
             }
-            ContadorDaTabela(); //Chama o metodo de Somar o Valor total e a quantidade de linhas na tabela
-
-            if (txtPesquisaCliente.getText().length() > 0) {
-                textoSolucao.setEnabled(true);
-            }
+            
         }
         
         
@@ -1872,8 +1892,20 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
     private void AlterarOrcamentoEmOs(){
         if (txtPesquisaCliente.getText().length() > 0) {
+            int codigo = Integer.parseInt(txtOs.getText()) ;
+            
             comboBoxSelecionaTipo.setSelectedItem("Ordem de Saída");
-            VerificaCodigoNotaNoBanco(true); // verifico se ja tem algum código cadastrado no banco para fazer a alteração ou a inserção dos dados pelo botão Salvar
+            if(VerificaCodigoNotaNoBanco(true))// verifico se ja tem algum código cadastrado no banco para fazer a alteração ou a inserção dos dados pelo botão Salvar
+            {
+                 //Alterar o status do orçamento
+                CadastroDeServico ser = new CadastroDeServico();
+                OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
+
+                ser.setOs(codigo);
+                ser.setStatus("FECHADO");
+                serDao.SalvarStatusDoOrcamento(ser);
+            }
+     
         } else {
             JOptionPane.showMessageDialog(null, "NÃO FOI INFORMADO CLIENTE PARA A EMISSÃO DA ORDEM DE SAIDA", "Mensagem",
                 JOptionPane.INFORMATION_MESSAGE);

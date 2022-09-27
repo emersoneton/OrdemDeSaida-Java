@@ -142,7 +142,7 @@ public class OrdemDeServicoDAO {
 
         boolean valida = false;
         try {
-            PreparedStatement busca = con.prepareStatement("SELECT * FROM orcamentos WHERE codigo = '" + ser.getOs() + "'");
+            PreparedStatement busca = con.prepareStatement("SELECT * FROM orcamentos WHERE codigo = '" + ser.getOs() + "' and status_orcamento = 'ABERTO'");
 
             ResultSet rs = busca.executeQuery();
 
