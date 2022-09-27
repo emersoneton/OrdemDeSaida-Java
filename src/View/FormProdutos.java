@@ -42,7 +42,7 @@ public class FormProdutos extends javax.swing.JFrame {
         Lista.setVisible(false);
         MODELO = new DefaultListModel();
         Lista.setModel(MODELO);
-        txtCodigo.setEnabled(false);
+        //txtCodigo.setEnabled(false);
         jtableProdutos.setModel(tabelaProdutos);
         txtQuantidade.setForeground(Color.black);
         txtValor.setText("0,00");
@@ -434,6 +434,7 @@ public class FormProdutos extends javax.swing.JFrame {
         
         CadastroDeProdutos pro = new CadastroDeProdutos();
         pro.setDescricao(txtDescricao.getText());
+        pro.setCodigo(txtCodigo.getText());
         
         ProdutosDAO proDao = new ProdutosDAO();
         proDao.Buscar(pro);

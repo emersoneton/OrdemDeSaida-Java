@@ -75,6 +75,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         textoSolucao.setWrapStyleWord(true);
         textoSolucao.setEnabled(false);
         txtInformacaoDoTipo.setText("ORDEM DE SAÍDA");
+        btnGerarOs.setVisible(false);
     }
 
     /**
@@ -125,6 +126,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         comboBoxSelecionaTipo = new javax.swing.JComboBox<>();
         jButton4 = new javax.swing.JButton();
         txtInformacaoDoTipo = new javax.swing.JLabel();
+        btnGerarOs = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         listaConsultaCliente = new javax.swing.JList<>();
@@ -353,6 +355,13 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         txtInformacaoDoTipo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         txtInformacaoDoTipo.setForeground(new java.awt.Color(255, 0, 0));
 
+        btnGerarOs.setText("Gera OS");
+        btnGerarOs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGerarOsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -388,10 +397,12 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                         .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtDataEHora, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnAdicionar)
-                        .addGap(12, 12, 12))
-                    .addComponent(txtDataEHora, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnGerarOs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(12, 12, 12))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -415,7 +426,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jHorarioAgendamento, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                                         .addComponent(jButton4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -443,16 +454,16 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtPesquisaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8)
-                            .addComponent(txtOs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7)
-                            .addComponent(comboBoxSelecionaTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(txtDataEHora, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtDataEHora, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(3, 3, 3)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtPesquisaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtOs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(comboBoxSelecionaTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGerarOs))
+                .addGap(2, 2, 2)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
@@ -502,7 +513,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                             .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         jtConsultaOrdens.addTab("Ordem de Serviço", jPanel1);
@@ -1207,7 +1218,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
             if (txtPesquisaCliente.getText().length() > 0) {
 
                 if (dataDeAgendamento == "inserido") {
-                    VerificaCodigoNotaNoBanco(); // verifico se ja tem algum código cadastrado no banco para fazer a alteração ou a inserção dos dados pelo botão Salvar
+                    VerificaCodigoNotaNoBanco(false); // verifico se ja tem algum código cadastrado no banco para fazer a alteração ou a inserção dos dados pelo botão Salvar
                 } else {
                     JOptionPane.showMessageDialog(null, "INFORME A DATA DE AGENDAMENTO ANTES DE SALVAR!", "Mensagem",
                             JOptionPane.INFORMATION_MESSAGE);
@@ -1237,7 +1248,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    public void VerificaCodigoNotaNoBanco() {
+    public void VerificaCodigoNotaNoBanco(boolean AlteraOrcamento) {
 
         CadastroDeServico ser = new CadastroDeServico();
 
@@ -1259,7 +1270,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                 EnviarEmail();
             }
         } else {
-            if (ser.isValidadorNota()) {   //UPDATE
+            if (ser.isValidadorNota() && !AlteraOrcamento) {   //UPDATE
                 SalvarItens(); //Salvo o Itens da Nota
 
                 JOptionPane.showMessageDialog(null, "Itens da Nota SALVO com sucesso!", "Mensagem",
@@ -1294,6 +1305,12 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
                 int resposta = JOptionPane.showConfirmDialog(null, "DESEJA ENVIAR O EMAIL COM A ORDEM DE SERVIÇO PARA O CLIENTE?", "escolha dois", JOptionPane.YES_NO_OPTION);
                 if (resposta == JOptionPane.YES_OPTION) {
                     EnviarEmail();
+                }
+                
+                if(AlteraOrcamento){
+                    String codigoOrcamento = txtOs.getText();
+                    
+                    
                 }
 
             }
@@ -1465,10 +1482,15 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         OrdemDeServicoDAO serDao = new OrdemDeServicoDAO();
 
         ser.setOs(Integer.parseInt(txtOs.getText()));
-
-        serDao.Buscar(ser);
-        serDao.BuscarItensDoServico(ser);
-
+        
+        if (comboBoxSelecionaTipo.getSelectedItem() == "Ordem de Saída"){
+             serDao.Buscar(ser);
+            serDao.BuscarItensDoServico(ser);
+        }else if (comboBoxSelecionaTipo.getSelectedItem() == "Orçamento"){
+            serDao.BuscarItensDoOrcamento(ser);
+            serDao.BuscarOsOrcamentos(ser);
+        }
+        
         txtPesquisaCliente.setText(ser.getCliente());
         txtDesconto.setText(String.valueOf(ser.getDesconto()).replace(".", ","));
         jDataDoAgendamento.setText(ser.getDataAgendamento());
@@ -1477,22 +1499,45 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         jHorarioAgendamento.setText(ser.getHorarioAgendamento());
         textoSolucao.setText(ser.getSolucaoProblema());
 
-        List<CadastroDeServico> lista = serDao.BuscarItensDoServico(ser);
-        for (int x = 0; x < lista.size(); x++) {
+        if (comboBoxSelecionaTipo.getSelectedItem() == "Ordem de Saída"){
+            
+            List<CadastroDeServico> lista = serDao.BuscarItensDoServico(ser);
+            for (int x = 0; x < lista.size(); x++) {
 
-            CadastroDeServico ser1 = new CadastroDeServico();
+                CadastroDeServico ser1 = new CadastroDeServico();
 
-            ser1.setDescricao(lista.get(x).getDescricao());
-            ser1.setQuantidade(lista.get(x).getQuantidade());
-            ser1.setValorTotal(lista.get(x).getValorTotal());
+                ser1.setDescricao(lista.get(x).getDescricao());
+                ser1.setQuantidade(lista.get(x).getQuantidade());
+                ser1.setValorTotal(lista.get(x).getValorTotal());
 
-            tableModel.addRow(ser1);
+                tableModel.addRow(ser1);
+            }
+            ContadorDaTabela(); //Chama o metodo de Somar o Valor total e a quantidade de linhas na tabela
+
+            if (txtPesquisaCliente.getText().length() > 0) {
+                textoSolucao.setEnabled(true);
+            }
+        
+        }else if (comboBoxSelecionaTipo.getSelectedItem() == "Orçamento"){
+            List<CadastroDeServico> lista = serDao.BuscarItensDoOrcamento(ser);
+            for (int x = 0; x < lista.size(); x++) {
+
+                CadastroDeServico ser1 = new CadastroDeServico();
+
+                ser1.setDescricao(lista.get(x).getDescricao());
+                ser1.setQuantidade(lista.get(x).getQuantidade());
+                ser1.setValorTotal(lista.get(x).getValorTotal());
+
+                tableModel.addRow(ser1);
+            }
+            ContadorDaTabela(); //Chama o metodo de Somar o Valor total e a quantidade de linhas na tabela
+
+            if (txtPesquisaCliente.getText().length() > 0) {
+                textoSolucao.setEnabled(true);
+            }
         }
-        ContadorDaTabela(); //Chama o metodo de Somar o Valor total e a quantidade de linhas na tabela
-
-        if (txtPesquisaCliente.getText().length() > 0) {
-            textoSolucao.setEnabled(true);
-        }
+        
+        
 
     }
 
@@ -1806,9 +1851,11 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     private void comboBoxSelecionaTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxSelecionaTipoActionPerformed
         if (comboBoxSelecionaTipo.getSelectedItem() == "Ordem de Saída") {
             txtInformacaoDoTipo.setText("ORDEM DE SAÍDA");
+            btnGerarOs.setVisible(false);
             BuscarOS();
         } else if (comboBoxSelecionaTipo.getSelectedItem() == "Orçamento") {
             txtInformacaoDoTipo.setText("ORÇAMENTO");
+            btnGerarOs.setVisible(true);
             BuscarOrcamento();
         }
     }//GEN-LAST:event_comboBoxSelecionaTipoActionPerformed
@@ -1817,6 +1864,22 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmdOsActionPerformed
 
+    private void btnGerarOsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerarOsActionPerformed
+        
+        AlterarOrcamentoEmOs();
+        
+    }//GEN-LAST:event_btnGerarOsActionPerformed
+
+    private void AlterarOrcamentoEmOs(){
+        if (txtPesquisaCliente.getText().length() > 0) {
+            comboBoxSelecionaTipo.setSelectedItem("Ordem de Saída");
+            VerificaCodigoNotaNoBanco(true); // verifico se ja tem algum código cadastrado no banco para fazer a alteração ou a inserção dos dados pelo botão Salvar
+        } else {
+            JOptionPane.showMessageDialog(null, "NÃO FOI INFORMADO CLIENTE PARA A EMISSÃO DA ORDEM DE SAIDA", "Mensagem",
+                JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    
     public void GerarRecibo() {
         CadastroDeServico ser = new CadastroDeServico();
         CadastroDeClientes cli = new CadastroDeClientes();
@@ -2055,6 +2118,7 @@ public class FormOrdemDeServico extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscar1;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnGerarOs;
     private javax.swing.JButton btnPdf;
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;

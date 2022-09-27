@@ -136,6 +136,43 @@ public class OrdemDeServicoDAO {
             Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void BuscarOsOrcamentos(CadastroDeServico ser) {
+        Conexao();
+
+        boolean valida = false;
+        try {
+            PreparedStatement busca = con.prepareStatement("SELECT * FROM orcamentos WHERE codigo = '" + ser.getOs() + "'");
+
+            ResultSet rs = busca.executeQuery();
+
+            while (rs.next()) {
+
+                // Transforma data de padrão Americano para o Brasileiro
+                Date d = rs.getDate("data_agendamento"); // a data 
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // formato de data desejado 
+                String data = sdf.format(d); // data formatada
+
+                ser.setCliente(rs.getString("cliente"));
+                ser.setValorTotal(Double.parseDouble(rs.getString("valor")));
+                ser.setDesconto(Double.parseDouble(rs.getString("desconto")));
+                ser.setDataAgendamento(data);
+                ser.setHorarioAgendamento(rs.getString("horario_agendamento"));
+                ser.setComplemento(rs.getString("complemento"));
+                ser.setSolucaoProblema(rs.getString("solucao_problema"));
+
+                valida = true;
+            }
+
+            if (valida == false) {
+                JOptionPane.showMessageDialog(null, "NÃO FOI ENCONTRADO A NOTA DO CÓDIGO INFORMADO", "Mensagem",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+            con.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrdemDeServicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public void SalvarItens(CadastroDeServico ser) {
 

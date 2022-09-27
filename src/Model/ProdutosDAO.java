@@ -87,11 +87,15 @@ public class ProdutosDAO {
             PreparedStatement busca = con.prepareStatement("SELECT * FROM produtos");
 
             ResultSet rs = busca.executeQuery();
+            
+            String descricao = "";
+            String codigo = "";
 
             while (rs.next()) {
-                String descricao = rs.getString("descricao");
+                descricao = rs.getString("descricao");
+                codigo = rs.getString("codigo");
 
-                if (descricao.trim().equals(pro.getDescricao())) {
+                if (descricao.trim().equals(pro.getDescricao()) || codigo.trim().equals(pro.getCodigo())) {
                     pro.setCodigo(rs.getString("codigo"));
                     pro.setCodigoBarras(rs.getString("codigo_barras"));
                     pro.setDescricao(rs.getString("descricao"));
